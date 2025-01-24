@@ -1,26 +1,38 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Success from './pages/Success';
 import ProtectedRoute from './components/ProtectedRoute';
+import Home from './pages/Home';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado para autenticación
+  // Obtener el estado inicial desde localStorage
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('isAuthenticated') === 'true'; // Convertir a booleano
+  });
+
+  // Función para manejar los cambios en la autenticación
+  const handleAuthChange = (status) => {
+    setIsAuthenticated(status); // Actualizar estado
+    localStorage.setItem('isAuthenticated', status); // Actualizar localStorage
+  };
 
   return (
     <Router>
       <Routes>
+        {/* Página de login */}
         <Route
           path="/"
-          element={<Login setAuth={setIsAuthenticated} />} // Pasar setAuth como prop
+          element={<Login setAuth={handleAuthChange} />} // Pasar setAuth como prop
         />
+
+        {/* Página protegida */}
         <Route
-          path="/success"
+          path="/home"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Success />
-            </ProtectedRoute>
-          }
+              <Home setAuth={handleAuthChange}/>
+            </ProtectedRoute>}
         />
       </Routes>
     </Router>

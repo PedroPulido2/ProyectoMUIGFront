@@ -21,8 +21,9 @@ const Login = ({ setAuth }) => { // Recibimos setAuth como prop
             const response = await api.post('/login/auth', { user, password });
             if (response.status === 200) {
                 alert(response.data.message); // Mensaje de éxito
-                setAuth(true); // Actualizar estado global
-                navigate('/success'); // Redirigir a página protegida
+                localStorage.setItem('username',response.data.user);
+                setAuth(true); // Actualizar estado global y localStorage
+                navigate('/home'); // Redirigir a página protegida
             }
         } catch (err) {
             if (err.response && err.response.data && err.response.data.error) {
