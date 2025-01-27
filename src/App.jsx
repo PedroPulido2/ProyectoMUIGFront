@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Success from './pages/Success';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
+import Fosil from './pages/Fosil';
 
 function App() {
   // Obtener el estado inicial desde localStorage
@@ -31,7 +32,15 @@ function App() {
           path="/home"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Home setAuth={handleAuthChange}/>
+              <Home setAuth={handleAuthChange} />
+            </ProtectedRoute>}
+        />
+        {/* Rutas Adicionales */}
+        <Route
+          path="/fosil"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Fosil setAuth={handleAuthChange} />
             </ProtectedRoute>}
         />
       </Routes>

@@ -87,3 +87,16 @@ input:focus {
     margin-bottom: 1rem;
     text-align: center;
 }
+
+/*Responsive*/
+/* Para pantallas de menos de 768px */
+@media (max-width: 768px) {
+.login-form {
+    width: 90%; /* Reducir el ancho del formulario en pantallas pequeñas */
+    padding: 1.5rem; /* Ajustar el espacio interno */
+  }
+
+  .login-button {
+    font-size: 0.9rem; /* Reducir ligeramente el tamaño del botón */
+  }
+}

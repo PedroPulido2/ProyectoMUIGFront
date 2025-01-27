@@ -4,8 +4,7 @@ import rutaLogo from '../styles/images/logo.png';
 import rutaImagenPerfil from '../styles/images/profile-img.jpg';
 import { Link } from "react-router-dom";
 
-
-const PageLayout = ({ username, setAuth }) => {
+const PageLayout = ({ username, setAuth, children }) => {
 
     const handleLogout = () => {
         localStorage.removeItem("isAuthenticated");
@@ -15,6 +14,9 @@ const PageLayout = ({ username, setAuth }) => {
 
     return (
         <div className="layout-container">
+            <button className="hamburger-btn" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+            ☰
+            </button>
             {/* Sidebar */}
             <div className="sidebar">
                 <div className="sidebar-header">
@@ -27,10 +29,10 @@ const PageLayout = ({ username, setAuth }) => {
                         <div className="menu-separator"></div>
                     </h4>
                     <li>
-                        <Link to="#"><span className="material-symbols-outlined">Home</span>Inicio</Link>
+                        <Link to="/home"><span className="material-symbols-outlined">Home</span>Inicio</Link>
                     </li>
                     <li>
-                        <Link to="#"><span className="material-symbols-outlined">Plagiarism</span>Fosil</Link>
+                        <Link to="/fosil"><span className="material-symbols-outlined">Plagiarism</span>Fosil</Link>
                     </li>
                     <li>
                         <Link to="#"><span className="material-symbols-outlined">Plagiarism</span>Mineral</Link>
@@ -73,8 +75,9 @@ const PageLayout = ({ username, setAuth }) => {
                 </header>
 
                 <main className="page-main">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus quis amet laborum ipsum et praesentium placeat itaque debitis earum cupiditate provident eveniet consequatur, modi architecto vero aliquid veritatis dignissimos distinctio?</p>
+                    {children} {/* Esto renderiza los hijos pasados desde Home.jsx */}
                 </main>
+
             </div>
         </div>
     );

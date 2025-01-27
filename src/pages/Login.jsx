@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import '../styles/Login.css';
@@ -9,7 +9,7 @@ const Login = ({ setAuth }) => { // Recibimos setAuth como prop
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    useEffect(() =>{
+    useEffect(() => {
         document.title = "Iniciar Sesion";
     }, []);
 
@@ -21,7 +21,7 @@ const Login = ({ setAuth }) => { // Recibimos setAuth como prop
             const response = await api.post('/login/auth', { user, password });
             if (response.status === 200) {
                 alert(response.data.message); // Mensaje de éxito
-                localStorage.setItem('username',response.data.user);
+                localStorage.setItem('username', response.data.user);
                 setAuth(true); // Actualizar estado global y localStorage
                 navigate('/home'); // Redirigir a página protegida
             }

@@ -1,21 +1,21 @@
 import React, { useEffect } from "react";
 import PageLayout from "./PageLayout";
 
-const Home = ({ setAuth }) => {
+const Fosil = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
 
   useEffect(() => {
-    document.title = "Inicio MUIG";
+    document.title = "Gestion Fosiles";
   }, []);
 
   return (
     <PageLayout username={username} setAuth={setAuth}>
-      <h2>Bienvenido a la página principal</h2>
-      <p>Sección del contenido principal</p>
+      <h2>Bienvenido a la página Fosil</h2>
+      <p>Sección del contenido Fosil</p>
       <p>{username}</p>
     </PageLayout>
   );
   
 };
 
-export default Home;
+export default Fosil;
