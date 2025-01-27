@@ -14,9 +14,6 @@ const PageLayout = ({ username, setAuth, children }) => {
 
     return (
         <div className="layout-container">
-            <button className="hamburger-btn" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-            ☰
-            </button>
             {/* Sidebar */}
             <div className="sidebar">
                 <div className="sidebar-header">

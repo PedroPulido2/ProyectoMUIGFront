@@ -1,0 +1,45 @@
+.main {
+  padding: 20px;
+}
+
+.main h2 {
+  text-align: center;
+}
+
+.selectModules {
+  display: flex;
+  flex-wrap: wrap;
+  /* Permite que los elementos se ajusten a la siguiente línea */
+  gap: 25px;
+  /* Espacio entre los elementos */
+  justify-content: center;
+  /* Centra los elementos horizontalmente */
+}
+
+.module {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.module img {
+  width: 400px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 30px;
+}
+
+.module span {
+  margin-top: 15px;
+  font-size: 16px;
+}
+
+.module:hover {
+  transform: scale(1.1);
+  border-color: #007bff;
+}

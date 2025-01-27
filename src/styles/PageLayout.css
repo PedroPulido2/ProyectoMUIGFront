@@ -8,7 +8,6 @@
 /*Div Total*/
 .layout-container {
     display: flex;
-    height: 100vh;
     background: #f5f5f5;
 }
 
@@ -170,8 +169,7 @@
     /*Espacio inicial igual al ancho del sidebar*/
     flex: 1;
     transition: margin-left 0.4s ease;
-    margin-top: 80px;
-    padding: 20px;
+    margin-top: 78px;
 }
 
 .page-content header {
@@ -196,8 +194,4 @@
 .sidebar:hover+.page-content header {
     left: 260px;
     width: calc(100% - 260px);
-}
-
-.page-main {
-    border-radius: 5px;
 }
