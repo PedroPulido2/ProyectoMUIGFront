@@ -1,0 +1,147 @@
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.create-button {
+    padding: 8px 12px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.create-button:hover {
+    background-color: #45a049;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    text-align: center;
+    background-color: #3e93b2;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+.update-button,
+.delete-button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.update-button {
+    background-color: #d8cc23;
+    color: white;
+}
+
+.update-button:hover {
+    background-color: #e5d81e;
+}
+
+.delete-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #e53935;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.expanded-details-wrapper {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+}
+
+.expanded-details-wrapper.open {
+    max-height: 400px;
+    /* Ajusta el valor según el tamaño máximo esperado del contenido */
+    padding: 10px;
+}
+
+.expanded-details {
+    text-align: left;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+.na-value {
+    color: #ff5739;
+    /* Un color distinto, como rojo suave */
+    font-weight: bold;
+    background-color: #ffe6e2;
+    /* Un fondo suave */
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.pagination-controls button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.pagination-controls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination-controls span {
+    font-weight: bold;
+}

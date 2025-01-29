@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PageLayout from "./PageLayout";
+import PageLayout from "../components/PageLayout";
 import '../styles/Home.css';
 import { useNavigate } from "react-router-dom";
 import imagenFosil from '../styles/images/moduleFosil.jpg';
@@ -20,7 +20,7 @@ const Home = ({ setAuth }) => {
   const handleModuleSelection = (module) => {
     setSelectedModule(module);
     console.log(module)
-    //navigate(`/${module}`);
+    navigate(`/${module}`);
   };
 
   return (
