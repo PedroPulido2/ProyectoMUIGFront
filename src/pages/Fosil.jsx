@@ -12,31 +12,40 @@ const Fosil = ({ setAuth }) => {
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [currentFosil, setCurrentFosil] = useState(null);
 
-  const fetchData = async () => {
-    try {
-      const response = await api.get("/fosil");
-      setFosiles(response.data);
-    } catch (error) {
-      console.error("Error al obtener los datos de fosiles", error);
-    }
-  };
-
   useEffect(() => {
     document.title = "Gestion Fosiles";
     fetchData();
   }, []);
 
+  //Funcion crear
   const handleCreate = () => {
     setCurrentFosil(null);
     setIsFormModalOpen(true);
   };
 
+  //Funcion actualizar
   const handleUpdate = (row) => {
     setCurrentFosil(row);
     setIsFormModalOpen(true);
   };
 
-  const handleSave = async (data) => {
+  //---Peticiones al Backend---
+  //Petición obtener los datos
+  const fetchData = async () => {
+    try {
+      const response = await api.get("/fosil");
+      setFosiles(response.data);
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.error) {
+        alert(err.response.data.error);
+      } else {
+        setError('Ocurrió un error inesperado. Intente nuevamente.');
+      }
+    }
+  };
+
+  //Petición actualizar u añadir los datos
+  const handleSaveUpdate = async (data) => {
     try {
       const formData = new FormData();
 
@@ -63,25 +72,50 @@ const Fosil = ({ setAuth }) => {
       }
       setIsFormModalOpen(false);
       fetchData();
-    } catch (error) {
-      console.error("Error al guardar el fosil", error);
-      alert("Error al Guardar el fósil", error);
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.error) {
+        alert(err.response.data.error);
+      } else {
+        setError('Ocurrió un error inesperado. Intente nuevamente.');
+      }
     }
   };
 
+  //Petición para eliminar los datos
   const handleDelete = async (row) => {
     if (window.confirm(`¿Estás seguro de que quieres eliminar el fósil con ID: ${row.ID_FOSIL}?`)) {
       try {
         await api.delete(`/fosil/${row.ID_FOSIL}`);
         alert(`El fósil con ID: ${row.ID_FOSIL} ha sido eliminado.`);
         fetchData();
-      } catch (error) {
-        console.error("Error al eliminar el fósil", error);
-        alert("Error al eliminar el fósil.");
+      } catch (err) {
+        if (err.response && err.response.data && err.response.data.error) {
+          alert(err.response.data.error);
+        } else {
+          setError('Ocurrió un error inesperado. Intente nuevamente.');
+        }
       }
     }
   };
 
+  //Petición para eliminar la imagen
+  const handleDeleteImage = async (row) => {
+    if (window.confirm(`¿Estás seguro de que quieres eliminar la imagen del fósil con ID: ${row.ID_FOSIL}?`)) {
+      try {
+        await api.delete(`/fosil/${row.ID_FOSIL}/image`);
+        alert(`La imagen del fósil con ID: ${row.ID_FOSIL} ha sido eliminado.`);
+        fetchData();
+      } catch (err) {
+        if (err.response && err.response.data && err.response.data.error) {
+          alert(err.response.data.error);
+        } else {
+          setError('Ocurrió un error inesperado. Intente nuevamente.');
+        }
+      }
+    }
+  };
+
+  //Arreglo de columnas a visualizar en la pagina
   const columns = [
     "ID_FOSIL",
     "COLECCION",
@@ -104,15 +138,15 @@ const Fosil = ({ setAuth }) => {
           data={fosiles}
           onCreate={handleCreate}
           onUpdate={handleUpdate}
+          onDeleteImage={handleDeleteImage}
           onDelete={handleDelete}
         />
       </div>
-
       <FosilFormModal
         isOpen={isFormModalOpen}
         closeModal={() => setIsFormModalOpen(false)}
         fosilData={currentFosil}
-        onSave={handleSave}
+        onSave={handleSaveUpdate}
       />
     </PageLayout>
   );

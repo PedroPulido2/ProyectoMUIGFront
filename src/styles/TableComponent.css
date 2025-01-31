@@ -11,12 +11,19 @@
 }
 
 .create-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
     padding: 8px 12px;
     background-color: #4caf50;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-left: auto;
+    font-size: 20px;
 }
 
 .create-button:hover {
@@ -38,7 +45,7 @@ td {
 
 th {
     text-align: center;
-    background-color: #3e93b2;
+    background-color: #1e86b6;
     font-weight: bold;
 }
 
@@ -51,31 +58,55 @@ tr:hover {
 }
 
 .update-button,
-.delete-button {
+.delete-button,
+.delete-image-button {
     padding: 5px 10px;
     margin: 0 5px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 10px;
+    font-size: 12px;
+}
+
+.delete-image-button {
+    background-color: #e33a3a;
+    color: black;
+}
+
+.delete-image-button:hover {
+    background-color: #ca4f4f;
 }
 
 .update-button {
-    background-color: #d8cc23;
-    color: white;
+    background-color: #fff200;
+    color: black;
 }
 
 .update-button:hover {
-    background-color: #e5d81e;
+    background-color: #d8cb0e;
 }
 
 .delete-button {
-    background-color: #f44336;
-    color: white;
+    background-color: #ff2919;
+    color: black;
 }
 
 .delete-button:hover {
-    background-color: #e53935;
+    background-color: #c41917;
+}
+
+.search-create {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-create input {
+    width: 300px;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    padding: 8px;
 }
 
 .action-buttons {
@@ -91,6 +122,10 @@ tr:hover {
     object-fit: cover;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.table-image:hover {
+    transform: scale(1.1);
 }
 
 .expanded-details-wrapper {
@@ -112,7 +147,7 @@ tr:hover {
 }
 
 .na-value {
-    color: #ff5739;
+    color: #d72525;
     /* Un color distinto, como rojo suave */
     font-weight: bold;
     background-color: #ffe6e2;
@@ -144,4 +179,16 @@ tr:hover {
 
 .pagination-controls span {
     font-weight: bold;
+}
+
+.button-container {
+    display: flex;
+    gap: 5px;
+}
+
+.search-create select {
+    padding: 8px;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    margin-right: 10px;
 }
