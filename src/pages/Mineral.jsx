@@ -2,30 +2,30 @@ import React, { useEffect, useState } from "react";
 import PageLayout from "../components/PageLayout";
 import '../styles/Main.css'
 import TableComponent from "../components/TableComponent";
-import FosilFormModal from "../components/modalForms/FosilModalForm";
+import MineralFormModal from "../components/modalForms/MineralModalForm";
 import api from '../services/api';
 
-const Fosil = ({ setAuth }) => {
+const Mineral = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
 
-  const [fosiles, setFosiles] = useState([]);
+  const [minerales, setMinerales] = useState([]);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
-  const [currentFosil, setCurrentFosil] = useState(null);
+  const [currentMineral, setCurrentMineral] = useState(null);
 
   useEffect(() => {
-    document.title = "Gestion Fosiles";
+    document.title = "Gestion Minerales";
     fetchData();
   }, []);
 
   //Funcion crear
   const handleCreate = () => {
-    setCurrentFosil(null);
+    setCurrentMineral(null);
     setIsFormModalOpen(true);
   };
 
   //Funcion actualizar
   const handleUpdate = (row) => {
-    setCurrentFosil(row);
+    setCurrentMineral(row);
     setIsFormModalOpen(true);
   };
 
@@ -33,8 +33,8 @@ const Fosil = ({ setAuth }) => {
   //Petición obtener los datos
   const fetchData = async () => {
     try {
-      const response = await api.get("/fosil");
-      setFosiles(response.data);
+      const response = await api.get("/mineral");
+      setMinerales(response.data);
     } catch (err) {
       if (err.response && err.response.data && err.response.data.error) {
         alert(err.response.data.error);
@@ -55,20 +55,20 @@ const Fosil = ({ setAuth }) => {
         }
       });
 
-      if (currentFosil) {
-        await api.put(`/fosil/${currentFosil.ID_FOSIL}`, formData, {
+      if (currentMineral) {
+        await api.put(`/mineral/${currentMineral.ID_MINERAL}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert(`El fósil con ID: ${currentFosil.ID_FOSIL} ha sido actualizado.`);
+        alert(`El mineral con ID: ${currentMineral.ID_MINERAL} ha sido actualizado.`);
       } else {
-        await api.post(`/fosil`, formData, {
+        await api.post(`/mineral`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert("Nuevo fosil añadido exitosamente.");
+        alert("Nuevo mineral añadido exitosamente.");
       }
       setIsFormModalOpen(false);
       fetchData();
@@ -83,10 +83,10 @@ const Fosil = ({ setAuth }) => {
 
   //Petición para eliminar los datos
   const handleDelete = async (row) => {
-    if (window.confirm(`¿Estás seguro de que quieres eliminar el fósil con ID: ${row.ID_FOSIL}?`)) {
+    if (window.confirm(`¿Estás seguro de que quieres eliminar el mineral con ID: ${row.ID_MINERAL}?`)) {
       try {
-        await api.delete(`/fosil/${row.ID_FOSIL}`);
-        alert(`El fósil con ID: ${row.ID_FOSIL} ha sido eliminado.`);
+        await api.delete(`/mineral/${row.ID_MINERAL}`);
+        alert(`El mineral con ID: ${row.ID_MINERAL} ha sido eliminado.`);
         fetchData();
       } catch (err) {
         if (err.response && err.response.data && err.response.data.error) {
@@ -100,10 +100,10 @@ const Fosil = ({ setAuth }) => {
 
   //Petición para eliminar la imagen
   const handleDeleteImage = async (row) => {
-    if (window.confirm(`¿Estás seguro de que quieres eliminar la imagen del fósil con ID: ${row.ID_FOSIL}?`)) {
+    if (window.confirm(`¿Estás seguro de que quieres eliminar la imagen del mineral con ID: ${row.ID_MINERAL}?`)) {
       try {
-        await api.delete(`/fosil/${row.ID_FOSIL}/image`);
-        alert(`La imagen del fósil con ID: ${row.ID_FOSIL} ha sido eliminado.`);
+        await api.delete(`/mineral/${row.ID_MINERAL}/image`);
+        alert(`La imagen del mineral con ID: ${row.ID_MINERAL} ha sido eliminado.`);
         fetchData();
       } catch (err) {
         if (err.response && err.response.data && err.response.data.error) {
@@ -117,39 +117,37 @@ const Fosil = ({ setAuth }) => {
 
   //Arreglo de columnas a visualizar en la pagina
   const columns = [
-    "ID_FOSIL",
+    "ID_MINERAL",
     "COLECCION",
-    "FILO",
-    "CLASE",
-    "NOMBRE_FOSIL",
-    "COLECTOR",
-    "LOCALIDAD",
-    "VITRINA",
-    "BANDEJA",
+    "NOMBRE_MINERAL",
+    "GRUPO_MINERALOGICO",
+    "REGION",
+    "CARACTERISTICAS",
+    "UBICACION",
     "FOTO",
   ];
 
   return (
     <PageLayout username={username} setAuth={setAuth}>
       <div className="main">
-        <h2>Gestión de Fósiles</h2>
+        <h2>Gestión de Minerales</h2>
         <TableComponent
           columns={columns}
-          data={fosiles}
+          data={minerales}
           onCreate={handleCreate}
           onUpdate={handleUpdate}
           onDeleteImage={handleDeleteImage}
           onDelete={handleDelete}
         />
       </div>
-      <FosilFormModal
+      <MineralFormModal
         isOpen={isFormModalOpen}
         closeModal={() => setIsFormModalOpen(false)}
-        fosilData={currentFosil}
+        mineralData={currentMineral}
         onSave={handleSaveUpdate}
       />
     </PageLayout>
   );
 };
 
-export default Fosil;
+export default Mineral;

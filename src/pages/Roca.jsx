@@ -2,30 +2,30 @@ import React, { useEffect, useState } from "react";
 import PageLayout from "../components/PageLayout";
 import '../styles/Main.css'
 import TableComponent from "../components/TableComponent";
-import FosilFormModal from "../components/modalForms/FosilModalForm";
+import RocaFormModal from "../components/modalForms/RocaModalForm";
 import api from '../services/api';
 
-const Fosil = ({ setAuth }) => {
+const Roca = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
 
-  const [fosiles, setFosiles] = useState([]);
+  const [rocas, setRocas] = useState([]);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
-  const [currentFosil, setCurrentFosil] = useState(null);
+  const [currentRocas, setCurrentRocas] = useState(null);
 
   useEffect(() => {
-    document.title = "Gestion Fosiles";
+    document.title = "Gestion Rocas";
     fetchData();
   }, []);
 
   //Funcion crear
   const handleCreate = () => {
-    setCurrentFosil(null);
+    setCurrentRocas(null);
     setIsFormModalOpen(true);
   };
 
   //Funcion actualizar
   const handleUpdate = (row) => {
-    setCurrentFosil(row);
+    setCurrentRocas(row);
     setIsFormModalOpen(true);
   };
 
@@ -33,8 +33,8 @@ const Fosil = ({ setAuth }) => {
   //Petición obtener los datos
   const fetchData = async () => {
     try {
-      const response = await api.get("/fosil");
-      setFosiles(response.data);
+      const response = await api.get("/roca");
+      setRocas(response.data);
     } catch (err) {
       if (err.response && err.response.data && err.response.data.error) {
         alert(err.response.data.error);
@@ -55,20 +55,20 @@ const Fosil = ({ setAuth }) => {
         }
       });
 
-      if (currentFosil) {
-        await api.put(`/fosil/${currentFosil.ID_FOSIL}`, formData, {
+      if (currentRocas) {
+        await api.put(`/roca/${currentRocas.ID_ROCA}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert(`El fósil con ID: ${currentFosil.ID_FOSIL} ha sido actualizado.`);
+        alert(`La roca con ID: ${currentRocas.ID_ROCA} ha sido actualizado.`);
       } else {
-        await api.post(`/fosil`, formData, {
+        await api.post(`/roca`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert("Nuevo fosil añadido exitosamente.");
+        alert("Nueva roca añadida exitosamente.");
       }
       setIsFormModalOpen(false);
       fetchData();
@@ -83,10 +83,10 @@ const Fosil = ({ setAuth }) => {
 
   //Petición para eliminar los datos
   const handleDelete = async (row) => {
-    if (window.confirm(`¿Estás seguro de que quieres eliminar el fósil con ID: ${row.ID_FOSIL}?`)) {
+    if (window.confirm(`¿Estás seguro de que quieres eliminar la roca con ID: ${row.ID_ROCA}?`)) {
       try {
-        await api.delete(`/fosil/${row.ID_FOSIL}`);
-        alert(`El fósil con ID: ${row.ID_FOSIL} ha sido eliminado.`);
+        await api.delete(`/roca/${row.ID_ROCA}`);
+        alert(`La roca con ID: ${row.ID_ROCA} ha sido eliminado.`);
         fetchData();
       } catch (err) {
         if (err.response && err.response.data && err.response.data.error) {
@@ -100,10 +100,10 @@ const Fosil = ({ setAuth }) => {
 
   //Petición para eliminar la imagen
   const handleDeleteImage = async (row) => {
-    if (window.confirm(`¿Estás seguro de que quieres eliminar la imagen del fósil con ID: ${row.ID_FOSIL}?`)) {
+    if (window.confirm(`¿Estás seguro de que quieres eliminar la imagen de la roca con ID: ${row.ID_ROCA}?`)) {
       try {
-        await api.delete(`/fosil/${row.ID_FOSIL}/image`);
-        alert(`La imagen del fósil con ID: ${row.ID_FOSIL} ha sido eliminado.`);
+        await api.delete(`/roca/${row.ID_ROCA}/image`);
+        alert(`La imagen de la roca con ID: ${row.ID_ROCA} ha sido eliminado.`);
         fetchData();
       } catch (err) {
         if (err.response && err.response.data && err.response.data.error) {
@@ -117,39 +117,38 @@ const Fosil = ({ setAuth }) => {
 
   //Arreglo de columnas a visualizar en la pagina
   const columns = [
-    "ID_FOSIL",
+    "ID_ROCA",
+    "TIPO",
     "COLECCION",
-    "FILO",
-    "CLASE",
-    "NOMBRE_FOSIL",
-    "COLECTOR",
-    "LOCALIDAD",
-    "VITRINA",
-    "BANDEJA",
+    "NOMBRE_PIEZA",
+    "DEPARTAMENTO",
+    "MUNICIPIO",
+    "OBSERVACIONES",
+    "UBICACION",
     "FOTO",
   ];
 
   return (
     <PageLayout username={username} setAuth={setAuth}>
       <div className="main">
-        <h2>Gestión de Fósiles</h2>
+        <h2>Gestión de Rocas</h2>
         <TableComponent
           columns={columns}
-          data={fosiles}
+          data={rocas}
           onCreate={handleCreate}
           onUpdate={handleUpdate}
           onDeleteImage={handleDeleteImage}
           onDelete={handleDelete}
         />
       </div>
-      <FosilFormModal
+      <RocaFormModal
         isOpen={isFormModalOpen}
         closeModal={() => setIsFormModalOpen(false)}
-        fosilData={currentFosil}
+        rocaData={currentRocas}
         onSave={handleSaveUpdate}
       />
     </PageLayout>
   );
 };
 
-export default Fosil;
+export default Roca;

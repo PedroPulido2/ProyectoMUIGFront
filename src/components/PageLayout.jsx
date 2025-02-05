@@ -29,16 +29,16 @@ const PageLayout = ({ username, setAuth, children }) => {
                         <Link to="/home"><span className="material-symbols-outlined">Home</span>Inicio</Link>
                     </li>
                     <li>
-                        <Link to="/fosil"><span className="material-symbols-outlined">Plagiarism</span>Fosil</Link>
+                        <Link to="/fosil"><span className="material-symbols-outlined">skull</span>Fosil</Link>
                     </li>
                     <li>
-                        <Link to="#"><span className="material-symbols-outlined">Plagiarism</span>Mineral</Link>
+                        <Link to="/mineral"><span className="material-symbols-outlined">diamond</span>Mineral</Link>
                     </li>
                     <li>
-                        <Link to="#"><span className="material-symbols-outlined">Plagiarism</span>Roca</Link>
+                        <Link to="/roca"><span className="material-symbols-outlined">terrain</span>Roca</Link>
                     </li>
                     <li>
-                        <Link to="#"><span className="material-symbols-outlined">Plagiarism</span>Investigación</Link>
+                        <Link to="/investigacion"><span className="material-symbols-outlined">science</span>Investigación</Link>
                     </li>
                     <h4>
                         <span>Cuenta</span>

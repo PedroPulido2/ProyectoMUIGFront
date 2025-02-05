@@ -2,30 +2,30 @@ import React, { useEffect, useState } from "react";
 import PageLayout from "../components/PageLayout";
 import '../styles/Main.css'
 import TableComponent from "../components/TableComponent";
-import FosilFormModal from "../components/modalForms/FosilModalForm";
+import InvestigacionFormModal from "../components/modalForms/InvestigacionModalForm";
 import api from '../services/api';
 
-const Fosil = ({ setAuth }) => {
+const Investigacion = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
 
-  const [fosiles, setFosiles] = useState([]);
+  const [investigacion, setInvestigacion] = useState([]);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
-  const [currentFosil, setCurrentFosil] = useState(null);
+  const [currentInvestigacion, setCurrentInvestigacion] = useState(null);
 
   useEffect(() => {
-    document.title = "Gestion Fosiles";
+    document.title = "Gestion Investigación";
     fetchData();
   }, []);
 
   //Funcion crear
   const handleCreate = () => {
-    setCurrentFosil(null);
+    setCurrentInvestigacion(null);
     setIsFormModalOpen(true);
   };
 
   //Funcion actualizar
   const handleUpdate = (row) => {
-    setCurrentFosil(row);
+    setCurrentInvestigacion(row);
     setIsFormModalOpen(true);
   };
 
@@ -33,8 +33,8 @@ const Fosil = ({ setAuth }) => {
   //Petición obtener los datos
   const fetchData = async () => {
     try {
-      const response = await api.get("/fosil");
-      setFosiles(response.data);
+      const response = await api.get("/investigacion");
+      setInvestigacion(response.data);
     } catch (err) {
       if (err.response && err.response.data && err.response.data.error) {
         alert(err.response.data.error);
@@ -55,20 +55,20 @@ const Fosil = ({ setAuth }) => {
         }
       });
 
-      if (currentFosil) {
-        await api.put(`/fosil/${currentFosil.ID_FOSIL}`, formData, {
+      if (currentInvestigacion) {
+        await api.put(`/investigacion/${currentInvestigacion.ID_PIEZA}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert(`El fósil con ID: ${currentFosil.ID_FOSIL} ha sido actualizado.`);
+        alert(`La investigación con ID: ${currentInvestigacion.ID_PIEZA} ha sido actualizado.`);
       } else {
-        await api.post(`/fosil`, formData, {
+        await api.post(`/investigacion`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert("Nuevo fosil añadido exitosamente.");
+        alert("Nueva investigación añadido exitosamente.");
       }
       setIsFormModalOpen(false);
       fetchData();
@@ -83,10 +83,10 @@ const Fosil = ({ setAuth }) => {
 
   //Petición para eliminar los datos
   const handleDelete = async (row) => {
-    if (window.confirm(`¿Estás seguro de que quieres eliminar el fósil con ID: ${row.ID_FOSIL}?`)) {
+    if (window.confirm(`¿Estás seguro de que quieres eliminar la investigación con ID: ${row.ID_PIEZA}?`)) {
       try {
-        await api.delete(`/fosil/${row.ID_FOSIL}`);
-        alert(`El fósil con ID: ${row.ID_FOSIL} ha sido eliminado.`);
+        await api.delete(`/investigacion/${row.ID_PIEZA}`);
+        alert(`La investigación con ID: ${row.ID_PIEZA} ha sido eliminado.`);
         fetchData();
       } catch (err) {
         if (err.response && err.response.data && err.response.data.error) {
@@ -100,10 +100,10 @@ const Fosil = ({ setAuth }) => {
 
   //Petición para eliminar la imagen
   const handleDeleteImage = async (row) => {
-    if (window.confirm(`¿Estás seguro de que quieres eliminar la imagen del fósil con ID: ${row.ID_FOSIL}?`)) {
+    if (window.confirm(`¿Estás seguro de que quieres eliminar la imagen de la investigación con ID: ${row.ID_PIEZA}?`)) {
       try {
-        await api.delete(`/fosil/${row.ID_FOSIL}/image`);
-        alert(`La imagen del fósil con ID: ${row.ID_FOSIL} ha sido eliminado.`);
+        await api.delete(`/investigacion/${row.ID_PIEZA}/image`);
+        alert(`La imagen de la investigación con ID: ${row.ID_PIEZA} ha sido eliminado.`);
         fetchData();
       } catch (err) {
         if (err.response && err.response.data && err.response.data.error) {
@@ -117,39 +117,38 @@ const Fosil = ({ setAuth }) => {
 
   //Arreglo de columnas a visualizar en la pagina
   const columns = [
-    "ID_FOSIL",
-    "COLECCION",
+    "ID_PIEZA",
+    "REPOSITORIO",
     "FILO",
-    "CLASE",
-    "NOMBRE_FOSIL",
+    "GENERO",
+    "NOMBRE",
+    "PERIODO_GEOLOGICO",
     "COLECTOR",
     "LOCALIDAD",
-    "VITRINA",
-    "BANDEJA",
     "FOTO",
   ];
 
   return (
     <PageLayout username={username} setAuth={setAuth}>
       <div className="main">
-        <h2>Gestión de Fósiles</h2>
+        <h2>Gestión de investigación</h2>
         <TableComponent
           columns={columns}
-          data={fosiles}
+          data={investigacion}
           onCreate={handleCreate}
           onUpdate={handleUpdate}
           onDeleteImage={handleDeleteImage}
           onDelete={handleDelete}
         />
       </div>
-      <FosilFormModal
+      <InvestigacionFormModal
         isOpen={isFormModalOpen}
         closeModal={() => setIsFormModalOpen(false)}
-        fosilData={currentFosil}
+        investigacionData={currentInvestigacion}
         onSave={handleSaveUpdate}
       />
     </PageLayout>
   );
 };
 
-export default Fosil;
+export default Investigacion;

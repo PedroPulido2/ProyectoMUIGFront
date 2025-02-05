@@ -5,6 +5,9 @@ import Success from './pages/Success';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Fosil from './pages/Fosil';
+import Mineral from './pages/Mineral';
+import Roca from './pages/Roca';
+import Investigacion from './pages/Investigacion';
 
 function App() {
   // Obtener el estado inicial desde localStorage
@@ -41,6 +44,27 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Fosil setAuth={handleAuthChange} />
+            </ProtectedRoute>}
+        />
+        <Route
+          path="/mineral"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Mineral setAuth={handleAuthChange} />
+            </ProtectedRoute>}
+        />
+        <Route
+          path="/roca"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Roca setAuth={handleAuthChange} />
+            </ProtectedRoute>}
+        />
+        <Route
+          path="/investigacion"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Investigacion setAuth={handleAuthChange} />
             </ProtectedRoute>}
         />
       </Routes>

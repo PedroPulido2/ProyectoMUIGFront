@@ -1,5 +1,6 @@
 .table-container {
     width: 100%;
+    max-width: 100%;
     overflow-x: auto;
 }
 
@@ -41,6 +42,7 @@ td {
     border: 1px solid #ddd;
     text-align: left;
     padding: 8px;
+    overflow: hidden;
 }
 
 th {

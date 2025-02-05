@@ -1,59 +1,49 @@
 import React, { useEffect, useState } from "react";
-import '../styles/FosilFormModal.css';
+import '../../styles/FormModal.css';
 
-const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
+const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
     const [formData, setFormData] = useState({
-        "ID_FOSIL": "",
+        "ID_ROCA": "",
         "N_BARRANTES": "",
+        "OTROS": "",
+        "BD_C_VARGAS": "",
+        "TIPO": "",
         "COLECCION": "",
-        "UBICACION": "",
-        "FILO": "",
-        "SUBFILO": "",
-        "CLASE": "",
-        "ORDEN": "",
-        "FAMILIA": "",
-        "GENERO": "",
-        "NOMBRE_FOSIL": "",
-        "PARTES": "",
-        "TIEMPO_GEOLOGICO": "",
-        "COLECTOR": "",
-        "LOCALIDAD": "",
-        "VITRINA": "",
-        "BANDEJA": "",
+        "NOMBRE_PIEZA": "",
+        "DEPARTAMENTO": "",
+        "MUNICIPIO": "",
+        "COLECTOR_DONADOR": "",
+        "CARACTERISTICAS": "",
         "OBSERVACIONES": "",
+        "UBICACION": "",
         "FOTO": null
     });
 
     useEffect(() => {
-        if (fosilData) {
+        if (rocaData) {
             setFormData({
-                ...fosilData,
+                ...rocaData,
                 FOTO: null
             });
         } else {
             setFormData({
-                "ID_FOSIL": "",
+                "ID_ROCA": "",
                 "N_BARRANTES": "",
+                "OTROS": "",
+                "BD_C_VARGAS": "",
+                "TIPO": "",
                 "COLECCION": "",
-                "UBICACION": "",
-                "FILO": "",
-                "SUBFILO": "",
-                "CLASE": "",
-                "ORDEN": "",
-                "FAMILIA": "",
-                "GENERO": "",
-                "NOMBRE_FOSIL": "",
-                "PARTES": "",
-                "TIEMPO_GEOLOGICO": "",
-                "COLECTOR": "",
-                "LOCALIDAD": "",
-                "VITRINA": "",
-                "BANDEJA": "",
+                "NOMBRE_PIEZA": "",
+                "DEPARTAMENTO": "",
+                "MUNICIPIO": "",
+                "COLECTOR_DONADOR": "",
+                "CARACTERISTICAS": "",
                 "OBSERVACIONES": "",
+                "UBICACION": "",
                 "FOTO": null
             });
         }
-    }, [fosilData]);
+    }, [rocaData]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -86,15 +76,16 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
                     <span className="close-form" onClick={closeModal}>
                         &times;
                     </span>
-                    <h3>{fosilData ? "Editar Fósil" : "Añadir Fósil"}</h3>
+                    <h3>{rocaData ? "Editar Roca" : "Añadir Roca"}</h3>
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
-                            <label>ID Fosil:</label>
+                            <label>ID roca:</label>
                             <input
                                 type="text"
-                                name="ID_FOSIL"
-                                value={formData.ID_FOSIL}
+                                name="ID_ROCA"
+                                value={formData.ID_ROCA}
                                 onChange={handleChange}
+                                required
                             //disabled={fosilData} // No editable para edición
                             />
                         </div>
@@ -108,6 +99,33 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
                             />
                         </div>
                         <div className="form-group">
+                            <label>Otros:</label>
+                            <input
+                                type="text"
+                                name="OTROS"
+                                value={formData.OTROS}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>BD_C_VARGAS:</label>
+                            <input
+                                type="text"
+                                name="BD_C_VARGAS"
+                                value={formData.BD_C_VARGAS}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Tipo:</label>
+                            <input
+                                type="text"
+                                name="TIPO"
+                                value={formData.TIPO}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="form-group">
                             <label>Colección:</label>
                             <input
                                 type="text"
@@ -117,111 +135,48 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Filo:</label>
+                            <label>Nombre de la Pieza:</label>
                             <input
                                 type="text"
-                                name="FILO"
-                                value={formData.FILO}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>SubFilo:</label>
-                            <input
-                                type="text"
-                                name="SUBFILO"
-                                value={formData.SUBFILO}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Clase:</label>
-                            <input
-                                type="text"
-                                name="CLASE"
-                                value={formData.CLASE}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Orden:</label>
-                            <input
-                                type="text"
-                                name="FAMILIA"
-                                value={formData.FAMILIA}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Genero:</label>
-                            <input
-                                type="text"
-                                name="GENERO"
-                                value={formData.GENERO}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Nombre Fosil:</label>
-                            <input
-                                type="text"
-                                name="NOMBRE_FOSIL"
-                                value={formData.NOMBRE_FOSIL}
+                                name="NOMBRE_PIEZA"
+                                value={formData.NOMBRE_PIEZA}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
                         <div className="form-group">
-                            <label>Partes:</label>
+                            <label>Departamento:</label>
                             <input
                                 type="text"
-                                name="PARTES"
-                                value={formData.PARTES}
+                                name="DEPARTAMENTO"
+                                value={formData.DEPARTAMENTO}
                                 onChange={handleChange}
                             />
                         </div>
                         <div className="form-group">
-                            <label>Tiempo Geológico:</label>
+                            <label>Municipio:</label>
                             <input
                                 type="text"
-                                name="TIEMPO_GEOLOGICO"
-                                value={formData.TIEMPO_GEOLOGICO}
+                                name="MUNICIPIO"
+                                value={formData.MUNICIPIO}
                                 onChange={handleChange}
                             />
                         </div>
                         <div className="form-group">
-                            <label>Colector:</label>
+                            <label>Colector o Donador:</label>
                             <input
                                 type="text"
-                                name="COLECTOR"
-                                value={formData.COLECTOR}
+                                name="COLECTOR_DONADOR"
+                                value={formData.COLECTOR_DONADOR}
                                 onChange={handleChange}
                             />
                         </div>
                         <div className="form-group">
-                            <label>Localidad:</label>
+                            <label>Caracteristicas:</label>
                             <input
                                 type="text"
-                                name="LOCALIDAD"
-                                value={formData.LOCALIDAD}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Vitrina:</label>
-                            <input
-                                type="text"
-                                name="VITRINA"
-                                value={formData.VITRINA}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Bandeja:</label>
-                            <input
-                                type="text"
-                                name="BANDEJA"
-                                value={formData.BANDEJA}
+                                name="CARACTERISTICAS"
+                                value={formData.CARACTERISTICAS}
                                 onChange={handleChange}
                             />
                         </div>
@@ -234,7 +189,15 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
                                 onChange={handleChange}
                             />
                         </div>
-                        {/* Agrega los demás campos aquí de manera similar */}
+                        <div className="form-group">
+                            <label>Ubicación:</label>
+                            <input
+                                type="text"
+                                name="UBICACION"
+                                value={formData.UBICACION}
+                                onChange={handleChange}
+                            />
+                        </div>
                         <div className="form-group">
                             <label>Foto:</label>
                             <input
@@ -245,7 +208,7 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
                             />
                         </div>
                         <button type="submit" className="save-button">
-                            {fosilData ? "Actualizar" : "Guardar"}
+                            {rocaData ? "Actualizar" : "Guardar"}
                         </button>
                     </form>
                 </div>
@@ -254,4 +217,4 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
     );
 };
 
-export default FosilFormModal;
+export default RocaFormModal;

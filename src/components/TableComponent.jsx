@@ -67,9 +67,11 @@ const TableComponent = ({
                         value={selectedColumn}
                         onChange={(e) => setSelectedColumn(e.target.value)}
                     >
-                        {columns.map((col, index) => (
-                            <option key={index} value={col}>{col}</option>
-                        ))}
+                        {columns
+                            .filter(col => col !== "FOTO")
+                            .map((col, index) => (
+                                <option key={index} value={col}>{col}</option>
+                            ))}
                     </select>
 
                     <input
