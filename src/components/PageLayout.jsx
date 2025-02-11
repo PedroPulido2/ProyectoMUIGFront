@@ -45,7 +45,7 @@ const PageLayout = ({ username, setAuth, children }) => {
                         <div className="menu-separator"></div>
                     </h4>
                     <li>
-                        <Link to="#"><span className="material-symbols-outlined">account_circle</span>Perfil</Link>
+                        <Link to="/perfil"><span className="material-symbols-outlined">account_circle</span>Perfil</Link>
                     </li>
                     <li>
                         <Link to="#"><span className="material-symbols-outlined">settings</span>Configuración</Link>

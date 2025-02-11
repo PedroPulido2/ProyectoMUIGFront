@@ -8,6 +8,7 @@ import Fosil from './pages/Fosil';
 import Mineral from './pages/Mineral';
 import Roca from './pages/Roca';
 import Investigacion from './pages/Investigacion';
+import Perfil from './pages/Perfil';
 
 function App() {
   // Obtener el estado inicial desde localStorage
@@ -65,6 +66,13 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Investigacion setAuth={handleAuthChange} />
+            </ProtectedRoute>}
+        />
+        <Route
+          path="/perfil"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Perfil setAuth={handleAuthChange} />
             </ProtectedRoute>}
         />
       </Routes>
