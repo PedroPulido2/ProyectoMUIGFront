@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import { jwtDecode } from 'jwt-decode';
 import '../styles/Login.css';
 
 const Login = ({ setAuth }) => { // Recibimos setAuth como prop
@@ -21,7 +22,17 @@ const Login = ({ setAuth }) => { // Recibimos setAuth como prop
             const response = await api.post('/login/auth', { user, password });
             if (response.status === 200) {
                 alert(response.data.message); // Mensaje de éxito
-                localStorage.setItem('username', response.data.user);
+
+                const token = response.data.token;
+
+                const decoded = jwtDecode(token);
+
+                localStorage.setItem('token',token);
+                localStorage.setItem('id_Perfil', decoded.id_Perfil);
+                localStorage.setItem('username', user);
+                localStorage.setItem('isAdmin', decoded.isAdmin);
+                localStorage.setItem('urlFotoProfile', decoded.foto);
+
                 setAuth(true); // Actualizar estado global y localStorage
                 navigate('/home'); // Redirigir a página protegida
             }
@@ -61,6 +72,7 @@ const Login = ({ setAuth }) => { // Recibimos setAuth como prop
                             required
                         />
                     </div>
+                    <br />
                     {error && <p className="error-message">{error}</p>}
                     <button type="submit" className="login-button">Ingresar</button>
                 </form>

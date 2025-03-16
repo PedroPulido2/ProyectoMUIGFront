@@ -115,6 +115,23 @@ const Roca = ({ setAuth }) => {
     }
   };
 
+  const allColums = [
+    "ID_ROCA",
+    "N_BARRANTES",
+    "OTROS",
+    "BD_C_VARGAS",
+    "TIPO",
+    "COLECCION",
+    "NOMBRE_PIEZA",
+    "DEPARTAMENTO",
+    "MUNICIPIO",
+    "COLECTOR_DONADOR",
+    "CARACTERISTICAS",
+    "OBSERVACIONES",
+    "UBICACION",
+    "FOTO",
+  ];
+
   //Arreglo de columnas a visualizar en la pagina
   const columns = [
     "ID_ROCA",
@@ -133,6 +150,7 @@ const Roca = ({ setAuth }) => {
       <div className="main">
         <h2>Gestión de Rocas</h2>
         <TableComponent
+          allColumns={allColums}
           columns={columns}
           data={rocas}
           onCreate={handleCreate}

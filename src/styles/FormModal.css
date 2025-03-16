@@ -95,3 +95,87 @@ form {
   background: linear-gradient(135deg, #218838, #1e7e34);
   transform: scale(1.05);
 }
+
+/* Estilos personalizados para el select */
+.styled-select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  outline: none;
+  cursor: pointer;
+  appearance: none; /* Quita la apariencia predeterminada del sistema */
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Cambia el borde al pasar el mouse */
+.styled-select:hover {
+  border-color: #218838;
+}
+
+/* Efecto cuando el usuario hace clic en el select */
+.styled-select:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+}
+
+/* Agregar una flecha personalizada al select */
+.styled-select {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23218838" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+  padding-right: 35px; /* Espacio para la flecha */
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+
+/*Decoracion para modal ChPassword*/
+.password-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.password-container input {
+  flex: 1;
+  padding-right: 60px;
+}
+
+.password-container button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-success {
+  color: green;
+  margin-left: 5px;
+}
+
+.icon-error {
+  color: red;
+  margin-left: 5px;
+}
+
+.password-container .validation-icon {
+  position: absolute;
+  right: 40px; /* Separa el check/cross del botón del ojo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

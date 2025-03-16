@@ -47,7 +47,8 @@ td {
 
 th {
     text-align: center;
-    background-color: #1e86b6;
+    color: white;
+    background-color: #06437c;
     font-weight: bold;
 }
 
@@ -62,39 +63,39 @@ tr:hover {
 .update-button,
 .delete-button,
 .delete-image-button {
+    border: 1px solid black;
     padding: 5px 10px;
     margin: 0 5px;
-    border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 12px;
 }
 
 .delete-image-button {
-    background-color: #e33a3a;
+    background-color: white;
     color: black;
 }
 
 .delete-image-button:hover {
-    background-color: #ca4f4f;
+    background-color: #c51e1b;
 }
 
 .update-button {
-    background-color: #fff200;
+    background-color: white;
     color: black;
 }
 
 .update-button:hover {
-    background-color: #d8cb0e;
+    background-color: #f6e721;
 }
 
 .delete-button {
-    background-color: #ff2919;
+    background-color: white;
     color: black;
 }
 
 .delete-button:hover {
-    background-color: #c41917;
+    background-color: #c51e1b;
 }
 
 .search-create {

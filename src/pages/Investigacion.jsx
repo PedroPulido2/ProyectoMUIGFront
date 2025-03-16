@@ -115,6 +115,27 @@ const Investigacion = ({ setAuth }) => {
     }
   };
 
+  const allColumns = [
+    "ID_PIEZA",
+    "COLECCION",
+    "REPOSITORIO",
+    "FILO",
+    "SUBFILO",
+    "CLASE",
+    "ORDEN",
+    "FAMILIA",
+    "GENERO",
+    "NOMBRE",
+    "PERIODO_GEOLOGICO",
+    "ERA_GEOLOGICA",
+    "FORMACION_GEOLOGICA",
+    "SECCION_ESTRATIGRAFICA",
+    "COLECTOR",
+    "LOCALIDAD",
+    "OBSERVACIONES",
+    "FOTO",
+  ];
+
   //Arreglo de columnas a visualizar en la pagina
   const columns = [
     "ID_PIEZA",
@@ -133,6 +154,7 @@ const Investigacion = ({ setAuth }) => {
       <div className="main">
         <h2>Gestión de investigación</h2>
         <TableComponent
+          allColumns={allColumns}
           columns={columns}
           data={investigacion}
           onCreate={handleCreate}

@@ -6,6 +6,7 @@ import ErrorImage from '../styles/images/Error-imagen.jpg'
 import ImageModal from "./ImageModal";
 
 const TableComponent = ({
+    allColumns, //Array de todas las columnas
     columns,  //Array de nombres de las columnas
     data,     //Array de datos de la tabla
     onCreate, //Funcion para el boton Crear
@@ -17,7 +18,7 @@ const TableComponent = ({
     const [isOpen, setIsOpen] = useState(false);
     const [imageSrc, setImageSrc] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
-    const [selectedColumn, setSelectedColumn] = useState(columns[0]);
+    const [selectedColumn, setSelectedColumn] = useState(allColumns[0]);
 
     //PAGINACION
     const rowsPerPage = 10;
@@ -67,7 +68,7 @@ const TableComponent = ({
                         value={selectedColumn}
                         onChange={(e) => setSelectedColumn(e.target.value)}
                     >
-                        {columns
+                        {allColumns
                             .filter(col => col !== "FOTO")
                             .map((col, index) => (
                                 <option key={index} value={col}>{col}</option>
@@ -105,15 +106,15 @@ const TableComponent = ({
                                             {row[col] && row[col].toString().startsWith("http") ? (
                                                 <LazyLoadImage
                                                     effect="blur"
-                                                    src={row[col]}
+                                                    src={`${import.meta.env.VITE_URL_BACK}/imagen/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`}
                                                     className="table-image"
                                                     threshold={300}
                                                     onError={(e) => (e.target.src = ErrorImage)}
                                                     onClick={(e) => {
                                                         e.stopPropagation();
-                                                        openModal(row[col]);
+                                                        openModal(`${import.meta.env.VITE_URL_BACK}/imagen/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`);
                                                     }}
-                                                />
+                                                />   
                                             ) : (
                                                 row[col] || "N/A"
                                             )}

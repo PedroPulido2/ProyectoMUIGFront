@@ -19,7 +19,6 @@ const Home = ({ setAuth }) => {
 
   const handleModuleSelection = (module) => {
     setSelectedModule(module);
-    console.log(module)
     navigate(`/${module}`);
   };
 

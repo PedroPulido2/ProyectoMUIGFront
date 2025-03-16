@@ -115,6 +115,23 @@ const Mineral = ({ setAuth }) => {
     }
   };
 
+  const allColumns = [
+    "ID_MINERAL",
+    "N_BARRANTES",
+    "COLECCION",
+    "NOMBRE_MINERAL",
+    "CANTIDAD",
+    "GRUPO_MINERALOGICO",
+    "REGION",
+    "SUBGRUPO",
+    "COMPOSICION",
+    "CARACTERISTICAS",
+    "COLECTOR",
+    "OBSERVACIONES",
+    "UBICACION",
+    "FOTO",
+  ];
+
   //Arreglo de columnas a visualizar en la pagina
   const columns = [
     "ID_MINERAL",
@@ -132,6 +149,7 @@ const Mineral = ({ setAuth }) => {
       <div className="main">
         <h2>Gestión de Minerales</h2>
         <TableComponent
+          allColumns={allColumns}
           columns={columns}
           data={minerales}
           onCreate={handleCreate}

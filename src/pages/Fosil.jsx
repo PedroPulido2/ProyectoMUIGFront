@@ -115,6 +115,27 @@ const Fosil = ({ setAuth }) => {
     }
   };
 
+  const allColumns = [
+    "ID_FOSIL",
+    "N_BARRANTES",
+    "COLECCION",
+    "UBICACION",
+    "FILO",
+    "SUBFILO",
+    "CLASE",
+    "ORDEN",
+    "FAMILIA",
+    "GENERO",
+    "NOMBRE_FOSIL",
+    "PARTES",
+    "TIEMPO_GEOLOGICO",
+    "COLECTOR",
+    "LOCALIDAD",
+    "VITRINA",
+    "BANDEJA",
+    "OBSERVACIONES",
+  ];
+
   //Arreglo de columnas a visualizar en la pagina
   const columns = [
     "ID_FOSIL",
@@ -134,6 +155,7 @@ const Fosil = ({ setAuth }) => {
       <div className="main">
         <h2>Gestión de Fósiles</h2>
         <TableComponent
+          allColumns={allColumns}
           columns={columns}
           data={fosiles}
           onCreate={handleCreate}

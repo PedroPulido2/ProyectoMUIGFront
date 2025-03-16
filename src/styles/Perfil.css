@@ -1,33 +1,107 @@
 .infPerfil {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    background: #f8f9fa;
+    background: #ffffff;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.info-container {
-    display: flex;
+/* Contenedor de botones flotantes */
+.button-container {
     flex-direction: column;
-    flex: 1;
+
+    display: flex;
+    gap: 10px; /* Espaciado entre los botones */
+    justify-content: center; /* Centrar los botones */
+    margin-bottom: 20px; /* Espaciado inferior */
 }
+
+.button-container button {
+    padding: 10px 15px;
+    font-size: 13px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+/* Botón de editar */
+.edit-button,
+.btn-change-password,
+.btn-delete-account {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.edit-button {
+    background-color: #848f9b;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Botón Cambiar Contraseña */
+.btn-change-password {
+    background-color: #007bff;
+}
+
+.btn-change-password:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Botón Eliminar Cuenta */
+.btn-delete-account {
+    background-color: #ff4d4d;
+}
+
+.btn-delete-account:hover {
+    background-color: #cc0000;
+    transform: scale(1.05);
+}
+
+/* Imagen de perfil */
 .imagen-container {
     position: relative;
     width: 180px;
     height: 180px;
     cursor: pointer;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
 }
+
+.imagen-container:hover {
+    transform: scale(1.05);
+}
+
 .editable-img {
     width: 100%;
     height: 100%;
-    border-radius: 10px;
+    object-fit: cover;
     transition: opacity 0.3s ease;
 }
+
 .imagen-container:hover .editable-img {
-    opacity: 0.7;
+    opacity: 0.8;
 }
+
 .input-file {
     position: absolute;
     top: 0;
@@ -37,34 +111,50 @@
     opacity: 0;
     cursor: pointer;
 }
-.btn-change-password {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
+
+/* Contenedor de información */
+.info-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 10px 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease;
 }
-.btn-change-password:hover {
-    background-color: #0056b3;
-}
-.btn-delete-account {
-    background-color: #ff0000;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-.btn-delete-account:hover {
-    background-color: #b30000;
-}
-@media (max-width: 600px) {
+
+
+/* Diseño responsive */
+@media (max-width: 768px) {
     .infPerfil {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        padding: 15px;
+    }
+
+    .imagen-container {
+        width: 140px;
+        height: 140px;
+    }
+
+    .info-container {
+        width: 100%;
+    }
+
+    .button-container {
+        position: relative;
+        top: 0;
+        right: 0;
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .btn-change-password,
+    .btn-delete-account {
+        width: auto;
     }
 }

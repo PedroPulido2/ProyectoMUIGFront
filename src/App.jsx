@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
-import Success from './pages/Success';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Fosil from './pages/Fosil';
@@ -9,6 +8,8 @@ import Mineral from './pages/Mineral';
 import Roca from './pages/Roca';
 import Investigacion from './pages/Investigacion';
 import Perfil from './pages/Perfil';
+import Config from './pages/Config';
+import Profiles from './pages/Profiles';
 
 function App() {
   // Obtener el estado inicial desde localStorage
@@ -73,6 +74,20 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Perfil setAuth={handleAuthChange} />
+            </ProtectedRoute>}
+        />
+        <Route
+          path="/config"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Config setAuth={handleAuthChange} />
+            </ProtectedRoute>}
+        />
+        <Route
+          path="/profiles"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Profiles setAuth={handleAuthChange} />
             </ProtectedRoute>}
         />
       </Routes>
