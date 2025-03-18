@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { jwtDecode } from 'jwt-decode';
+import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
 import '../styles/Login.css';
 
 const Login = ({ setAuth }) => { // Recibimos setAuth como prop
@@ -13,6 +14,19 @@ const Login = ({ setAuth }) => { // Recibimos setAuth como prop
     useEffect(() => {
         document.title = "Iniciar Sesion";
     }, []);
+
+    const [showPassword, setShowPassword] = useState({
+        current: false,
+        new: false,
+        confirm: false
+    });
+
+    const togglePasswordVisibility = (field) => {
+        setShowPassword(prev => ({
+            ...prev,
+            [field]: !prev[field]
+        }));
+    };
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -27,7 +41,7 @@ const Login = ({ setAuth }) => { // Recibimos setAuth como prop
 
                 const decoded = jwtDecode(token);
 
-                localStorage.setItem('token',token);
+                localStorage.setItem('token', token);
                 localStorage.setItem('id_Perfil', decoded.id_Perfil);
                 localStorage.setItem('username', user);
                 localStorage.setItem('isAdmin', decoded.isAdmin);
@@ -63,14 +77,20 @@ const Login = ({ setAuth }) => { // Recibimos setAuth como prop
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Contraseña:</label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Ingrese su contraseña"
-                            required
-                        />
+                        <div className='password-container'>
+                            <input
+                                type={showPassword.current ? "text" : "password"}
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Ingrese su contraseña"
+                                required
+                            />
+                            <button type="button" onClick={() => togglePasswordVisibility("current")}>
+                                {showPassword.current ? <EyeOff /> : <Eye />}
+                            </button>
+                        </div>
+
                     </div>
                     <br />
                     {error && <p className="error-message">{error}</p>}

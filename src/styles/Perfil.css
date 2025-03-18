@@ -7,10 +7,15 @@
     background: #ffffff;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 /* Contenedor de botones flotantes */
+
+button {
+    transition: all 0.3s ease-in-out;
+}
+
 .button-container {
     flex-direction: column;
 
@@ -27,6 +32,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 /* Botón de editar */
@@ -47,11 +53,11 @@
 }
 
 .edit-button {
-    background-color: #848f9b;
+    background-color: #6c757d;
 }
 
 .edit-button:hover {
-    background-color: #0056b3;
+    background-color: #495057;
     transform: scale(1.05);
 }
 
@@ -61,17 +67,17 @@
 }
 
 .btn-change-password:hover {
-    background-color: #0056b3;
+    background-color: #003d82;
     transform: scale(1.05);
 }
 
 /* Botón Eliminar Cuenta */
 .btn-delete-account {
-    background-color: #ff4d4d;
+    background-color: #dc3545;
 }
 
 .btn-delete-account:hover {
-    background-color: #cc0000;
+    background-color: #c82333;
     transform: scale(1.05);
 }
 

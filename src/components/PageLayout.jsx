@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import '../styles/PageLayout.css';
-import rutaLogo from '../styles/images/logo.png';
+import rutaLogo from '../styles/images/Logo-simuig3.png';
 import { Link } from "react-router-dom";
 import imagenProfileOther from '../styles/images/profile-other.jpg';
 import api from '../services/api';
@@ -40,7 +40,7 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
             <div className="sidebar">
                 <div className="sidebar-header">
                     <img src={rutaLogo} alt="Logo del sistema" />
-                    <h2>Menu</h2>
+                    <h2>Museo Universitario Ingeniería Geológica</h2>
                 </div>
                 <ul className="sidebar-links">
                     <h4>
@@ -63,9 +63,9 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
                         <Link to="/investigacion"><span className="material-symbols-outlined">science</span>Investigación</Link>
                     </li>
 
-                    {isAdmin === 2 ?
+                    {isAdmin === 3 ?
                         <li>
-                            <Link to="/profiles"><span className="material-symbols-outlined">science</span>Administradores</Link>
+                            <Link to="/profiles"><span className="material-symbols-outlined">manage_accounts</span>Perfiles</Link>
                         </li> : <></>
                     }
 
@@ -76,9 +76,17 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
                     <li>
                         <Link to="/perfil"><span className="material-symbols-outlined">account_circle</span>Perfil</Link>
                     </li>
+                    <h4>
+                        <span>Creador</span>
+                        <div className="menu-separator"></div>
+                    </h4>
                     <li>
-                        <Link to="/config"><span className="material-symbols-outlined">settings</span>Configuración</Link>
+                        <Link to="/aboutCreator"><span className="material-symbols-outlined">shield_person</span>Acerca del Creador</Link>
                     </li>
+                    <h4>
+                        <span>Acciones</span>
+                        <div className="menu-separator"></div>
+                    </h4>
                     <li>
                         <button onClick={handleLogout}><span className="material-symbols-outlined">Logout</span>Cerrar Sesión</button>
                     </li>
@@ -88,7 +96,7 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
                         <img src={getProfileImage()} alt="profile-img" />
                         <div className="user-detail">
                             <h3>{username}</h3>
-                            <span>{isAdmin === 2 ? "SuperAdministrador" : isAdmin === 1 ? "Administrador" : "Visitante"}</span>
+                            <span>{isAdmin === 3 ? "Super-Administrador" : isAdmin === 2 ? "Administrador" : "Visitante"}</span>
                         </div>
                     </div>
                 </div>

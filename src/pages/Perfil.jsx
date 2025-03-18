@@ -165,9 +165,9 @@ const Perfil = ({ setAuth }) => {
                                 <p><strong>Correo:</strong> {perfil.correo}</p>
                                 <p><strong>Teléfono:</strong> {perfil.telefono}</p>
                                 <p><strong>Fecha de Creación:</strong> {perfil.fechaCreacion ? new Date(perfil.fechaCreacion).toLocaleDateString() : "No disponible"}</p>
-                                {perfil.isAdmin === 2 ? (
+                                {perfil.isAdmin === 3 ? (
                                     <p><strong>Es SuperAdministrador</strong></p>
-                                ) : perfil.isAdmin === 1 ? (
+                                ) : perfil.isAdmin === 2 ? (
                                     <p><strong>Es Administrador</strong></p>
                                 ) : (
                                     <p><strong>Es Visitante</strong></p>

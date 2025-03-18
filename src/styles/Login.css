@@ -3,7 +3,7 @@
     margin: 0;
     font-family: 'Arial', sans-serif;
     background: linear-gradient(135deg, #6a11cb, #2575fc);
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,9 +56,8 @@ input {
     transition: border-color 0.3s;
 }
 
-input:focus {
-    border-color: #2575fc;
-    outline: none;
+input:focus-visible {
+    outline: 2px solid #2575fc;
 }
 
 /* Botón */
@@ -73,10 +72,12 @@ input:focus {
     cursor: pointer;
     transition: background 0.3s;
     width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .login-button:hover {
     background: linear-gradient(135deg, #5a0fbf, #2063d3);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Mensaje de error */
@@ -88,15 +89,47 @@ input:focus {
     text-align: center;
 }
 
+/*Decoracion para modal ChPassword*/
+.password-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.password-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /*Responsive*/
 /* Para pantallas de menos de 768px */
 @media (max-width: 768px) {
-.login-form {
-    width: 90%; /* Reducir el ancho del formulario en pantallas pequeñas */
-    padding: 1.5rem; /* Ajustar el espacio interno */
-  }
+    .login-container {
+        flex-direction: column;
+    }
+}
 
-  .login-button {
-    font-size: 0.9rem; /* Reducir ligeramente el tamaño del botón */
-  }
+@media (max-width: 480px) {
+    .login-form {
+        width: 95%;
+    }
+
+    input {
+        font-size: 0.9rem;
+    }
 }

@@ -8,8 +8,8 @@ import Mineral from './pages/Mineral';
 import Roca from './pages/Roca';
 import Investigacion from './pages/Investigacion';
 import Perfil from './pages/Perfil';
-import Config from './pages/Config';
 import Profiles from './pages/Profiles';
+import AcercaDeCreador from './pages/AcercaDeCreador';
 
 function App() {
   // Obtener el estado inicial desde localStorage
@@ -77,10 +77,10 @@ function App() {
             </ProtectedRoute>}
         />
         <Route
-          path="/config"
+          path="/aboutCreator"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <Config setAuth={handleAuthChange} />
+              <AcercaDeCreador setAuth={handleAuthChange} />
             </ProtectedRoute>}
         />
         <Route

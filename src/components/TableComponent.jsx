@@ -14,6 +14,8 @@ const TableComponent = ({
     onDeleteImage, //Funcion para el boton BorrarImagen
     onDelete, //Funcion para el boton Borrar
 }) => {
+    const isAdmin = Number(localStorage.getItem('isAdmin')) || 0;
+
     const [expandedRow, setExpandedRow] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [imageSrc, setImageSrc] = useState("");
@@ -81,7 +83,7 @@ const TableComponent = ({
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
-                    {onCreate && (<button className="create-button" onClick={onCreate}><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#e8eaed"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" /></svg> Crear Nuevo</button>)}
+                    {(isAdmin === 2 || isAdmin === 3) && onCreate && (<button className="create-button" onClick={onCreate}><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#e8eaed"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" /></svg> Crear Nuevo</button>)}
                 </div>
             </div>
             <table>
@@ -90,7 +92,7 @@ const TableComponent = ({
                         {columns.map((col, index) => (
                             <th key={index}>{col}</th>
                         ))}
-                        {(onUpdate || onDeleteImage || onDelete) && <th>ACCIONES</th>}
+                        {(isAdmin === 2 || isAdmin === 3) && (onUpdate || onDeleteImage || onDelete) && <th>ACCIONES</th>}
                     </tr>
                 </thead>
                 <tbody>
@@ -114,13 +116,13 @@ const TableComponent = ({
                                                         e.stopPropagation();
                                                         openModal(`${import.meta.env.VITE_URL_BACK}/imagen/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`);
                                                     }}
-                                                />   
+                                                />
                                             ) : (
                                                 row[col] || "N/A"
                                             )}
                                         </td>
                                     ))}
-                                    {(onUpdate || onDeleteImage || onDelete) && (
+                                    {(isAdmin === 2 || isAdmin === 3) && (onUpdate || onDeleteImage || onDelete) && (
                                         <td className="action-buttons">
                                             {onUpdate && (<button className="update-button" onClick={() => onUpdate(row)}><span className="material-symbols-outlined">Edit</span></button>)}
                                             {onDeleteImage && (<button className="delete-image-button" onClick={() => onDeleteImage(row)}><span className="material-symbols-outlined"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#00000"><path d="m840-234-80-80v-446H314l-80-80h526q33 0 56.5 23.5T840-760v526ZM792-56l-64-64H200q-33 0-56.5-23.5T120-200v-528l-64-64 56-56 736 736-56 56ZM240-280l120-160 90 120 33-44-283-283v447h447l-80-80H240Zm297-257ZM424-424Z" /></svg></span></button>)}

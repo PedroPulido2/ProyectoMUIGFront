@@ -1,6 +1,8 @@
 .image-grid {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
+  justify-content: center;
 }
 
 .preview-image {
@@ -9,6 +11,12 @@
   height: auto;
   border: 1px solid #ccc;
   border-radius: 8px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.preview-image:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .modal {
@@ -27,20 +35,39 @@
 .modal-content {
   max-width: 90%;
   max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out;
 }
 
+/*Boton de cerrar*/
 .close {
   position: absolute;
   top: 20px;
   right: 30px;
-  color: #fff;
+  color: white;
   font-size: 40px;
   font-weight: bold;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .close:hover,
 .close:focus {
-  color: #bbb;
+  color: #ff4d4d;
   text-decoration: none;
+  transform: scale(1.2);
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  .preview-image {
+    width: 80px;
+  }
+
+  .close {
+    font-size: 30px;
+    top: 10px;
+    right: 15px;
+  }
 }
