@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import '../../styles/FormModal.css';
 import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
+import { showNotification } from "../../utils/showNotification";
 
 const PerfilModalChPassword = ({ isOpen, closeModal, onSave }) => {
     const username = localStorage.getItem("username") || "Invitado";
@@ -51,7 +52,7 @@ const PerfilModalChPassword = ({ isOpen, closeModal, onSave }) => {
                     headers: { Authorization: `Bearer ${token}` }
                 }
             );
-            
+
             if (!response.data.valid) {
                 setErrorMessage("La contraseña actual es incorrecta.");
                 return;
@@ -62,7 +63,8 @@ const PerfilModalChPassword = ({ isOpen, closeModal, onSave }) => {
             closeModal();
         } catch (error) {
             console.error("Error al actualizar la contraseña", error);
-            alert("Error al actulizar la contraseña");
+            showNotification("warning", "Error", "Sesión expirada. Inicia sesión nuevamente.");
+
         }
     };
 

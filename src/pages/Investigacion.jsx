@@ -4,6 +4,7 @@ import '../styles/Main.css'
 import TableComponent from "../components/TableComponent";
 import InvestigacionFormModal from "../components/modalForms/InvestigacionModalForm";
 import api from '../services/api';
+import { showNotification, showConfirmation } from "../utils/showNotification";
 
 const Investigacion = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
@@ -36,11 +37,7 @@ const Investigacion = ({ setAuth }) => {
       const response = await api.get("/investigacion");
       setInvestigacion(response.data);
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.error) {
-        alert(err.response.data.error);
-      } else {
-        setError('Ocurrió un error inesperado. Intente nuevamente.');
-      }
+      showNotification("error", "Error al obtener los datos!", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
     }
   };
 
@@ -61,56 +58,49 @@ const Investigacion = ({ setAuth }) => {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert(`La investigación con ID: ${currentInvestigacion.ID_PIEZA} ha sido actualizado.`);
+        showNotification("success", "Pieza Actualizada", `La pieza con ID: ${currentInvestigacion.ID_PIEZA} ha sido actualizada exitosamente.`);
       } else {
         await api.post(`/investigacion`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert("Nueva investigación añadido exitosamente.");
+        showNotification("success", "¡Pieza Añadida!", "Nueva pieza añadida exitosamente.");
       }
       setIsFormModalOpen(false);
       fetchData();
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.error) {
-        alert(err.response.data.error);
-      } else {
-        setError('Ocurrió un error inesperado. Intente nuevamente.');
-      }
+      showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
     }
   };
 
   //Petición para eliminar los datos
   const handleDelete = async (row) => {
-    if (window.confirm(`¿Estás seguro de que quieres eliminar la investigación con ID: ${row.ID_PIEZA}?`)) {
+    const confirmDelete = await showConfirmation("¿Está seguro?", `Se eliminará la investigación con ID: ${row.ID_PIEZA}. Esta acción no se puede deshacer.`);
+
+    if (confirmDelete.isConfirmed) {
       try {
         await api.delete(`/investigacion/${row.ID_PIEZA}`);
-        alert(`La investigación con ID: ${row.ID_PIEZA} ha sido eliminado.`);
+        showNotification("success", "Eliminado", `La investigación con ID: ${row.ID_PIEZA} ha sido eliminada.`);
         fetchData();
       } catch (err) {
-        if (err.response && err.response.data && err.response.data.error) {
-          alert(err.response.data.error);
-        } else {
-          setError('Ocurrió un error inesperado. Intente nuevamente.');
-        }
+        showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
       }
     }
   };
 
+
   //Petición para eliminar la imagen
   const handleDeleteImage = async (row) => {
-    if (window.confirm(`¿Estás seguro de que quieres eliminar la imagen de la investigación con ID: ${row.ID_PIEZA}?`)) {
+    const confirmDelete = await showConfirmation("¿Está seguro?", `Se eliminará la imagen de la investigación con ID: ${row.ID_PIEZA}. Esta acción no se puede deshacer.`);
+
+    if (confirmDelete.isConfirmed) {
       try {
         await api.delete(`/investigacion/${row.ID_PIEZA}/image`);
-        alert(`La imagen de la investigación con ID: ${row.ID_PIEZA} ha sido eliminado.`);
+        showNotification("success", "Eliminado", `La imagen de la investigación con ID: ${row.ID_PIEZA} ha sido eliminada.`);
         fetchData();
       } catch (err) {
-        if (err.response && err.response.data && err.response.data.error) {
-          alert(err.response.data.error);
-        } else {
-          setError('Ocurrió un error inesperado. Intente nuevamente.');
-        }
+        showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
       }
     }
   };

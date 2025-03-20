@@ -1,7 +1,7 @@
 /* Fondo de la página */
 .login-page {
     margin: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #6a11cb, #2575fc);
     min-height: 100vh;
     display: flex;
@@ -78,6 +78,26 @@ input:focus-visible {
 .login-button:hover {
     background: linear-gradient(135deg, #5a0fbf, #2063d3);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Botón de registro */
+.register-button {
+    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    margin-top: 1.5rem;
+    width: 60%;
+}
+
+.register-button:hover {
+    background: linear-gradient(135deg, #ff5e91, #ff4e7a);
+    transform: scale(1.05);
 }
 
 /* Mensaje de error */

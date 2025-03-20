@@ -179,3 +179,17 @@ form {
   justify-content: center;
 }
 
+
+.id-container {
+  display: flex;
+  gap: 5px;
+}
+
+.id-container select {
+  width: 120px;
+  border-radius: 5px;
+}
+
+.id-container input {
+  flex: 1;
+}

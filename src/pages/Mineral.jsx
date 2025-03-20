@@ -4,6 +4,7 @@ import '../styles/Main.css'
 import TableComponent from "../components/TableComponent";
 import MineralFormModal from "../components/modalForms/MineralModalForm";
 import api from '../services/api';
+import { showNotification, showConfirmation } from "../utils/showNotification";
 
 const Mineral = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
@@ -36,11 +37,7 @@ const Mineral = ({ setAuth }) => {
       const response = await api.get("/mineral");
       setMinerales(response.data);
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.error) {
-        alert(err.response.data.error);
-      } else {
-        setError('Ocurrió un error inesperado. Intente nuevamente.');
-      }
+      showNotification("error", "Error al obtener los datos!", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
     }
   };
 
@@ -61,56 +58,48 @@ const Mineral = ({ setAuth }) => {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert(`El mineral con ID: ${currentMineral.ID_MINERAL} ha sido actualizado.`);
+        showNotification("success", "Mineral Actualizado", `El mineral con ID: ${currentMineral.ID_MINERAL} ha sido actualizado.`);
       } else {
         await api.post(`/mineral`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert("Nuevo mineral añadido exitosamente.");
+        showNotification("success", "¡Mineral Añadido!", "Nuevo mineral añadido exitosamente.");
       }
       setIsFormModalOpen(false);
       fetchData();
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.error) {
-        alert(err.response.data.error);
-      } else {
-        setError('Ocurrió un error inesperado. Intente nuevamente.');
-      }
+      showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
     }
   };
 
   //Petición para eliminar los datos
   const handleDelete = async (row) => {
-    if (window.confirm(`¿Estás seguro de que quieres eliminar el mineral con ID: ${row.ID_MINERAL}?`)) {
+    const confirmDelete = await showConfirmation("¿Está seguro?", `El mineral con ID: ${row.ID_MINERAL} será eliminado.`);
+
+    if (confirmDelete.isConfirmed) {
       try {
         await api.delete(`/mineral/${row.ID_MINERAL}`);
-        alert(`El mineral con ID: ${row.ID_MINERAL} ha sido eliminado.`);
+        showNotification("success", "Eliminado", `El mineral con ID: ${row.ID_MINERAL} ha sido eliminado.`);
         fetchData();
       } catch (err) {
-        if (err.response && err.response.data && err.response.data.error) {
-          alert(err.response.data.error);
-        } else {
-          setError('Ocurrió un error inesperado. Intente nuevamente.');
-        }
+        showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
       }
     }
   };
 
   //Petición para eliminar la imagen
   const handleDeleteImage = async (row) => {
-    if (window.confirm(`¿Estás seguro de que quieres eliminar la imagen del mineral con ID: ${row.ID_MINERAL}?`)) {
+    const confirmDelete = await showConfirmation("¿Está seguro?", `Se eliminará la imagen del mineral con ID: ${row.ID_MINERAL}.`);
+
+    if (confirmDelete.isConfirmed) {
       try {
         await api.delete(`/mineral/${row.ID_MINERAL}/image`);
-        alert(`La imagen del mineral con ID: ${row.ID_MINERAL} ha sido eliminado.`);
+        showNotification("success", "Imagen Eliminada", `La imagen del mineral con ID: ${row.ID_MINERAL} ha sido eliminada.`);
         fetchData();
       } catch (err) {
-        if (err.response && err.response.data && err.response.data.error) {
-          alert(err.response.data.error);
-        } else {
-          setError('Ocurrió un error inesperado. Intente nuevamente.');
-        }
+        showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
       }
     }
   };

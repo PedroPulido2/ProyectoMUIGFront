@@ -4,6 +4,7 @@ import api from "../services/api";
 import '../styles/Main.css'
 import TableComponent from "../components/TableComponent";
 import ProfilesModalForm from "../components/modalForms/ProfilesModalForm";
+import { showNotification, showConfirmation } from "../utils/showNotification";
 
 const Profiles = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
@@ -17,16 +18,15 @@ const Profiles = ({ setAuth }) => {
     fetchData();
   }, []);
 
-  
   //Peticiones al Backend, para obtener los datos
   const fetchData = async () => {
     try {
       const response = await api.get("/perfil");
 
       // Filtrar los perfiles para excluir el del usuario actual
-    const filteredProfiles = response.data.filter(profile => profile.USER !== username);
+      const filteredProfiles = response.data.filter(profile => profile.USER?.trim() !== username?.trim());
 
-      // Transformar los datos agregando la propiedad "ROL"
+      // Transformar los datos agregando la propiedad "ROL" y formateando las fechas
       const formattedProfiles = filteredProfiles.map(profile => ({
         ...profile,
         ROL: profile.IS_ADMIN === 1 ? "Visitante" :
@@ -44,13 +44,10 @@ const Profiles = ({ setAuth }) => {
 
       setProfiles(formattedProfiles);
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.error) {
-        alert(err.response.data.error);
-      } else {
-        setError('Ocurrió un error inesperado. Intente nuevamente.');
-      }
+      console.error("Error al obtener los perfiles:", err);
+      showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
     }
-  }
+  };
 
   //Funcion Crear
   const handleCreate = () => {
@@ -74,63 +71,53 @@ const Profiles = ({ setAuth }) => {
         }
       });
 
-      console.log(data);
-      console.log(currentProfile);
-
       if (currentProfile) {
         await api.put(`/perfil/${currentProfile.ID_PERFIL}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert(`El perfil con ID: ${currentProfile.ID_PERFIL} ha sido actualizado.`);
+        showNotification("success", "Perfil Actualizado", `El perfil con ID: ${currentProfile.ID_PERFIL} ha sido actualizado.`);
       } else {
         await api.post(`/perfil`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert("Nuevo Perfil añadido exitosamente");
+        showNotification("success", "¡Perfil Añadido!", "Nuevo perfil añadido exitosamente.");
       }
       setIsFormModalOpen(false);
       fetchData();
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.error) {
-        alert(err.response.data.error);
-      } else {
-        setError('Ocurrió un error inesperado. Intente nuevamente.');
-      }
+      console.error("Error al actualizar el perfil:", err);
+      showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
     }
   };
 
   const handleDelete = async (row) => {
-    if (window.confirm(`¿Estás seguro que quiere eliminar el perfil con ID: ${row.ID_PERFIL}?`)){
+    const confirmDelete = await showConfirmation("¿Está seguro?", `Esta acción eliminará el perfil con ID: ${row.ID_PERFIL}. ¡No se puede deshacer!`);
+
+    if (confirmDelete.isConfirmed) {
       try {
         await api.delete(`/perfil/${row.ID_PERFIL}`);
-        alert(`El perfil con ID: ${row.ID_PERFIL} ha sido eliminado.`);
+        showNotification("success", "¡Eliminado!", `El perfil con ID: ${row.ID_PERFIL} ha sido eliminado.`);
         fetchData();
       } catch (err) {
-        if (err.response && err.response.data && err.response.data.error) {
-          alert(err.response.data.error);
-        } else {
-          setError('Ocurrió un error inesperado. Intente nuevamente.');
-        }
+        showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
       }
     }
   };
 
   const handleDeleteImage = async (row) => {
-    if (window.confirm(`¿Estás seguro que quiere eliminar la imagen del perfil con ID: ${row.ID_PERFIL}?`)){
+    const confirmDelete = await showConfirmation("¿Está seguro?", `Esta acción eliminará la imagen del perfil con ID: ${row.ID_PERFIL}. ¡No se puede deshacer!`);
+
+    if (confirmDelete.isConfirmed) {
       try {
         await api.delete(`/perfil/${row.ID_PERFIL}/image`);
-        alert(`La imagen del perfil con ID: ${row.ID_PERFIL} ha sido eliminado.`);
+        showNotification("success", "¡Eliminada!", `La imagen del perfil con ID: ${row.ID_PERFIL} ha sido eliminada.`);
         fetchData();
       } catch (err) {
-        if (err.response && err.response.data && err.response.data.error) {
-          alert(err.response.data.error);
-        } else {
-          setError('Ocurrió un error inesperado. Intente nuevamente.');
-        }
+        showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
       }
     }
   };
@@ -163,7 +150,6 @@ const Profiles = ({ setAuth }) => {
     "FOTO",
     "ROL",
   ];
-
 
   return (
     <PageLayout username={username} setAuth={setAuth}>

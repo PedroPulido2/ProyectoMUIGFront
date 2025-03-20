@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import '../../styles/FormModal.css';
-import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
-
+import { Eye, EyeOff } from "lucide-react";
+import { showNotification } from "../../utils/showNotification";
 
 const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
     const [formData, setFormData] = useState({
@@ -69,6 +69,18 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        // Validación del número de documento (solo números y hasta 30 dígitos)
+        if (name === "id_Perfil") {
+            if (!/^\d*$/.test(value)) return; // Permite solo números
+            if (value.length > 30) return; // Máximo 30 dígitos
+        }
+
+        // Validación del teléfono (solo números)
+        if (name === "telefono") {
+            if (!/^\d*$/.test(value)) return; // Permite solo números
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -77,6 +89,16 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
+
+        // Verificar si el archivo es una imagen
+        const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+        if (!validImageTypes.includes(file.type)) {
+            showNotification("warning", "Formato no válido", "Por favor, selecciona una imagen en formato JPG, JPEG o PNG.");
+
+            e.target.value = "";
+            return;
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             foto: file,
@@ -85,6 +107,26 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // Validar edad mínima (14 años)
+        const today = new Date();
+        const birthDate = new Date(formData.fechaNacimiento);
+        const age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+
+        if (
+            age < 14 ||
+            (age === 14 && monthDiff < 0) ||
+            (age === 14 && monthDiff === 0 && today.getDate() < birthDate.getDate())
+        ) {
+            showNotification("error", "Edad inválida", "El usuario debe tener al menos 14 años.");
+            return;
+        }
+
+        if (formData.password.length >= 1 && formData.password.length < 6) {
+            showNotification("error", "Contraseña inválida", "La contraseña debe tener al menos 6 caracteres.");
+            return;
+        }
 
         const formattedData = {
             ...formData,

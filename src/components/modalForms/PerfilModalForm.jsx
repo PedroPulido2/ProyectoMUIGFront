@@ -8,13 +8,13 @@ const PerfilModalForm = ({ isOpen, closeModal, onSave, perfilData }) => {
         if (perfilData) {
             setFormData({
                 ...perfilData,
-                fechaNacimiento: perfilData.fechaNacimiento 
-                    ? new Date(perfilData.fechaNacimiento).toISOString().split("T")[0] 
+                fechaNacimiento: perfilData.fechaNacimiento
+                    ? new Date(perfilData.fechaNacimiento).toISOString().split("T")[0]
                     : ""
             });
         }
     }, [perfilData]);
-    
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -25,11 +25,11 @@ const PerfilModalForm = ({ isOpen, closeModal, onSave, perfilData }) => {
 
         const formattedData = {
             ...formData,
-            fechaNacimiento: formData.fechaNacimiento 
+            fechaNacimiento: formData.fechaNacimiento
                 ? new Date(formData.fechaNacimiento).toISOString()  // Convierte a formato ISO
                 : null
         };
-    
+
         onSave(formattedData);  // Enviar los datos convertidos
         closeModal();
     };

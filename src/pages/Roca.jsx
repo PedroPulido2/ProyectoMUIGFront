@@ -4,6 +4,7 @@ import '../styles/Main.css'
 import TableComponent from "../components/TableComponent";
 import RocaFormModal from "../components/modalForms/RocaModalForm";
 import api from '../services/api';
+import { showNotification, showConfirmation } from "../utils/showNotification";
 
 const Roca = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
@@ -36,11 +37,7 @@ const Roca = ({ setAuth }) => {
       const response = await api.get("/roca");
       setRocas(response.data);
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.error) {
-        alert(err.response.data.error);
-      } else {
-        setError('Ocurrió un error inesperado. Intente nuevamente.');
-      }
+      showNotification("error", "Error al obtener los datos!", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
     }
   };
 
@@ -61,56 +58,48 @@ const Roca = ({ setAuth }) => {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert(`La roca con ID: ${currentRocas.ID_ROCA} ha sido actualizado.`);
+        showNotification("success", "Roca Actualizada", `La roca con ID: ${currentRocas.ID_ROCA} ha sido actualizada.`);
       } else {
         await api.post(`/roca`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert("Nueva roca añadida exitosamente.");
+        showNotification("success", "¡Roca Añadida!", "Nueva roca añadida exitosamente.");
       }
       setIsFormModalOpen(false);
       fetchData();
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.error) {
-        alert(err.response.data.error);
-      } else {
-        setError('Ocurrió un error inesperado. Intente nuevamente.');
-      }
+      showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
     }
   };
 
   //Petición para eliminar los datos
   const handleDelete = async (row) => {
-    if (window.confirm(`¿Estás seguro de que quieres eliminar la roca con ID: ${row.ID_ROCA}?`)) {
+    const confirmDelete = await showConfirmation("¿Está seguro?", `Se eliminará la roca con ID: ${row.ID_ROCA}. Esta acción no se puede deshacer.`);
+
+    if (confirmDelete.isConfirmed) {
       try {
         await api.delete(`/roca/${row.ID_ROCA}`);
-        alert(`La roca con ID: ${row.ID_ROCA} ha sido eliminado.`);
+        showNotification("success", "Eliminado", `La roca con ID: ${row.ID_ROCA} ha sido eliminada.`);
         fetchData();
       } catch (err) {
-        if (err.response && err.response.data && err.response.data.error) {
-          alert(err.response.data.error);
-        } else {
-          setError('Ocurrió un error inesperado. Intente nuevamente.');
-        }
+        showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
       }
     }
   };
 
   //Petición para eliminar la imagen
   const handleDeleteImage = async (row) => {
-    if (window.confirm(`¿Estás seguro de que quieres eliminar la imagen de la roca con ID: ${row.ID_ROCA}?`)) {
+    const confirmDelete = await showConfirmation("¿Está seguro?", `Se eliminará la imagen de la roca con ID: ${row.ID_ROCA}. Esta acción no se puede deshacer.`);
+
+    if (confirmDelete.isConfirmed) {
       try {
         await api.delete(`/roca/${row.ID_ROCA}/image`);
-        alert(`La imagen de la roca con ID: ${row.ID_ROCA} ha sido eliminado.`);
+        showNotification("success", "Eliminado", `La imagen de la roca con ID: ${row.ID_ROCA} ha sido eliminada.`);
         fetchData();
       } catch (err) {
-        if (err.response && err.response.data && err.response.data.error) {
-          alert(err.response.data.error);
-        } else {
-          setError('Ocurrió un error inesperado. Intente nuevamente.');
-        }
+        showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
       }
     }
   };

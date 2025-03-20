@@ -1,54 +1,63 @@
 import React, { useEffect, useState } from "react";
+import { showNotification } from "../../utils/showNotification";
 import '../../styles/FormModal.css';
 
 const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData }) => {
     const [formData, setFormData] = useState({
-        "ID_PIEZA": "",
-        "COLECCION": "",
-        "REPOSITORIO": "",
-        "FILO": "",
-        "SUBFILO": "",
-        "CLASE": "",
-        "ORDEN": "",
-        "FAMILIA": "",
-        "GENERO": "",
-        "NOMBRE": "",
-        "PERIODO_GEOLOGICO": "",
-        "ERA_GEOLOGICA": "",
-        "FORMACION_GEOLOGICA": "",
-        "SECCION_ESTRATIGRAFICA": "",
-        "COLECTOR": "",
-        "LOCALIDAD": "",
-        "OBSERVACIONES": "",
-        "FOTO": null
+        ID_PIEZA_PREFIX: "",
+        ID_PIEZA_SUFFIX: "",
+        COLECCION: "",
+        REPOSITORIO: "",
+        FILO: "",
+        SUBFILO: "",
+        CLASE: "",
+        ORDEN: "",
+        FAMILIA: "",
+        GENERO: "",
+        NOMBRE: "",
+        PERIODO_GEOLOGICO: "",
+        ERA_GEOLOGICA: "",
+        FORMACION_GEOLOGICA: "",
+        SECCION_ESTRATIGRAFICA: "",
+        COLECTOR: "",
+        LOCALIDAD: "",
+        OBSERVACIONES: "",
+        FOTO: null
     });
 
     useEffect(() => {
         if (investigacionData) {
+            const prefixes = ["MGUPTC-CPi-AFPC-", "MGUPTC-CPi-HRR-", "MGUPTC-CPi-MJGL-"];
+            let selectedPrefix = prefixes.find(prefix => investigacionData.ID_PIEZA?.startsWith(prefix)) || "";
+            let suffix = investigacionData.ID_PIEZA ? investigacionData.ID_PIEZA.replace(selectedPrefix, "") : "";
+
             setFormData({
                 ...investigacionData,
+                ID_PIEZA_PREFIX: selectedPrefix,
+                ID_PIEZA_SUFFIX: suffix,
                 FOTO: null
             });
         } else {
             setFormData({
-                "ID_PIEZA": "",
-                "COLECCION": "",
-                "REPOSITORIO": "",
-                "FILO": "",
-                "SUBFILO": "",
-                "CLASE": "",
-                "ORDEN": "",
-                "FAMILIA": "",
-                "GENERO": "",
-                "NOMBRE": "",
-                "PERIODO_GEOLOGICO": "",
-                "ERA_GEOLOGICA": "",
-                "FORMACION_GEOLOGICA": "",
-                "SECCION_ESTRATIGRAFICA": "",
-                "COLECTOR": "",
-                "LOCALIDAD": "",
-                "OBSERVACIONES": "",
-                "FOTO": null
+                ID_PIEZA_PREFIX: "",
+                ID_PIEZA_SUFFIX: "",
+                COLECCION: "",
+                REPOSITORIO: "",
+                FILO: "",
+                SUBFILO: "",
+                CLASE: "",
+                ORDEN: "",
+                FAMILIA: "",
+                GENERO: "",
+                NOMBRE: "",
+                PERIODO_GEOLOGICO: "",
+                ERA_GEOLOGICA: "",
+                FORMACION_GEOLOGICA: "",
+                SECCION_ESTRATIGRAFICA: "",
+                COLECTOR: "",
+                LOCALIDAD: "",
+                OBSERVACIONES: "",
+                FOTO: null
             });
         }
     }, [investigacionData]);
@@ -63,6 +72,16 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
+
+        // Verificar si el archivo es una imagen
+        const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+        if (!validImageTypes.includes(file.type)) {
+            showNotification("warning", "Formato no válido", "Por favor, selecciona una imagen en formato JPG, JPEG o PNG.");
+
+            e.target.value = "";
+            return;
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             FOTO: file,
@@ -71,7 +90,8 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave(formData);
+        const fullID = formData.ID_PIEZA_PREFIX + formData.ID_PIEZA_SUFFIX;
+        onSave({ ...formData, ID_PIEZA: fullID });
         closeModal();
     };
 
@@ -88,14 +108,24 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label>ID pieza:</label>
-                            <input
-                                type="text"
-                                name="ID_PIEZA"
-                                value={formData.ID_PIEZA}
-                                onChange={handleChange}
-                                required
-                            //disabled={fosilData} // No editable para edición
-                            />
+                            <div className="id-container">
+                                <select
+                                    value={formData.ID_PIEZA_PREFIX || ""}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_PIEZA_PREFIX: e.target.value }))}
+                                >
+                                    <option value="">(Vacío)</option>
+                                    <option value="MGUPTC-CPi-AFPC-">MGUPTC-CPi-AFPC-</option>
+                                    <option value="MGUPTC-CPi-HRR-">MGUPTC-CPi-HRR-</option>
+                                    <option value="MGUPTC-CPi-MJGL-">MGUPTC-CPi-MJGL-</option>
+                                </select>
+                                <input
+                                    type="text"
+                                    name="ID_PIEZA_SUFFIX"
+                                    value={formData.ID_PIEZA_SUFFIX}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_PIEZA_SUFFIX: e.target.value }))}
+                                    required
+                                />
+                            </div>
                         </div>
                         <div className="form-group">
                             <label>Colección:</label>

@@ -155,15 +155,30 @@ tr:hover {
 }
 
 .expanded-details-wrapper.open {
-    max-height: 400px;
+    max-height: 600px;
     /* Ajusta el valor según el tamaño máximo esperado del contenido */
-    padding: 10px;
+    padding: 15px;
 }
 
 .expanded-details {
-    text-align: left;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: #eef4ffb4;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.details-column {
+    flex: 1; /* Ambas columnas ocupan el mismo espacio */
+    min-width: 45%;
+}
+
+.expanded-details p {
+    font-size: 15px; /* Tamaño más pequeño */
+    line-height: 1.4; /* Mejora la legibilidad */
+    color: #333; /* Color oscuro para mejor contraste */
 }
 
 .na-value {

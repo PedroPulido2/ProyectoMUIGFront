@@ -1,0 +1,77 @@
+/* Fondo de la página */
+.register-page {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenedor principal */
+.register-form {
+    background: #ffffff;
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+/* Título */
+.register-form h2 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+/* Grupos de entrada */
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+/* Mensaje de error */
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.register-button2 {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.register-button2:hover {
+    background: linear-gradient(135deg, #5a0fbf, #2063d3);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .register-form {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .register-form {
+        width: 95%;
+    }
+
+    input, select {
+        font-size: 0.9rem;
+    }
+}

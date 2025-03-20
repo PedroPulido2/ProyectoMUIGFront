@@ -1,46 +1,53 @@
 import React, { useEffect, useState } from "react";
+import { showNotification } from "../../utils/showNotification";
 import '../../styles/FormModal.css';
 
 const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
     const [formData, setFormData] = useState({
-        "ID_MINERAL": "",
-        "N_BARRANTES": "",
-        "COLECCION": "",
-        "NOMBRE_MINERAL": "",
-        "CANTIDAD": "",
-        "GRUPO_MINERALOGICO": "",
-        "REGION": "",
-        "SUBGRUPO": "",
-        "COMPOSICION": "",
-        "CARACTERISTICAS": "",
-        "COLECTOR": "",
-        "OBSERVACIONES": "",
-        "UBICACION": "",
-        "FOTO": null
+        ID_MINERAL: "",
+        N_BARRANTES: "",
+        COLECCION: "",
+        NOMBRE_MINERAL: "",
+        CANTIDAD: "",
+        GRUPO_MINERALOGICO: "",
+        REGION: "",
+        SUBGRUPO: "",
+        COMPOSICION: "",
+        CARACTERISTICAS: "",
+        COLECTOR: "",
+        OBSERVACIONES: "",
+        UBICACION: "",
+        FOTO: null
     });
 
     useEffect(() => {
         if (mineralData) {
+            const prefix = mineralData.ID_MINERAL?.startsWith("MGUPTC-CM-") ? "MGUPTC-CM-" : "";
+            const suffix = mineralData.ID_MINERAL ? mineralData.ID_MINERAL.replace("MGUPTC-CM-", "") : "";
+
             setFormData({
                 ...mineralData,
+                ID_MINERAL_PREFIX: prefix,
+                ID_MINERAL_SUFFIX: suffix,
                 FOTO: null
             });
         } else {
             setFormData({
-                "ID_MINERAL": "",
-                "N_BARRANTES": "",
-                "COLECCION": "",
-                "NOMBRE_MINERAL": "",
-                "CANTIDAD": "",
-                "GRUPO_MINERALOGICO": "",
-                "REGION": "",
-                "SUBGRUPO": "",
-                "COMPOSICION": "",
-                "CARACTERISTICAS": "",
-                "COLECTOR": "",
-                "OBSERVACIONES": "",
-                "UBICACION": "",
-                "FOTO": null
+                ID_MINERAL_PREFIX: "",
+                ID_MINERAL_SUFFIX: "",
+                N_BARRANTES: "",
+                COLECCION: "",
+                NOMBRE_MINERAL: "",
+                CANTIDAD: "",
+                GRUPO_MINERALOGICO: "",
+                REGION: "",
+                SUBGRUPO: "",
+                COMPOSICION: "",
+                CARACTERISTICAS: "",
+                COLECTOR: "",
+                OBSERVACIONES: "",
+                UBICACION: "",
+                FOTO: null
             });
         }
     }, [mineralData]);
@@ -55,6 +62,16 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
+
+        // Verificar si el archivo es una imagen
+        const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+        if (!validImageTypes.includes(file.type)) {
+            showNotification("warning", "Formato no válido", "Por favor, selecciona una imagen en formato JPG, JPEG o PNG.");
+
+            e.target.value = "";
+            return;
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             FOTO: file,
@@ -63,7 +80,8 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave(formData);
+        const fullID = formData.ID_MINERAL_PREFIX + formData.ID_MINERAL_SUFFIX;
+        onSave({ ...formData, ID_MINERAL: fullID });
         closeModal();
     };
 
@@ -80,14 +98,22 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label>ID mineral:</label>
-                            <input
-                                type="text"
-                                name="ID_MINERAL"
-                                value={formData.ID_MINERAL}
-                                onChange={handleChange}
-                                required
-                            //disabled={fosilData} // No editable para edición
-                            />
+                            <div className="id-container">
+                                <select
+                                    value={formData.ID_MINERAL_PREFIX || ""}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_MINERAL_PREFIX: e.target.value }))}
+                                >
+                                    <option value="">(Vacío)</option>
+                                    <option value="MGUPTC-CM-">MGUPTC-CM-</option>
+                                </select>
+                                <input
+                                    type="text"
+                                    name="ID_MINERAL_SUFFIX"
+                                    value={formData.ID_MINERAL_SUFFIX}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_MINERAL_SUFFIX: e.target.value }))}
+                                    required
+                                />
+                            </div>
                         </div>
                         <div className="form-group">
                             <label>N_Barrantes:</label>

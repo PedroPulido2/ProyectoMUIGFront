@@ -3,7 +3,6 @@ import '../styles/PageLayout.css';
 import rutaLogo from '../styles/images/Logo-simuig3.png';
 import { Link } from "react-router-dom";
 import imagenProfileOther from '../styles/images/profile-other.jpg';
-import api from '../services/api';
 
 const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
     const [urlFoto, setUrlFoto] = useState(localStorage.getItem('urlFotoProfile') || urlimgProfile);
@@ -62,13 +61,11 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
                     <li>
                         <Link to="/investigacion"><span className="material-symbols-outlined">science</span>Investigación</Link>
                     </li>
-
                     {isAdmin === 3 ?
                         <li>
                             <Link to="/profiles"><span className="material-symbols-outlined">manage_accounts</span>Perfiles</Link>
                         </li> : <></>
                     }
-
                     <h4>
                         <span>Cuenta</span>
                         <div className="menu-separator"></div>

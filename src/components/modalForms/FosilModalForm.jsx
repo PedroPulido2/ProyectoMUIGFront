@@ -1,56 +1,63 @@
 import React, { useEffect, useState } from "react";
 import '../../styles/FormModal.css';
+import { showNotification } from "../../utils/showNotification";
 
 const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
     const [formData, setFormData] = useState({
-        "ID_FOSIL": "",
-        "N_BARRANTES": "",
-        "COLECCION": "",
-        "UBICACION": "",
-        "FILO": "",
-        "SUBFILO": "",
-        "CLASE": "",
-        "ORDEN": "",
-        "FAMILIA": "",
-        "GENERO": "",
-        "NOMBRE_FOSIL": "",
-        "PARTES": "",
-        "TIEMPO_GEOLOGICO": "",
-        "COLECTOR": "",
-        "LOCALIDAD": "",
-        "VITRINA": "",
-        "BANDEJA": "",
-        "OBSERVACIONES": "",
-        "FOTO": null
+        ID_FOSIL_PREFIX: "",
+        ID_FOSIL_SUFFIX: "",
+        N_BARRANTES: "",
+        COLECCION: "",
+        UBICACION: "",
+        FILO: "",
+        SUBFILO: "",
+        CLASE: "",
+        ORDEN: "",
+        FAMILIA: "",
+        GENERO: "",
+        NOMBRE_FOSIL: "",
+        PARTES: "",
+        TIEMPO_GEOLOGICO: "",
+        COLECTOR: "",
+        LOCALIDAD: "",
+        VITRINA: "",
+        BANDEJA: "",
+        OBSERVACIONES: "",
+        FOTO: null
     });
 
     useEffect(() => {
         if (fosilData) {
+            const prefix = fosilData.ID_FOSIL?.startsWith("MGUPTC-CPL-") ? "MGUPTC-CPL-" : "";
+            const suffix = fosilData.ID_FOSIL ? fosilData.ID_FOSIL.replace("MGUPTC-CPL-", "") : "";
             setFormData({
                 ...fosilData,
+                ID_FOSIL_PREFIX: prefix,
+                ID_FOSIL_SUFFIX: suffix,
                 FOTO: null
             });
         } else {
             setFormData({
-                "ID_FOSIL": "",
-                "N_BARRANTES": "",
-                "COLECCION": "",
-                "UBICACION": "",
-                "FILO": "",
-                "SUBFILO": "",
-                "CLASE": "",
-                "ORDEN": "",
-                "FAMILIA": "",
-                "GENERO": "",
-                "NOMBRE_FOSIL": "",
-                "PARTES": "",
-                "TIEMPO_GEOLOGICO": "",
-                "COLECTOR": "",
-                "LOCALIDAD": "",
-                "VITRINA": "",
-                "BANDEJA": "",
-                "OBSERVACIONES": "",
-                "FOTO": null
+                ID_FOSIL_PREFIX: "",
+                ID_FOSIL_SUFFIX: "",
+                N_BARRANTES: "",
+                COLECCION: "",
+                UBICACION: "",
+                FILO: "",
+                SUBFILO: "",
+                CLASE: "",
+                ORDEN: "",
+                FAMILIA: "",
+                GENERO: "",
+                NOMBRE_FOSIL: "",
+                PARTES: "",
+                TIEMPO_GEOLOGICO: "",
+                COLECTOR: "",
+                LOCALIDAD: "",
+                VITRINA: "",
+                BANDEJA: "",
+                OBSERVACIONES: "",
+                FOTO: null
             });
         }
     }, [fosilData]);
@@ -65,6 +72,16 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
+
+        // Verificar si el archivo es una imagen
+        const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+        if (!validImageTypes.includes(file.type)) {
+            showNotification("warning", "Formato no válido", "Por favor, selecciona una imagen en formato JPG, JPEG o PNG.");
+
+            e.target.value = "";
+            return;
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             FOTO: file,
@@ -73,7 +90,8 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave(formData);
+        const fullID = formData.ID_FOSIL_PREFIX + formData.ID_FOSIL_SUFFIX;
+        onSave({ ...formData, ID_FOSIL: fullID });
         closeModal();
     };
 
@@ -90,14 +108,22 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label>ID Fosil:</label>
-                            <input
-                                type="text"
-                                name="ID_FOSIL"
-                                value={formData.ID_FOSIL}
-                                onChange={handleChange}
-                                required
-                            //disabled={fosilData} // No editable para edición
-                            />
+                            <div className="id-container">
+                                <select
+                                    value={formData.ID_FOSIL_PREFIX || ""}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_FOSIL_PREFIX: e.target.value }))}
+                                >
+                                    <option value="">(Vacío)</option>
+                                    <option value="MGUPTC-CPL-">MGUPTC-CPL-</option>
+                                </select>
+                                <input
+                                    type="text"
+                                    name="ID_FOSIL_SUFFIX"
+                                    value={formData.ID_FOSIL_SUFFIX}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_FOSIL_SUFFIX: e.target.value }))}
+                                    required
+                                />
+                            </div>
                         </div>
                         <div className="form-group">
                             <label>N_Barrantes:</label>

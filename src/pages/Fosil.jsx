@@ -4,6 +4,7 @@ import '../styles/Main.css'
 import TableComponent from "../components/TableComponent";
 import FosilFormModal from "../components/modalForms/FosilModalForm";
 import api from '../services/api';
+import { showNotification, showConfirmation } from "../utils/showNotification";
 
 const Fosil = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
@@ -36,11 +37,7 @@ const Fosil = ({ setAuth }) => {
       const response = await api.get("/fosil");
       setFosiles(response.data);
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.error) {
-        alert(err.response.data.error);
-      } else {
-        setError('Ocurrió un error inesperado. Intente nuevamente.');
-      }
+      showNotification("error", "Error al obtener los datos!", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
     }
   };
 
@@ -61,56 +58,48 @@ const Fosil = ({ setAuth }) => {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert(`El fósil con ID: ${currentFosil.ID_FOSIL} ha sido actualizado.`);
+        showNotification("success", "Fósil Actualizado", `El fósil con ID: ${currentFosil.ID_FOSIL} ha sido actualizado exitosamente.`);
       } else {
         await api.post(`/fosil`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert("Nuevo fosil añadido exitosamente.");
+        showNotification("success", "¡Fósil Añadido!", "Nuevo fósil añadido exitosamente.");
       }
       setIsFormModalOpen(false);
       fetchData();
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.error) {
-        alert(err.response.data.error);
-      } else {
-        setError('Ocurrió un error inesperado. Intente nuevamente.');
-      }
+      showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
     }
   };
 
   //Petición para eliminar los datos
   const handleDelete = async (row) => {
-    if (window.confirm(`¿Estás seguro de que quieres eliminar el fósil con ID: ${row.ID_FOSIL}?`)) {
+    const confirmDelete = await showConfirmation("¿Está seguro?", `Se eliminará el fósil con ID: ${row.ID_FOSIL}. Esta acción no se puede deshacer.`);
+
+    if (confirmDelete.isConfirmed) {
       try {
         await api.delete(`/fosil/${row.ID_FOSIL}`);
-        alert(`El fósil con ID: ${row.ID_FOSIL} ha sido eliminado.`);
+        showNotification("success", "¡Eliminado!", `El fósil con ID: ${row.ID_FOSIL} ha sido eliminado.`);
         fetchData();
       } catch (err) {
-        if (err.response && err.response.data && err.response.data.error) {
-          alert(err.response.data.error);
-        } else {
-          setError('Ocurrió un error inesperado. Intente nuevamente.');
-        }
+        showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
       }
     }
   };
 
   //Petición para eliminar la imagen
   const handleDeleteImage = async (row) => {
-    if (window.confirm(`¿Estás seguro de que quieres eliminar la imagen del fósil con ID: ${row.ID_FOSIL}?`)) {
+    const confirmDelete = await showConfirmation("¿Está seguro?", `Se eliminará la imagen del fósil con ID: ${row.ID_FOSIL}. Esta acción no se puede deshacer.`);
+
+    if (confirmDelete.isConfirmed) {
       try {
         await api.delete(`/fosil/${row.ID_FOSIL}/image`);
-        alert(`La imagen del fósil con ID: ${row.ID_FOSIL} ha sido eliminado.`);
+        showNotification("success", "¡Imagen eliminada!", `La imagen del fósil con ID: ${row.ID_FOSIL} ha sido eliminada.`);
         fetchData();
       } catch (err) {
-        if (err.response && err.response.data && err.response.data.error) {
-          alert(err.response.data.error);
-        } else {
-          setError('Ocurrió un error inesperado. Intente nuevamente.');
-        }
+        showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
       }
     }
   };

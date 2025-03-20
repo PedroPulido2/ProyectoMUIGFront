@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { jwtDecode } from 'jwt-decode';
 import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
+import { showNotification } from '../utils/showNotification';
 import '../styles/Login.css';
 
 const Login = ({ setAuth }) => { // Recibimos setAuth como prop
@@ -35,7 +36,7 @@ const Login = ({ setAuth }) => { // Recibimos setAuth como prop
         try {
             const response = await api.post('/login/auth', { user, password });
             if (response.status === 200) {
-                alert(response.data.message); // Mensaje de éxito
+                showNotification("success", "Inicio de Sesión exitoso!", response.data.message);
 
                 const token = response.data.token;
 
@@ -90,12 +91,13 @@ const Login = ({ setAuth }) => { // Recibimos setAuth como prop
                                 {showPassword.current ? <EyeOff /> : <Eye />}
                             </button>
                         </div>
-
                     </div>
-                    <br />
                     {error && <p className="error-message">{error}</p>}
                     <button type="submit" className="login-button">Ingresar</button>
                 </form>
+                <button className="register-button" onClick={() => navigate('/register')}>
+                    Registrarse
+                </button>
             </div>
         </div>
     );

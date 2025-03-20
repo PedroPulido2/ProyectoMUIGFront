@@ -1,46 +1,52 @@
 import React, { useEffect, useState } from "react";
+import { showNotification } from "../../utils/showNotification";
 import '../../styles/FormModal.css';
 
 const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
     const [formData, setFormData] = useState({
-        "ID_ROCA": "",
-        "N_BARRANTES": "",
-        "OTROS": "",
-        "BD_C_VARGAS": "",
-        "TIPO": "",
-        "COLECCION": "",
-        "NOMBRE_PIEZA": "",
-        "DEPARTAMENTO": "",
-        "MUNICIPIO": "",
-        "COLECTOR_DONADOR": "",
-        "CARACTERISTICAS": "",
-        "OBSERVACIONES": "",
-        "UBICACION": "",
-        "FOTO": null
+        ID_ROCA: "",
+        N_BARRANTES: "",
+        OTROS: "",
+        BD_C_VARGAS: "",
+        TIPO: "",
+        COLECCION: "",
+        NOMBRE_PIEZA: "",
+        DEPARTAMENTO: "",
+        MUNICIPIO: "",
+        COLECTOR_DONADOR: "",
+        CARACTERISTICAS: "",
+        OBSERVACIONES: "",
+        UBICACION: "",
+        FOTO: null
     });
 
     useEffect(() => {
         if (rocaData) {
+            const prefix = rocaData.ID_ROCA?.startsWith("MGUPTC-CPT-") ? "MGUPTC-CPT-" : "";
+            const suffix = rocaData.ID_ROCA ? rocaData.ID_ROCA.replace("MGUPTC-CPT-", "") : "";
             setFormData({
                 ...rocaData,
+                ID_ROCA_PREFIX: prefix,
+                ID_ROCA_SUFFIX: suffix,
                 FOTO: null
             });
         } else {
             setFormData({
-                "ID_ROCA": "",
-                "N_BARRANTES": "",
-                "OTROS": "",
-                "BD_C_VARGAS": "",
-                "TIPO": "",
-                "COLECCION": "",
-                "NOMBRE_PIEZA": "",
-                "DEPARTAMENTO": "",
-                "MUNICIPIO": "",
-                "COLECTOR_DONADOR": "",
-                "CARACTERISTICAS": "",
-                "OBSERVACIONES": "",
-                "UBICACION": "",
-                "FOTO": null
+                ID_ROCA_PREFIX: "",
+                ID_ROCA_SUFFIX: "",
+                N_BARRANTES: "",
+                OTROS: "",
+                BD_C_VARGAS: "",
+                TIPO: "",
+                COLECCION: "",
+                NOMBRE_PIEZA: "",
+                DEPARTAMENTO: "",
+                MUNICIPIO: "",
+                COLECTOR_DONADOR: "",
+                CARACTERISTICAS: "",
+                OBSERVACIONES: "",
+                UBICACION: "",
+                FOTO: null
             });
         }
     }, [rocaData]);
@@ -55,6 +61,16 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
+
+        // Verificar si el archivo es una imagen
+        const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+        if (!validImageTypes.includes(file.type)) {
+            showNotification("warning", "Formato no válido", "Por favor, selecciona una imagen en formato JPG, JPEG o PNG.");
+
+            e.target.value = "";
+            return;
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             FOTO: file,
@@ -63,7 +79,8 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave(formData);
+        const fullID = formData.ID_ROCA_PREFIX + formData.ID_ROCA_SUFFIX;
+        onSave({ ...formData, ID_ROCA: fullID });
         closeModal();
     };
 
@@ -80,14 +97,22 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label>ID roca:</label>
-                            <input
-                                type="text"
-                                name="ID_ROCA"
-                                value={formData.ID_ROCA}
-                                onChange={handleChange}
-                                required
-                            //disabled={fosilData} // No editable para edición
-                            />
+                            <div className="id-container">
+                                <select
+                                    value={formData.ID_ROCA_PREFIX || ""}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_ROCA_PREFIX: e.target.value }))}
+                                >
+                                    <option value="">(Vacío)</option>
+                                    <option value="MGUPTC-CPT-">MGUPTC-CPT-</option>
+                                </select>
+                                <input
+                                    type="text"
+                                    name="ID_ROCA_SUFFIX"
+                                    value={formData.ID_ROCA_SUFFIX}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_ROCA_SUFFIX: e.target.value }))}
+                                    required
+                                />
+                            </div>
                         </div>
                         <div className="form-group">
                             <label>N_Barrantes:</label>

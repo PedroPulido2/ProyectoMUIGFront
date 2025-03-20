@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import '../styles/ImageModal.css';
 
-const ImageModal = ({isOpen, modalImage, closeModal}) => {
+const ImageModal = ({ isOpen, modalImage, closeModal }) => {
     return (
         <div>
             {isOpen && (

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaEdit, FaLock, FaTrash } from "react-icons/fa";
-
 import PageLayout from "../components/PageLayout";
 import api from "../services/api";
 import imagenProfileFemale from '../styles/images/profile-female.jpg';
 import imagenProfileMale from '../styles/images/profile-male.jpg';
 import imagenProfileOther from '../styles/images/profile-other.jpg';
+import { showNotification, showConfirmation } from "../utils/showNotification";
 
 import PerfilModalForm from '../components/modalForms/PerfilModalForm';
 import PerfilModalChPassword from "../components/modalForms/PerfilModalChPassword";
@@ -16,7 +16,6 @@ const Perfil = ({ setAuth }) => {
     const id_Perfil = localStorage.getItem("id_Perfil") || null;
 
     const [perfil, setPerfil] = useState({});
-    const [error, setError] = useState(null);
     const [isFormModalOpen, setIsFormModalOpen] = useState(false);
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
     const [urlFoto, setUrlFoto] = useState(localStorage.getItem('urlFotoProfile') || "");
@@ -44,96 +43,105 @@ const Perfil = ({ setAuth }) => {
                 const perfilData = response.data[0];
                 setPerfil(perfilData);
 
+                // Guardar en localStorage y actualizar estado
                 localStorage.setItem("urlFotoProfile", perfilData.foto);
                 setUrlFoto(perfilData.foto);
             } else {
                 setPerfil({ foto: "" })
             }
         } catch (err) {
-            if (err.response && err.response.data && err.response.data.error) {
-                setPerfil({ foto: "" })
-                alert(err.response.data.error);
-            } else {
-                setError('Ocurrió un error inesperado. Intente nuevamente.');
-            }
+            setPerfil({ foto: "" });
+            setUrlFoto("");
+            showNotification("error", "Error al obtener los datos", err.response?.data?.error || "Ocurrio un error inesperado. Intente nuevamente.");
         }
     };
 
     const handleImageChange = async (e) => {
         const file = e.target.files[0];
-        if (file) {
-            const formData = new FormData();
 
-            formData.append("id_Perfil", perfil.id_Perfil);
+        if (!file) return; // Si no se selecciona un archivo, salir de la función.
 
-            Object.keys(perfil).forEach(key => {
-                if (key !== "foto" && key !== "id_Perfil") { //Evita sobreescribir "foto" 
-                    formData.append(key, perfil[key]);
-                }
+        // Verificar si el archivo es una imagen
+        const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+        if (!validImageTypes.includes(file.type)) {
+            return showNotification("warning", "Formato no válido", "Por favor, selecciona una imagen en formato JPG o PNG.");
+        }
+
+        const formData = new FormData();
+        formData.append("id_Perfil", perfil.id_Perfil);
+
+        Object.keys(perfil).forEach(key => {
+            if (key !== "foto" && key !== "id_Perfil") {
+                formData.append(key, perfil[key]);
+            }
+        });
+
+        formData.append("foto", file); // Agrega la imagen
+
+        try {
+            const response = await api.put(`/perfil/${perfil.id_Perfil}`, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
             });
 
-            formData.append("foto", file); //Agrega la imagen al formData
-
-            try {
-                await api.put(`/perfil/${perfil.id_Perfil}`, formData, {
-                    headers: { "Content-Type": "multipart/form-data" },
-                });
-
+            if (response.status === 200) {
                 await fetchData();
-
-                alert("Foto Perfil actualizado con exito");
-            } catch (error) {
-                console.error("Error al actualizar la foto del perfil:", error);
-                alert("Hubo un error al actualizar la foto.");
+                showNotification("success", "¡Éxito!", "Foto de perfil actualizada con éxito.");
             }
+        } catch (error) {
+            console.error("Error al actualizar la foto del perfil:", error);
+            showNotification("error", "Error", error.response?.data?.error || "Hubo un error al actualizar la foto.");
         }
     };
 
     const handleSave = async (updatedData) => {
         try {
             const response = await api.put(`/perfil/${perfil.id_Perfil}`, updatedData);
-            if (response.status === 201) {
-                alert('Datos actualizados con exito');
+
+            if (response.status === 200) {
+                showNotification("success", "¡Éxito!", "Datos del perfil actualizados con éxito.");
+                setIsFormModalOpen(false);
+                await fetchData();
+            } else {
+                throw new Error("La actualización no fue exitosa.");
             }
-            setIsFormModalOpen(false);
-            fetchData();
         } catch (error) {
             console.error("Error al actualizar el perfil:", error);
-            alert("Hubo un error al actualizar el perfil.");
+            showNotification("error", "Error", error.response?.data?.error || "Hubo un error al actualizar el perfil.");
         }
     };
 
     const handleSavePassword = async (newPassword) => {
-        const token = localStorage.getItem("token");
-
-        try {
-            const response = await api.put(`/login/cPw/${username}`, { password: newPassword },
-                {
-                    headers: { Authorization: `Bearer ${token}` }
-                }
-            );
-
-            alert(response.data.message);
-        } catch (error) {
-            console.error("Error al actualizar la contraseña", error);
-            alert("Error al actulizar la contraseña");
+        if (!newPassword || newPassword.length < 6) {
+            showNotification("error", "Contraseña inválida", "La contraseña debe tener al menos 6 caracteres.");
+            return;
         }
-    }
-
-    //Petición para eliminar el perfil
-    const handleDeleteProfile = async () => {
-        if (window.confirm(`¿Está seguro de que desea eliminar su perfil? Esta acción no se puede deshacer.`)) {
-            try {
-                await api.delete(`/perfil/${perfil.id_Perfil}`);
-                alert(`El Perfil ${perfil.id_Perfil} ha sido eliminado correctamente.`);
-                handleLogout();
-            } catch (error) {
-                console.error("Error al actualizar la contraseña", error);
-                alert("Ocurrio un errror inesperado, intente nuevamente");
-            }
+        try {
+            const response = await api.put(`/login/cPw/${username}`,
+                { password: newPassword },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            showNotification("success", "¡Éxito!", response.data.message);
+        } catch (error) {
+            console.error("Error al actualizar la contraseña:", error);
+            showNotification("error", "Error", error.response?.data?.error || "Error al actualizar la contraseña, por favor vuelva a iniciar sesión.");
         }
     };
 
+    //Petición para eliminar el perfil
+    const handleDeleteProfile = async () => {
+        const confirmDelete = await showConfirmation("¿Está seguro?", "Esta acción eliminará su perfil permanentemente y no se puede deshacer.");
+
+        if (confirmDelete.isConfirmed) {
+            try {
+                await api.delete(`/perfil/${perfil.id_Perfil}`);
+                showNotification("success", "¡Perfil Eliminado!", `El perfil con ID ${perfil.id_Perfil} ha sido eliminado correctamente.`);
+                handleLogout(); // Cierra sesión después de eliminar el perfil
+            } catch (error) {
+                console.error("Error al eliminar el perfil:", error);
+                showNotification("error", "Error", error.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
+            }
+        }
+    };
 
     return (
         <PageLayout username={username} setAuth={setAuth} urlimgProfile={urlFoto}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import '../styles/TableComponent.css'
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -134,15 +134,22 @@ const TableComponent = ({
                                 {expandedRow === rowIndex && (
                                     <tr>
                                         <td colSpan={columns.length + 1}>
-                                            <div
-                                                className={`expanded-details-wrapper ${expandedRow === rowIndex ? "open" : ""}`}
-                                            >
+                                            <div className={`expanded-details-wrapper ${expandedRow === rowIndex ? "open" : ""}`}>
                                                 <div className="expanded-details">
-                                                    {Object.entries(row).map(([key, value]) => (
-                                                        <p key={key}>
-                                                            <strong>{key}</strong>: {value || "N/A"}
-                                                        </p>
-                                                    ))}
+                                                    <div className="details-column">
+                                                        {Object.entries(row).slice(0, Math.ceil(Object.entries(row).length / 2)).map(([key, value]) => (
+                                                            <p key={key}>
+                                                                <strong>{key}</strong>: {value || "N/A"}
+                                                            </p>
+                                                        ))}
+                                                    </div>
+                                                    <div className="details-column">
+                                                        {Object.entries(row).slice(Math.ceil(Object.entries(row).length / 2)).map(([key, value]) => (
+                                                            <p key={key}>
+                                                                <strong>{key}</strong>: {value || "N/A"}
+                                                            </p>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>

@@ -10,6 +10,7 @@ import Investigacion from './pages/Investigacion';
 import Perfil from './pages/Perfil';
 import Profiles from './pages/Profiles';
 import AcercaDeCreador from './pages/AcercaDeCreador';
+import Register from './pages/Register';
 
 function App() {
   // Obtener el estado inicial desde localStorage
@@ -31,7 +32,10 @@ function App() {
           path="/"
           element={<Login setAuth={handleAuthChange} />} // Pasar setAuth como prop
         />
-
+        <Route
+          path='/register'
+          element={<Register />}
+        />
         {/* Página protegida */}
         <Route
           path="/home"
