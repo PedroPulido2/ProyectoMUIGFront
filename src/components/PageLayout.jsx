@@ -26,7 +26,7 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
         try {
             if (!urlFoto) return imagenProfileOther;
             const photoId = urlFoto.split('/d/')[1]?.split('/')[0];
-            return `${import.meta.env.VITE_URL_BACK}/imagen/load/${photoId}`;
+            return `${process.env.VITE_URL_BACK}/imagen/load/${photoId}`;
         } catch (error) {
             console.error("Error al obtener la imagen de perfil:", error);
             return imagenProfileOther;

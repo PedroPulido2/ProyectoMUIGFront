@@ -150,7 +150,7 @@ const Perfil = ({ setAuth }) => {
                 <br />
                 <div className="infPerfil">
                     <div className="imagen-container">
-                        <img src={perfil.foto ? `${import.meta.env.VITE_URL_BACK}/imagen/load/${perfil.foto.split('/d/')[1]?.split('/')[0] || null}` : perfil.genero === "Masculino" ? imagenProfileMale : perfil.genero === "Femenino" ? imagenProfileFemale : imagenProfileOther}
+                        <img src={perfil.foto ? `${process.env.VITE_URL_BACK}/imagen/load/${perfil.foto.split('/d/')[1]?.split('/')[0] || null}` : perfil.genero === "Masculino" ? imagenProfileMale : perfil.genero === "Femenino" ? imagenProfileFemale : imagenProfileOther}
                             alt="Perfil"
                             className="editable-img"
                         />
