@@ -4,10 +4,13 @@ FROM node:18 AS build
 # Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia solo los archivos necesarios para instalar dependencias
+# Copia el archivo .env
+COPY .env ./
+
+# Copia los archivos necesarios para instalar dependencias
 COPY package.json package-lock.json ./
 
-# Instala todas las dependencias (de producción y de desarrollo)
+# Instala todas las dependencias
 RUN npm ci
 
 # Copia el resto del código
