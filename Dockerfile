@@ -4,9 +4,6 @@ FROM node:18 AS build
 # Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia el archivo .env
-COPY .env ./
-
 # Copia los archivos necesarios para instalar dependencias
 COPY package.json package-lock.json ./
 
