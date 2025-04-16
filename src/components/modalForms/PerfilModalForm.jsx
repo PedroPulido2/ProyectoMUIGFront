@@ -9,7 +9,7 @@ const PerfilModalForm = ({ isOpen, closeModal, onSave, perfilData }) => {
             setFormData({
                 ...perfilData,
                 fechaNacimiento: perfilData.fechaNacimiento
-                    ? new Date(perfilData.fechaNacimiento).toISOString().split("T")[0]
+                    ? perfilData.fechaNacimiento.split("T")[0]
                     : ""
             });
         }
@@ -25,9 +25,7 @@ const PerfilModalForm = ({ isOpen, closeModal, onSave, perfilData }) => {
 
         const formattedData = {
             ...formData,
-            fechaNacimiento: formData.fechaNacimiento
-                ? new Date(formData.fechaNacimiento).toISOString()  // Convierte a formato ISO
-                : null
+            fechaNacimiento: formData.fechaNacimiento || null
         };
 
         onSave(formattedData);  // Enviar los datos convertidos
