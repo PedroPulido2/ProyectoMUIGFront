@@ -1,32 +1,32 @@
-# Etapa de construcción con Node.js
-FROM node:18 AS build
+# Etapa 1: Construcción
+FROM node:18-alpine AS build
 
-# Establece el directorio de trabajo
+# Directorio de trabajo
 WORKDIR /app
 
-# Copia el archivo .env
-COPY .env ./
+# Copiar archivos necesarios
+COPY package*.json ./
 
-# Copia los archivos necesarios para instalar dependencias
-COPY package.json package-lock.json ./
+# Instalar dependencias
+RUN npm install
 
-# Instala todas las dependencias
-RUN npm ci
-
-# Copia el resto del código
+# Copiar el resto del proyecto
 COPY . .
 
-# Ejecuta el comando de construcción para generar los archivos en el directorio dist
+# Construir la aplicación
 RUN npm run build
 
-# Etapa final con Nginx para servir el frontend
+# Etapa 2: Servidor de producción con Nginx
 FROM nginx:alpine
 
-# Copia los archivos construidos desde la etapa anterior
+# Copiar archivos de compilación al contenedor de Nginx
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Expone el puerto 80
+# Eliminar configuración por defecto de Nginx y usar una propia si la tienes
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Exponer el puerto
 EXPOSE 80
 
-# Comando para iniciar Nginx
+# Comando para correr Nginx
 CMD ["nginx", "-g", "daemon off;"]

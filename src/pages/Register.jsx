@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, XCircle, CheckCircle } from "lucide-react";
 import { showNotification } from "../utils/showNotification";
 import "../styles/Register.css";
 
@@ -19,18 +19,26 @@ const Register = () => {
         foto: "",
         user: "",
         password: "",
-        isAdmin: "1"
+        confirmPassword: "",
+        isAdmin: "1",
+        aceptaTerminos: false
     });
 
     const [error, setError] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState({
+        new: false,
+        confirm: false
+    });
 
     useEffect(() => {
         document.title = "Registrarse";
     }, []);
 
-    const togglePasswordVisibility = () => {
-        setShowPassword((prev) => !prev);
+    const togglePasswordVisibility = (field) => {
+        setShowPassword(prev => ({
+            ...prev,
+            [field]: !prev[field]
+        }));
     };
 
     const handleChange = (e) => {
@@ -74,15 +82,27 @@ const Register = () => {
             return;
         }
 
+        if (formData.password !== formData.confirmPassword) {
+            showNotification("error", "Error de confirmación", "Las contraseñas no coinciden.");
+            return;
+        }
+
+        if (!formData.aceptaTerminos) {
+            showNotification("error", "Debes aceptar los términos", "Para continuar, acepta el tratamiento de datos personales.");
+            return;
+        }
+
         const formattedData = {
             ...formData,
-            fechaNacimiento: formData.fechaNacimiento
-                ? new Date(formData.fechaNacimiento).toISOString()
-                : null
+            fechaNacimiento: formData.fechaNacimiento || null
         };
 
         try {
-            const response = await api.post("/perfil", formattedData);
+            const response = await api.post("/perfil", formattedData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
             if (response.status === 201) {
                 showNotification("success", "¡Registro exitoso!", "Usuario registrado correctamente.");
                 navigate("/");
@@ -93,6 +113,8 @@ const Register = () => {
             setError(err.response?.data?.error || "Error al registrar el usuario.");
         }
     };
+
+    const passwordsMatch = formData.password === formData.confirmPassword;
 
     return (
         <div className="register-page">
@@ -152,17 +174,57 @@ const Register = () => {
                         <label htmlFor="password">Contraseña:</label>
                         <div className="password-container">
                             <input
-                                type={showPassword ? "text" : "password"}
+                                type={showPassword.new ? "text" : "password"}
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
                                 placeholder="Ingrese su contraseña"
                                 required
                             />
-                            <button type="button" onClick={togglePasswordVisibility}>
-                                {showPassword ? <EyeOff /> : <Eye />}
+                            <button type="button" onClick={() => togglePasswordVisibility("new")}>
+                                {showPassword.new ? <EyeOff /> : <Eye />}
                             </button>
                         </div>
+
+                    </div>
+                    <div className="form-group">
+                        <label>Confirmar Contraseña:</label>
+                        <div className="password-container">
+                            <input
+                                type={showPassword.confirm ? "text" : "password"}
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
+                                placeholder="Repita la contraseña"
+                                required
+                            />
+                            <button type="button" onClick={() => togglePasswordVisibility("confirm")}>
+                                {showPassword.confirm ? <EyeOff /> : <Eye />}
+                            </button>
+                            {formData.confirmPassword && (
+                                <div className="validation-icon">
+                                    {passwordsMatch ? (
+                                        <CheckCircle className="icon-success" />
+                                    ) : (
+                                        <XCircle className="icon-error" />
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <div className="form-group checkbox-group">
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="aceptaTerminos"
+                                checked={formData.aceptaTerminos}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, aceptaTerminos: e.target.checked })
+                                }
+                                required
+                            />
+                            Acepto el tratamiento de mis datos personales según la política de privacidad.
+                        </label>
                     </div>
                     <br />
                     {error && <p className="error-message">{error}</p>}

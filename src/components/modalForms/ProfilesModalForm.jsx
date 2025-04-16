@@ -130,9 +130,7 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
 
         const formattedData = {
             ...formData,
-            fechaNacimiento: formData.fechaNacimiento
-                ? new Date(formData.fechaNacimiento).toISOString()  // Convierte a formato ISO
-                : null
+            fechaNacimiento: formData.fechaNacimiento || null
         };
 
         onSave(formattedData);

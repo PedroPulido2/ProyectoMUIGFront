@@ -14,6 +14,7 @@ import '../styles/Perfil.css'
 const Perfil = ({ setAuth }) => {
     const username = localStorage.getItem("username") || "Invitado";
     const id_Perfil = localStorage.getItem("id_Perfil") || null;
+    const token = localStorage.getItem("token") || null;
 
     const [perfil, setPerfil] = useState({});
     const [isFormModalOpen, setIsFormModalOpen] = useState(false);
@@ -72,7 +73,14 @@ const Perfil = ({ setAuth }) => {
 
         Object.keys(perfil).forEach(key => {
             if (key !== "foto" && key !== "id_Perfil") {
-                formData.append(key, perfil[key]);
+                let value = perfil[key];
+
+                // Limpiar la fecha si es fechaNacimiento
+                if (key === "fechaNacimiento" && typeof value === "string") {
+                    value = value.split("T")[0];
+                }
+
+                formData.append(key, value);
             }
         });
 
@@ -95,7 +103,12 @@ const Perfil = ({ setAuth }) => {
 
     const handleSave = async (updatedData) => {
         try {
-            const response = await api.put(`/perfil/${perfil.id_Perfil}`, updatedData);
+            const cleanedData = {
+                ...updatedData,
+                fechaNacimiento: updatedData.fechaNacimiento?.split("T")[0]
+            };
+
+            const response = await api.put(`/perfil/${perfil.id_Perfil}`, cleanedData);
 
             if (response.status === 200) {
                 showNotification("success", "¡Éxito!", "Datos del perfil actualizados con éxito.");

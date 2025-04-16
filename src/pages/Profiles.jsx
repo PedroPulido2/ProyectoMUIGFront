@@ -34,11 +34,11 @@ const Profiles = ({ setAuth }) => {
             "Super-Administrador",
 
         FECHA_NACIMIENTO: profile.FECHA_NACIMIENTO
-          ? new Date(profile.FECHA_NACIMIENTO).toISOString().split("T")[0]
+          ? profile.FECHA_NACIMIENTO.split("T")[0]
           : "",
 
         FECHA_CREACION: profile.FECHA_CREACION
-          ? new Date(profile.FECHA_CREACION).toISOString().split("T")[0]
+          ? profile.FECHA_CREACION.split("T")[0]
           : ""
       }));
 
