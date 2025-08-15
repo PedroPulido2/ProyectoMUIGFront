@@ -64,6 +64,18 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === "N_BARRANTES") {
+            if (!/^\d*$/.test(value)) return; // Permite solo números
+            if (value.length > 4) return;
+        }
+
+        if (name === "FILO" || name === "SUBFILO" || name === "CLASE" || name === "ORDEN" || name === "FAMILIA" ||
+            name === "GENERO" || name === "NOMBRE_FOSIL" || name === "COLECTOR"
+        ) {
+            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value)) return;
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -113,14 +125,18 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
                                     value={formData.ID_FOSIL_PREFIX || ""}
                                     onChange={(e) => setFormData(prev => ({ ...prev, ID_FOSIL_PREFIX: e.target.value }))}
                                 >
-                                    <option value="">(Vacío)</option>
                                     <option value="MGUPTC-CPL-">MGUPTC-CPL-</option>
                                 </select>
                                 <input
                                     type="text"
                                     name="ID_FOSIL_SUFFIX"
                                     value={formData.ID_FOSIL_SUFFIX}
-                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_FOSIL_SUFFIX: e.target.value }))}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        if (!/^[a-zA-Z0-9]*$/.test(value)) return;
+                                        if (value.length > 6) return;
+                                        setFormData(prev => ({ ...prev, ID_FOSIL_SUFFIX: value }));
+                                    }}
                                     required
                                 />
                             </div>

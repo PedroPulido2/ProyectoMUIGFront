@@ -64,6 +64,14 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === "FILO" || name === "SUBFILO" || name === "CLASE" || name === "ORDEN" || name === "FAMILIA" || name === "GENERO" ||
+            name === "NOMBRE" || name === "PERIODO_GEOLOGICO" || name === "ERA_GEOLOGICA" || name === "FORMACION_GEOLOGICA" || name === "COLECTOR" ||
+            name === "COLECTOR"
+        ) {
+            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value)) return;
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -113,7 +121,6 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
                                     value={formData.ID_PIEZA_PREFIX || ""}
                                     onChange={(e) => setFormData(prev => ({ ...prev, ID_PIEZA_PREFIX: e.target.value }))}
                                 >
-                                    <option value="">(Vacío)</option>
                                     <option value="MGUPTC-CPi-AFPC-">MGUPTC-CPi-AFPC-</option>
                                     <option value="MGUPTC-CPi-HRR-">MGUPTC-CPi-HRR-</option>
                                     <option value="MGUPTC-CPi-MJGL-">MGUPTC-CPi-MJGL-</option>
@@ -122,7 +129,12 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
                                     type="text"
                                     name="ID_PIEZA_SUFFIX"
                                     value={formData.ID_PIEZA_SUFFIX}
-                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_PIEZA_SUFFIX: e.target.value }))}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        if (!/^[a-zA-Z0-9]*$/.test(value)) return;
+                                        if (value.length > 6) return;
+                                        setFormData(prev => ({ ...prev, ID_PIEZA_SUFFIX: value }));
+                                    }}
                                     required
                                 />
                             </div>

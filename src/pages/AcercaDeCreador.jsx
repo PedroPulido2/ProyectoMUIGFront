@@ -29,7 +29,12 @@ const AcercaDeCreador = ({ setAuth }) => {
           <p className="contact">
             📧 Contacto personal: <a href="mailto:pedropulido1104@gmail.com">pedropulido1104@gmail.com</a><br />
             📧 Contacto institucional: <a href="mailto:pedro.pulido01@uptc.edu.co">pedro.pulido01@uptc.edu.co</a><br />
-            🌐 Portafolio: <a href="https://www.linkedin.com/in/pedro-alonso-pulido-hernández-134936181" target="_blank" rel="noopener noreferrer">LinkedIn</a><br />
+            {/* 🌐 Portafolio: 
+<a href="https://www.linkedin.com/in/pedro-alonso-pulido-hernández-134936181" 
+   target="_blank" 
+   rel="noopener noreferrer">
+   LinkedIn
+</a><br /> */}
             <br /><br /><br />
             © {new Date().getFullYear()} Todos los derechos reservados.
           </p>

@@ -81,7 +81,109 @@
     color: #333;
     text-align: left;
 }
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
 
+.password-container input {
+    width: 100%;
+    padding-right: 60px; /* Espacio para ícono y botón */
+}
+
+.password-container button {
+    position: absolute;
+    right: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.validation-icon {
+    position: absolute;
+    right: 40px; /* Antes del botón del ojo */
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-success {
+    color: green;
+    width: 20px;
+    height: 20px;
+}
+
+.icon-error {
+    color: red;
+    width: 20px;
+    height: 20px;
+}
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    padding-left: 30px; /* espacio para el check */
+    font-size: 14px;
+    user-select: none;
+}
+
+/* Ocultamos el checkbox real */
+.custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Dibujamos el cuadrado del checkbox */
+.checkmark {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 18px;
+    width: 18px;
+    background-color: #f1f1f1;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+/* Cuando se pasa el mouse */
+.custom-checkbox:hover input ~ .checkmark {
+    border-color: #888;
+}
+
+/* Cuando está marcado */
+.custom-checkbox input:checked ~ .checkmark {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+/* Dibujamos la palomita (✔) */
+.checkmark::after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 5px;
+    top: 1px;
+    width: 4px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Mostramos la palomita cuando está marcado */
+.custom-checkbox input:checked ~ .checkmark::after {
+    display: block;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {

@@ -53,6 +53,17 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === "N_BARRANTES") {
+            if (!/^\d*$/.test(value)) return; // Permite solo números
+            if (value.length > 4) return;
+        }
+
+        if (name === "TIPO" || name === "NOMBRE_PIEZA" || name === "DEPARTAMENTO" || name === "MUNICIPIO" ||
+            name === "COLECTOR_DONADOR") {
+            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value)) return;
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -102,14 +113,18 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
                                     value={formData.ID_ROCA_PREFIX || ""}
                                     onChange={(e) => setFormData(prev => ({ ...prev, ID_ROCA_PREFIX: e.target.value }))}
                                 >
-                                    <option value="">(Vacío)</option>
                                     <option value="MGUPTC-CPT-">MGUPTC-CPT-</option>
                                 </select>
                                 <input
                                     type="text"
                                     name="ID_ROCA_SUFFIX"
                                     value={formData.ID_ROCA_SUFFIX}
-                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_ROCA_SUFFIX: e.target.value }))}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        if (!/^[a-zA-Z0-9]*$/.test(value)) return;
+                                        if (value.length > 6) return;
+                                        setFormData(prev => ({ ...prev, ID_ROCA_SUFFIX: value }));
+                                    }}
                                     required
                                 />
                             </div>
