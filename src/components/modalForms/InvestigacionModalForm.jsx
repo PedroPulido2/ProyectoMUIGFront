@@ -26,10 +26,15 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
     });
 
     useEffect(() => {
+        const defaultPrefix = "MGUPTC-CPi-AFPC-";
+        const prefixes = ["MGUPTC-CPi-AFPC-", "MGUPTC-CPi-HRR-", "MGUPTC-CPi-MJGL-"];
+
         if (investigacionData) {
-            const prefixes = ["MGUPTC-CPi-AFPC-", "MGUPTC-CPi-HRR-", "MGUPTC-CPi-MJGL-"];
-            let selectedPrefix = prefixes.find(prefix => investigacionData.ID_PIEZA?.startsWith(prefix)) || "";
-            let suffix = investigacionData.ID_PIEZA ? investigacionData.ID_PIEZA.replace(selectedPrefix, "") : "";
+            let selectedPrefix =
+                prefixes.find(prefix => investigacionData.ID_PIEZA?.startsWith(prefix)) || defaultPrefix;
+
+            let suffix =
+                investigacionData.ID_PIEZA?.replace(selectedPrefix, "") || "";
 
             setFormData({
                 ...investigacionData,
@@ -39,7 +44,7 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
             });
         } else {
             setFormData({
-                ID_PIEZA_PREFIX: "",
+                ID_PIEZA_PREFIX: defaultPrefix,
                 ID_PIEZA_SUFFIX: "",
                 COLECCION: "",
                 REPOSITORIO: "",

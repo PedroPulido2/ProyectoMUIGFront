@@ -4,7 +4,7 @@ import '../../styles/FormModal.css';
 
 const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
     const [formData, setFormData] = useState({
-        ID_MINERAL: "",
+        ID_MINERAL: "MGUPTC-CM-",
         N_BARRANTES: "",
         COLECCION: "",
         NOMBRE_MINERAL: "",
@@ -22,18 +22,16 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
 
     useEffect(() => {
         if (mineralData) {
-            const prefix = mineralData.ID_MINERAL?.startsWith("MGUPTC-CM-") ? "MGUPTC-CM-" : "";
-            const suffix = mineralData.ID_MINERAL ? mineralData.ID_MINERAL.replace("MGUPTC-CM-", "") : "";
-
+            const suffix = mineralData.ID_MINERAL?.replace("MGUPTC-CM-", "") || "";
             setFormData({
                 ...mineralData,
-                ID_MINERAL_PREFIX: prefix,
+                ID_MINERAL_PREFIX: "MGUPTC-CM-",
                 ID_MINERAL_SUFFIX: suffix,
                 FOTO: null
             });
         } else {
             setFormData({
-                ID_MINERAL_PREFIX: "",
+                ID_MINERAL_PREFIX: "MGUPTC-CM-",
                 ID_MINERAL_SUFFIX: "",
                 N_BARRANTES: "",
                 COLECCION: "",

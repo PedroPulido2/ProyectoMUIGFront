@@ -4,7 +4,7 @@ import { showNotification } from "../../utils/showNotification";
 
 const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
     const [formData, setFormData] = useState({
-        ID_FOSIL_PREFIX: "",
+        ID_FOSIL_PREFIX: "MGUPTC-CPL-",
         ID_FOSIL_SUFFIX: "",
         N_BARRANTES: "",
         COLECCION: "",
@@ -28,17 +28,16 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
 
     useEffect(() => {
         if (fosilData) {
-            const prefix = fosilData.ID_FOSIL?.startsWith("MGUPTC-CPL-") ? "MGUPTC-CPL-" : "";
-            const suffix = fosilData.ID_FOSIL ? fosilData.ID_FOSIL.replace("MGUPTC-CPL-", "") : "";
+            const suffix = fosilData.ID_FOSIL?.replace("MGUPTC-CPL-", "") || "";
             setFormData({
                 ...fosilData,
-                ID_FOSIL_PREFIX: prefix,
+                ID_FOSIL_PREFIX: "MGUPTC-CPL-",
                 ID_FOSIL_SUFFIX: suffix,
                 FOTO: null
             });
         } else {
             setFormData({
-                ID_FOSIL_PREFIX: "",
+                ID_FOSIL_PREFIX: "MGUPTC-CPL-",
                 ID_FOSIL_SUFFIX: "",
                 N_BARRANTES: "",
                 COLECCION: "",
