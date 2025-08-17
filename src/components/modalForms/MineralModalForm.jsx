@@ -4,7 +4,7 @@ import '../../styles/FormModal.css';
 
 const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
     const [formData, setFormData] = useState({
-        ID_MINERAL: "",
+        ID_MINERAL: "MGUPTC-CM-",
         N_BARRANTES: "",
         COLECCION: "",
         NOMBRE_MINERAL: "",
@@ -22,18 +22,16 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
 
     useEffect(() => {
         if (mineralData) {
-            const prefix = mineralData.ID_MINERAL?.startsWith("MGUPTC-CM-") ? "MGUPTC-CM-" : "";
-            const suffix = mineralData.ID_MINERAL ? mineralData.ID_MINERAL.replace("MGUPTC-CM-", "") : "";
-
+            const suffix = mineralData.ID_MINERAL?.replace("MGUPTC-CM-", "") || "";
             setFormData({
                 ...mineralData,
-                ID_MINERAL_PREFIX: prefix,
+                ID_MINERAL_PREFIX: "MGUPTC-CM-",
                 ID_MINERAL_SUFFIX: suffix,
                 FOTO: null
             });
         } else {
             setFormData({
-                ID_MINERAL_PREFIX: "",
+                ID_MINERAL_PREFIX: "MGUPTC-CM-",
                 ID_MINERAL_SUFFIX: "",
                 N_BARRANTES: "",
                 COLECCION: "",
@@ -54,6 +52,18 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === "N_BARRANTES" || name === "CANTIDAD") {
+            if (!/^\d*$/.test(value)) return; // Permite solo números
+            if (value.length > 4) return;
+        }
+
+        if (name === "NOMBRE_MINERAL" || name === "GRUPO_MINERALOGICO" || name === "REGION" || name === "SUBGRUPO"
+            || name === "COLECTOR"
+        ) {
+            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value)) return;
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -103,14 +113,18 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
                                     value={formData.ID_MINERAL_PREFIX || ""}
                                     onChange={(e) => setFormData(prev => ({ ...prev, ID_MINERAL_PREFIX: e.target.value }))}
                                 >
-                                    <option value="">(Vacío)</option>
                                     <option value="MGUPTC-CM-">MGUPTC-CM-</option>
                                 </select>
                                 <input
                                     type="text"
                                     name="ID_MINERAL_SUFFIX"
                                     value={formData.ID_MINERAL_SUFFIX}
-                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_MINERAL_SUFFIX: e.target.value }))}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        if (!/^[a-zA-Z0-9]*$/.test(value)) return;
+                                        if (value.length > 6) return;
+                                        setFormData(prev => ({ ...prev, ID_MINERAL_SUFFIX: value }));
+                                    }}
                                     required
                                 />
                             </div>

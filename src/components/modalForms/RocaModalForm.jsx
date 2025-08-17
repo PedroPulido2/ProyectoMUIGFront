@@ -4,7 +4,7 @@ import '../../styles/FormModal.css';
 
 const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
     const [formData, setFormData] = useState({
-        ID_ROCA: "",
+        ID_ROCA: "MGUPTC-CPT-",
         N_BARRANTES: "",
         OTROS: "",
         BD_C_VARGAS: "",
@@ -22,17 +22,16 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
 
     useEffect(() => {
         if (rocaData) {
-            const prefix = rocaData.ID_ROCA?.startsWith("MGUPTC-CPT-") ? "MGUPTC-CPT-" : "";
-            const suffix = rocaData.ID_ROCA ? rocaData.ID_ROCA.replace("MGUPTC-CPT-", "") : "";
+            const suffix = rocaData.ID_ROCA?.replace("MGUPTC-CPT-", "") || "";
             setFormData({
                 ...rocaData,
-                ID_ROCA_PREFIX: prefix,
+                ID_ROCA_PREFIX: "MGUPTC-CPT-",
                 ID_ROCA_SUFFIX: suffix,
                 FOTO: null
             });
         } else {
             setFormData({
-                ID_ROCA_PREFIX: "",
+                ID_ROCA_PREFIX: "MGUPTC-CPT-",
                 ID_ROCA_SUFFIX: "",
                 N_BARRANTES: "",
                 OTROS: "",
@@ -53,6 +52,17 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === "N_BARRANTES") {
+            if (!/^\d*$/.test(value)) return; // Permite solo números
+            if (value.length > 4) return;
+        }
+
+        if (name === "TIPO" || name === "NOMBRE_PIEZA" || name === "DEPARTAMENTO" || name === "MUNICIPIO" ||
+            name === "COLECTOR_DONADOR") {
+            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value)) return;
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -99,17 +109,21 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
                             <label>ID roca:</label>
                             <div className="id-container">
                                 <select
-                                    value={formData.ID_ROCA_PREFIX || ""}
+                                    value={formData.ID_ROCA_PREFIX}
                                     onChange={(e) => setFormData(prev => ({ ...prev, ID_ROCA_PREFIX: e.target.value }))}
                                 >
-                                    <option value="">(Vacío)</option>
                                     <option value="MGUPTC-CPT-">MGUPTC-CPT-</option>
                                 </select>
                                 <input
                                     type="text"
                                     name="ID_ROCA_SUFFIX"
                                     value={formData.ID_ROCA_SUFFIX}
-                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_ROCA_SUFFIX: e.target.value }))}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        if (!/^[a-zA-Z0-9]*$/.test(value)) return;
+                                        if (value.length > 6) return;
+                                        setFormData(prev => ({ ...prev, ID_ROCA_SUFFIX: value }));
+                                    }}
                                     required
                                 />
                             </div>

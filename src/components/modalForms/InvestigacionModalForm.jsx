@@ -26,10 +26,15 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
     });
 
     useEffect(() => {
+        const defaultPrefix = "MGUPTC-CPi-AFPC-";
+        const prefixes = ["MGUPTC-CPi-AFPC-", "MGUPTC-CPi-HRR-", "MGUPTC-CPi-MJGL-"];
+
         if (investigacionData) {
-            const prefixes = ["MGUPTC-CPi-AFPC-", "MGUPTC-CPi-HRR-", "MGUPTC-CPi-MJGL-"];
-            let selectedPrefix = prefixes.find(prefix => investigacionData.ID_PIEZA?.startsWith(prefix)) || "";
-            let suffix = investigacionData.ID_PIEZA ? investigacionData.ID_PIEZA.replace(selectedPrefix, "") : "";
+            let selectedPrefix =
+                prefixes.find(prefix => investigacionData.ID_PIEZA?.startsWith(prefix)) || defaultPrefix;
+
+            let suffix =
+                investigacionData.ID_PIEZA?.replace(selectedPrefix, "") || "";
 
             setFormData({
                 ...investigacionData,
@@ -39,7 +44,7 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
             });
         } else {
             setFormData({
-                ID_PIEZA_PREFIX: "",
+                ID_PIEZA_PREFIX: defaultPrefix,
                 ID_PIEZA_SUFFIX: "",
                 COLECCION: "",
                 REPOSITORIO: "",
@@ -64,6 +69,14 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === "FILO" || name === "SUBFILO" || name === "CLASE" || name === "ORDEN" || name === "FAMILIA" || name === "GENERO" ||
+            name === "NOMBRE" || name === "PERIODO_GEOLOGICO" || name === "ERA_GEOLOGICA" || name === "FORMACION_GEOLOGICA" || name === "COLECTOR" ||
+            name === "COLECTOR"
+        ) {
+            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value)) return;
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -113,7 +126,6 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
                                     value={formData.ID_PIEZA_PREFIX || ""}
                                     onChange={(e) => setFormData(prev => ({ ...prev, ID_PIEZA_PREFIX: e.target.value }))}
                                 >
-                                    <option value="">(Vacío)</option>
                                     <option value="MGUPTC-CPi-AFPC-">MGUPTC-CPi-AFPC-</option>
                                     <option value="MGUPTC-CPi-HRR-">MGUPTC-CPi-HRR-</option>
                                     <option value="MGUPTC-CPi-MJGL-">MGUPTC-CPi-MJGL-</option>
@@ -122,7 +134,12 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
                                     type="text"
                                     name="ID_PIEZA_SUFFIX"
                                     value={formData.ID_PIEZA_SUFFIX}
-                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_PIEZA_SUFFIX: e.target.value }))}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        if (!/^[a-zA-Z0-9]*$/.test(value)) return;
+                                        if (value.length > 6) return;
+                                        setFormData(prev => ({ ...prev, ID_PIEZA_SUFFIX: value }));
+                                    }}
                                     required
                                 />
                             </div>

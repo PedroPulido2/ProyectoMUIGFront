@@ -4,7 +4,7 @@ import { showNotification } from "../../utils/showNotification";
 
 const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
     const [formData, setFormData] = useState({
-        ID_FOSIL_PREFIX: "",
+        ID_FOSIL_PREFIX: "MGUPTC-CPL-",
         ID_FOSIL_SUFFIX: "",
         N_BARRANTES: "",
         COLECCION: "",
@@ -28,17 +28,16 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
 
     useEffect(() => {
         if (fosilData) {
-            const prefix = fosilData.ID_FOSIL?.startsWith("MGUPTC-CPL-") ? "MGUPTC-CPL-" : "";
-            const suffix = fosilData.ID_FOSIL ? fosilData.ID_FOSIL.replace("MGUPTC-CPL-", "") : "";
+            const suffix = fosilData.ID_FOSIL?.replace("MGUPTC-CPL-", "") || "";
             setFormData({
                 ...fosilData,
-                ID_FOSIL_PREFIX: prefix,
+                ID_FOSIL_PREFIX: "MGUPTC-CPL-",
                 ID_FOSIL_SUFFIX: suffix,
                 FOTO: null
             });
         } else {
             setFormData({
-                ID_FOSIL_PREFIX: "",
+                ID_FOSIL_PREFIX: "MGUPTC-CPL-",
                 ID_FOSIL_SUFFIX: "",
                 N_BARRANTES: "",
                 COLECCION: "",
@@ -64,6 +63,18 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === "N_BARRANTES") {
+            if (!/^\d*$/.test(value)) return; // Permite solo números
+            if (value.length > 4) return;
+        }
+
+        if (name === "FILO" || name === "SUBFILO" || name === "CLASE" || name === "ORDEN" || name === "FAMILIA" ||
+            name === "GENERO" || name === "NOMBRE_FOSIL" || name === "COLECTOR"
+        ) {
+            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value)) return;
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -113,14 +124,18 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
                                     value={formData.ID_FOSIL_PREFIX || ""}
                                     onChange={(e) => setFormData(prev => ({ ...prev, ID_FOSIL_PREFIX: e.target.value }))}
                                 >
-                                    <option value="">(Vacío)</option>
                                     <option value="MGUPTC-CPL-">MGUPTC-CPL-</option>
                                 </select>
                                 <input
                                     type="text"
                                     name="ID_FOSIL_SUFFIX"
                                     value={formData.ID_FOSIL_SUFFIX}
-                                    onChange={(e) => setFormData(prev => ({ ...prev, ID_FOSIL_SUFFIX: e.target.value }))}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        if (!/^[a-zA-Z0-9]*$/.test(value)) return;
+                                        if (value.length > 6) return;
+                                        setFormData(prev => ({ ...prev, ID_FOSIL_SUFFIX: value }));
+                                    }}
                                     required
                                 />
                             </div>

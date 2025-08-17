@@ -44,15 +44,48 @@ const Register = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        // Validación del número de documento (solo números y hasta 30 dígitos)
+        const invalidSequences = ["1234", "0000", "1111", "2222", "3333", "4444", "5555", "6666", "7777", "8888", "9999"];
+
+        if (name === "tipoIdentificacion") {
+            setFormData({
+                ...formData,
+                tipoIdentificacion: value,
+                id_Perfil: "" // Limpia el número de documento
+            });
+            return;
+        }
+
         if (name === "id_Perfil") {
-            if (!/^\d*$/.test(value)) return; // Permite solo números
-            if (value.length > 30) return; // Máximo 30 dígitos
+            if (invalidSequences.includes(value)) return;
+            if (formData.tipoIdentificacion === "Pasaporte") {
+                if (!/^[a-zA-Z0-9]*$/.test(value)) return;
+                if (value.length > 10) return;
+            } else {
+                // Otros documentos: solo números, hasta 12 dígitos
+                if (!/^\d*$/.test(value)) return;
+                if (value.length > 12) return;
+            }
         }
 
         // Validación del teléfono (solo números)
         if (name === "telefono") {
+            if (invalidSequences.includes(value)) return;
             if (!/^\d*$/.test(value)) return; // Permite solo números
+            if (value.length > 10) return;
+        }
+
+        if (name === "nombre" || name === "apellido") {
+            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value)) return;
+        }
+
+        if (name === "correo") {
+            // Patrón básico para validar formato de email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (value && !emailRegex.test(value)) {
+                setError("El formato del correo no es válido.");
+            } else {
+                setError(""); // Limpia el error si es válido
+            }
         }
 
         setFormData({ ...formData, [name]: value });
@@ -74,6 +107,21 @@ const Register = () => {
             (age === 14 && monthDiff === 0 && today.getDate() < birthDate.getDate())
         ) {
             showNotification("error", "Edad inválida", "El usuario debe tener al menos 14 años.");
+            return;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.correo)) {
+            showNotification("error", "Correo inválido", "Ingrese un correo electrónico válido.");
+            return;
+        }
+
+        if (formData.id_Perfil.length >= 1 && formData.id_Perfil.length < 5) {
+            showNotification("error", "Id Perfil invalido", "El id Perfil debe tener al menos 5 caracteres.");
+            return;
+        }
+
+        if (formData.telefono.length >= 1 && formData.telefono.length < 5) {
+            showNotification("error", "Telefono invalido", "El número de telefono debe tener al menos 5 caracteres.");
             return;
         }
 
@@ -213,7 +261,7 @@ const Register = () => {
                         </div>
                     </div>
                     <div className="form-group checkbox-group">
-                        <label>
+                        <label className="custom-checkbox">
                             <input
                                 type="checkbox"
                                 name="aceptaTerminos"
@@ -223,6 +271,7 @@ const Register = () => {
                                 }
                                 required
                             />
+                            <span className="checkmark"></span>
                             Acepto el tratamiento de mis datos personales según la política de privacidad.
                         </label>
                     </div>

@@ -5,6 +5,6 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   plugins: [react()],
   define: {
-    'process.env.VITE_URL_BACK': JSON.stringify('https://proyectomuigback.up.railway.app/api')
+    'process.env.VITE_URL_BACK': JSON.stringify('http://proyectomuigback.railway.internal/api')
   }
 })
