@@ -212,7 +212,7 @@
     /* Sombra suave para separar el header del contenido */
     width: calc(100% - 85px);
     /* Asegura que el header ocupe todo el ancho */
-    transition: left 0.4s ease, width 0.4s ease;
+    transition: left 0.3s ease, width 0.3s ease;
     /* Añade una transición para suavizar el efecto */
 }
 

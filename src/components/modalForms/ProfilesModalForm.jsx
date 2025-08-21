@@ -76,7 +76,6 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
             setFormData({
                 ...formData,
                 tipoIdentificacion: value,
-                id_Perfil: "" // Limpia el número de documento
             });
             return;
         }
