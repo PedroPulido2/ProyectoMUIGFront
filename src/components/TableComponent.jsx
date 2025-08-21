@@ -114,7 +114,7 @@ const TableComponent = ({
                                                     onError={(e) => (e.target.src = ErrorImage)}
                                                     onClick={(e) => {
                                                         e.stopPropagation();
-                                                        openModal(`${process.env.VITE_URL_BACK}/imagen/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`);
+                                                        openModal(`${import.meta.env.VITE_URL_BACK}/imagen/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`);
                                                     }}
                                                 />
                                             ) : (

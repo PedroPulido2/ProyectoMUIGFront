@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import '../styles/PageLayout.css';
 import rutaLogo from '../styles/images/Logo-simuig3.png';
 import { Link } from "react-router-dom";
@@ -7,10 +7,30 @@ import imagenProfileOther from '../styles/images/profile-other.jpg';
 const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
     const [urlFoto, setUrlFoto] = useState(localStorage.getItem('urlFotoProfile') || urlimgProfile);
     const isAdmin = Number(localStorage.getItem('isAdmin')) || 0;
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const sidebarRef = useRef(null);
+    const buttonRef = useRef(null);
 
     useEffect(() => {
         setUrlFoto(localStorage.getItem('urlFotoProfile') || urlimgProfile);
-    }, [urlimgProfile]);
+
+        const handleClickOutside = (event) => {
+            if (
+                isSidebarOpen &&
+                sidebarRef.current &&
+                !sidebarRef.current.contains(event.target) &&
+                buttonRef.current &&
+                !buttonRef.current.contains(event.target)
+            ) {
+                setIsSidebarOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [urlimgProfile, isSidebarOpen]);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -36,7 +56,7 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
     return (
         <div className="layout-container">
             {/* Sidebar */}
-            <div className="sidebar">
+            <div ref={sidebarRef} className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
                 <div className="sidebar-header">
                     <img src={rutaLogo} alt="Logo del sistema" />
                     <h2>Museo Universitario Ingeniería Geológica</h2>
@@ -101,6 +121,13 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
             {/* Contenido Principal */}
             <div className="page-content">
                 <header className="page-header">
+                    <button
+                        ref={buttonRef}
+                        className="menu-toggle material-symbols-outlined"
+                        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                    >
+                        menu
+                    </button>
                     <h1>Gestion Inventario MUIG-UPTC</h1>
                 </header>
 
