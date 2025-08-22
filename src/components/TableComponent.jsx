@@ -108,13 +108,13 @@ const TableComponent = ({
                                             {row[col] && row[col].toString().startsWith("http") ? (
                                                 <LazyLoadImage
                                                     effect="blur"
-                                                    src={`${import.meta.env.VITE_URL_BACK}/imagen/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`}
+                                                    src={`${process.env.VITE_URL_BACK}/imagen/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`}
                                                     className="table-image"
                                                     threshold={300}
                                                     onError={(e) => (e.target.src = ErrorImage)}
                                                     onClick={(e) => {
                                                         e.stopPropagation();
-                                                        openModal(`${import.meta.env.VITE_URL_BACK}/imagen/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`);
+                                                        openModal(`${process.env.VITE_URL_BACK}/imagen/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`);
                                                     }}
                                                 />
                                             ) : (
