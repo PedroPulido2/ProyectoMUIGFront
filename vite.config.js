@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   base: './',
   define: {
-    'process.env.VITE_URL_BACK': JSON.stringify('https://muigbk.up.railway.app/api')
+    'process.env.VITE_URL_BACK': JSON.stringify('/api')
   }
 })
