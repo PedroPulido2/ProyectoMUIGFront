@@ -108,13 +108,13 @@ const TableComponent = ({
                                             {row[col] && row[col].toString().startsWith("http") ? (
                                                 <LazyLoadImage
                                                     effect="blur"
-                                                    src={`${process.env.VITE_URL_BACK}/imagen/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`}
+                                                    src={`${process.env.VITE_URL_BACK}/imagen/wm/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`}
                                                     className="table-image"
                                                     threshold={300}
                                                     onError={(e) => (e.target.src = ErrorImage)}
                                                     onClick={(e) => {
                                                         e.stopPropagation();
-                                                        openModal(`${process.env.VITE_URL_BACK}/imagen/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`);
+                                                        openModal(`${process.env.VITE_URL_BACK}/imagen/wm/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`);
                                                     }}
                                                 />
                                             ) : (
@@ -137,14 +137,14 @@ const TableComponent = ({
                                             <div className={`expanded-details-wrapper ${expandedRow === rowIndex ? "open" : ""}`}>
                                                 <div className="expanded-details">
                                                     <div className="details-column">
-                                                        {Object.entries(row).slice(0, Math.ceil(Object.entries(row).length / 2)).map(([key, value]) => (
+                                                        {Object.entries(row).filter(([key]) => key !== "FOTO").slice(0, Math.ceil(Object.entries(row).length / 2)).map(([key, value]) => (
                                                             <p key={key}>
                                                                 <strong>{key}</strong>: {value || "N/A"}
                                                             </p>
                                                         ))}
                                                     </div>
                                                     <div className="details-column">
-                                                        {Object.entries(row).slice(Math.ceil(Object.entries(row).length / 2)).map(([key, value]) => (
+                                                        {Object.entries(row).filter(([key]) => key !== "FOTO").slice(Math.ceil(Object.entries(row).length / 2)).map(([key, value]) => (
                                                             <p key={key}>
                                                                 <strong>{key}</strong>: {value || "N/A"}
                                                             </p>
