@@ -64,7 +64,7 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        if (name === "N_BARRANTES") {
+        if (name === "N_BARRANTES" || name === "PARTES") {
             if (!/^\d*$/.test(value)) return; // Permite solo números
             if (value.length > 4) return;
         }

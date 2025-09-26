@@ -3,6 +3,7 @@ import '../styles/PageLayout.css';
 import rutaLogo from '../styles/images/Logo-simuig3.png';
 import { Link } from "react-router-dom";
 import imagenProfileOther from '../styles/images/profile-other.jpg';
+import { showNotification } from "../utils/showNotification";
 
 const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
     const [urlFoto, setUrlFoto] = useState(localStorage.getItem('urlFotoProfile') || urlimgProfile);
@@ -10,6 +11,7 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const sidebarRef = useRef(null);
     const buttonRef = useRef(null);
+    const logoutTimerRef = useRef(null);
 
     useEffect(() => {
         setUrlFoto(localStorage.getItem('urlFotoProfile') || urlimgProfile);
@@ -40,7 +42,34 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
         localStorage.removeItem("isAdmin");
         localStorage.removeItem("urlFotoProfile")
         setAuth(false);
+        showNotification("success", "Cierre de sesion exitoso", "Se cerro la sesion correctamente.");
     };
+
+    useEffect(() => {
+        const resetTimer = () => {
+            if (logoutTimerRef.current) {
+                clearTimeout(logoutTimerRef.current);
+            }
+            // tiempo en minutos de inacntividad
+            logoutTimerRef.current = setTimeout(() => {
+                handleLogout();
+                showNotification("info", "Sesión expirada", "Por seguridad, su sesión ha expirado por inactividad.");
+            },  5 * 60 * 1000);
+        };
+        // Eventos de actividad del usuario
+        const events = ["mousemove", "keydown", "click", "scroll"];
+        events.forEach(event => window.addEventListener(event, resetTimer));
+
+        // Inicia el timer
+        resetTimer();
+
+        return () => {
+            if (logoutTimerRef.current) {
+                clearTimeout(logoutTimerRef.current);
+            }
+            events.forEach(event => window.removeEventListener(event, resetTimer));
+        };
+    }, []);
 
     const getProfileImage = () => {
         try {

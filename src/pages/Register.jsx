@@ -125,8 +125,19 @@ const Register = () => {
             return;
         }
 
-        if (formData.password.length < 6) {
-            showNotification("error", "Contraseña inválida", "La contraseña debe tener al menos 6 caracteres.");
+        if (formData.user.length < 5) {
+            showNotification("error", "Usuario inválido", "El usuario debe tener al menos 5 caracteres.");
+            return;
+        }
+
+        // Validación de contraseña fuerte
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+        if (!passwordRegex.test(formData.password)) {
+            showNotification(
+                "error",
+                "Contraseña inválida",
+                "La contraseña debe tener mínimo 6 caracteres, al menos una mayúscula, una minúscula y un número."
+            );
             return;
         }
 
