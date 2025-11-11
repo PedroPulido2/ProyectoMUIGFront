@@ -19,7 +19,13 @@ const Profiles = ({ setAuth }) => {
     try {
       const response = await api.get("/logs");
 
-      const formattedLogs = response.data.map((log) => ({
+      //Ordenar los logs por fecha descendente
+      const sortedLogs = [...response.data].sort(
+        (a, b) => new Date(b.DATE) - new Date(a.DATE)
+      );
+
+      //Formatear las fechas al formato local "es-CO"
+      const formattedLogs = sortedLogs.map((log) => ({
         ...log,
         DATE: log.DATE
           ? new Date(log.DATE).toLocaleString("es-CO", {
