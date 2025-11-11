@@ -13,6 +13,9 @@ const Mineral = ({ setAuth }) => {
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [currentMineral, setCurrentMineral] = useState(null);
 
+  const idPerfilAccion = localStorage.getItem("id_Perfil") || "";
+  const usernameAccion = localStorage.getItem("username") || "";
+
   useEffect(() => {
     document.title = "Gestion Minerales";
     fetchData();
@@ -52,6 +55,9 @@ const Mineral = ({ setAuth }) => {
         }
       });
 
+      formData.append("idPerfilAccion", idPerfilAccion);
+      formData.append("usernameAccion", usernameAccion);
+
       if (currentMineral) {
         await api.put(`/mineral/${currentMineral.ID_MINERAL}`, formData, {
           headers: {
@@ -80,7 +86,14 @@ const Mineral = ({ setAuth }) => {
 
     if (confirmDelete.isConfirmed) {
       try {
-        await api.delete(`/mineral/${row.ID_MINERAL}`);
+        await api.delete(`/mineral/${row.ID_MINERAL}`, {
+          data: {
+            idPerfilAccion: idPerfilAccion,
+            usernameAccion: usernameAccion,
+          }, headers: {
+            "Content-Type": "application/json",
+          }
+        });
         showNotification("success", "Eliminado", `El mineral con ID: ${row.ID_MINERAL} ha sido eliminado.`);
         fetchData();
       } catch (err) {
@@ -95,7 +108,14 @@ const Mineral = ({ setAuth }) => {
 
     if (confirmDelete.isConfirmed) {
       try {
-        await api.delete(`/mineral/${row.ID_MINERAL}/image`);
+        await api.delete(`/mineral/${row.ID_MINERAL}/image`, {
+          data: {
+            idPerfilAccion: idPerfilAccion,
+            usernameAccion: usernameAccion,
+          }, headers: {
+            "Content-Type": "application/json",
+          }
+        });
         showNotification("success", "Imagen Eliminada", `La imagen del mineral con ID: ${row.ID_MINERAL} ha sido eliminada.`);
         fetchData();
       } catch (err) {

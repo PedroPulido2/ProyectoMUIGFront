@@ -13,6 +13,9 @@ const Roca = ({ setAuth }) => {
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [currentRocas, setCurrentRocas] = useState(null);
 
+  const idPerfilAccion = localStorage.getItem("id_Perfil") || "";
+  const usernameAccion = localStorage.getItem("username") || "";
+
   useEffect(() => {
     document.title = "Gestion Rocas";
     fetchData();
@@ -52,6 +55,9 @@ const Roca = ({ setAuth }) => {
         }
       });
 
+      formData.append("idPerfilAccion", idPerfilAccion);
+      formData.append("usernameAccion", usernameAccion);
+
       if (currentRocas) {
         await api.put(`/roca/${currentRocas.ID_ROCA}`, formData, {
           headers: {
@@ -80,7 +86,14 @@ const Roca = ({ setAuth }) => {
 
     if (confirmDelete.isConfirmed) {
       try {
-        await api.delete(`/roca/${row.ID_ROCA}`);
+        await api.delete(`/roca/${row.ID_ROCA}`, {
+          data: {
+            idPerfilAccion: idPerfilAccion,
+            usernameAccion: usernameAccion,
+          }, headers: {
+            "Content-Type": "application/json",
+          }
+        });
         showNotification("success", "Eliminado", `La roca con ID: ${row.ID_ROCA} ha sido eliminada.`);
         fetchData();
       } catch (err) {
@@ -95,7 +108,14 @@ const Roca = ({ setAuth }) => {
 
     if (confirmDelete.isConfirmed) {
       try {
-        await api.delete(`/roca/${row.ID_ROCA}/image`);
+        await api.delete(`/roca/${row.ID_ROCA}/image`, {
+          data: {
+            idPerfilAccion: idPerfilAccion,
+            usernameAccion: usernameAccion,
+          }, headers: {
+            "Content-Type": "application/json",
+          }
+        });
         showNotification("success", "Eliminado", `La imagen de la roca con ID: ${row.ID_ROCA} ha sido eliminada.`);
         fetchData();
       } catch (err) {

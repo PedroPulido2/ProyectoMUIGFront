@@ -46,6 +46,12 @@ const PerfilModalChPassword = ({ isOpen, closeModal, onSave }) => {
             return;
         }
 
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+        if (!passwordRegex.test(formData.newPassword)) {
+            setErrorMessage("La contraseña debe tener mínimo 6 caracteres, al menos una mayúscula, una minúscula y un número.");
+            return;
+        }
+
         try {
             const response = await api.post(`/login/verify`, { password: formData.currentPassword },
                 {

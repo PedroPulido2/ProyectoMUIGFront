@@ -4,6 +4,7 @@ import rutaLogo from '../styles/images/Logo-simuig3.png';
 import { Link } from "react-router-dom";
 import imagenProfileOther from '../styles/images/profile-other.jpg';
 import { showNotification } from "../utils/showNotification";
+import api from "../services/api";
 
 const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
     const [urlFoto, setUrlFoto] = useState(localStorage.getItem('urlFotoProfile') || urlimgProfile);
@@ -12,6 +13,7 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
     const sidebarRef = useRef(null);
     const buttonRef = useRef(null);
     const logoutTimerRef = useRef(null);
+    const token = localStorage.getItem("token") || null;
 
     useEffect(() => {
         setUrlFoto(localStorage.getItem('urlFotoProfile') || urlimgProfile);
@@ -35,6 +37,7 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
     }, [urlimgProfile, isSidebarOpen]);
 
     const handleLogout = () => {
+        logout();
         localStorage.removeItem('token');
         localStorage.removeItem("isAuthenticated");
         localStorage.removeItem("id_Perfil");
@@ -43,6 +46,18 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
         localStorage.removeItem("urlFotoProfile")
         setAuth(false);
         showNotification("success", "Cierre de sesion exitoso", "Se cerro la sesion correctamente.");
+    };
+
+    const logout = async () => {
+        try {
+            await api.post(`/login/logout/${username}`,
+                { id_Perfil: localStorage.getItem("id_Perfil") },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+        } catch (error) {
+            console.error("Error during logout:", error);
+            showNotification("error", "Error", error.response?.data?.error || "Error al cerrar la sesion");
+        }
     };
 
     useEffect(() => {
@@ -54,7 +69,7 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
             logoutTimerRef.current = setTimeout(() => {
                 handleLogout();
                 showNotification("info", "Sesión expirada", "Por seguridad, su sesión ha expirado por inactividad.");
-            },  5 * 60 * 1000);
+            }, 5 * 60 * 1000);
         };
         // Eventos de actividad del usuario
         const events = ["mousemove", "keydown", "click", "scroll"];
@@ -112,7 +127,12 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
                     </li>
                     {isAdmin === 3 ?
                         <li>
-                            <Link to="/profiles"><span className="material-symbols-outlined">manage_accounts</span>Perfiles</Link>
+                            <Link to="/sd/profiles"><span className="material-symbols-outlined">manage_accounts</span>Perfiles</Link>
+                        </li> : <></>
+                    }
+                    {isAdmin === 3 ?
+                        <li>
+                            <Link to="/sd/logs"><span className="material-symbols-outlined">search_activity</span>Logs</Link>
                         </li> : <></>
                     }
                     <h4>

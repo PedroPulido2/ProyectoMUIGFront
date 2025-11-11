@@ -13,6 +13,9 @@ const Investigacion = ({ setAuth }) => {
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [currentInvestigacion, setCurrentInvestigacion] = useState(null);
 
+  const idPerfilAccion = localStorage.getItem("id_Perfil") || "";
+  const usernameAccion = localStorage.getItem("username") || "";
+
   useEffect(() => {
     document.title = "Gestion Investigación";
     fetchData();
@@ -52,6 +55,9 @@ const Investigacion = ({ setAuth }) => {
         }
       });
 
+      formData.append("idPerfilAccion", idPerfilAccion);
+      formData.append("usernameAccion", usernameAccion);
+
       if (currentInvestigacion) {
         await api.put(`/investigacion/${currentInvestigacion.ID_PIEZA}`, formData, {
           headers: {
@@ -80,7 +86,14 @@ const Investigacion = ({ setAuth }) => {
 
     if (confirmDelete.isConfirmed) {
       try {
-        await api.delete(`/investigacion/${row.ID_PIEZA}`);
+        await api.delete(`/investigacion/${row.ID_PIEZA}`, {
+          data: {
+            idPerfilAccion: idPerfilAccion,
+            usernameAccion: usernameAccion,
+          }, headers: {
+            "Content-Type": "application/json",
+          }
+        });
         showNotification("success", "Eliminado", `La investigación con ID: ${row.ID_PIEZA} ha sido eliminada.`);
         fetchData();
       } catch (err) {
@@ -96,7 +109,14 @@ const Investigacion = ({ setAuth }) => {
 
     if (confirmDelete.isConfirmed) {
       try {
-        await api.delete(`/investigacion/${row.ID_PIEZA}/image`);
+        await api.delete(`/investigacion/${row.ID_PIEZA}/image`, {
+          data: {
+            idPerfilAccion: idPerfilAccion,
+            usernameAccion: usernameAccion,
+          }, headers: {
+            "Content-Type": "application/json",
+          }
+        });
         showNotification("success", "Eliminado", `La imagen de la investigación con ID: ${row.ID_PIEZA} ha sido eliminada.`);
         fetchData();
       } catch (err) {

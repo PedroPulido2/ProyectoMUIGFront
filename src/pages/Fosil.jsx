@@ -13,6 +13,9 @@ const Fosil = ({ setAuth }) => {
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [currentFosil, setCurrentFosil] = useState(null);
 
+  const idPerfilAccion = localStorage.getItem("id_Perfil") || "";
+  const usernameAccion = localStorage.getItem("username") || "";
+
   useEffect(() => {
     document.title = "Gestion Fosiles";
     fetchData();
@@ -52,6 +55,9 @@ const Fosil = ({ setAuth }) => {
         }
       });
 
+      formData.append("idPerfilAccion", idPerfilAccion);
+      formData.append("usernameAccion", usernameAccion);
+
       if (currentFosil) {
         await api.put(`/fosil/${currentFosil.ID_FOSIL}`, formData, {
           headers: {
@@ -80,7 +86,14 @@ const Fosil = ({ setAuth }) => {
 
     if (confirmDelete.isConfirmed) {
       try {
-        await api.delete(`/fosil/${row.ID_FOSIL}`);
+        await api.delete(`/fosil/${row.ID_FOSIL}`, {
+          data: {
+            idPerfilAccion: idPerfilAccion,
+            usernameAccion: usernameAccion,
+          }, headers: {
+            "Content-Type": "application/json",
+          }
+        });
         showNotification("success", "¡Eliminado!", `El fósil con ID: ${row.ID_FOSIL} ha sido eliminado.`);
         fetchData();
       } catch (err) {
@@ -95,7 +108,14 @@ const Fosil = ({ setAuth }) => {
 
     if (confirmDelete.isConfirmed) {
       try {
-        await api.delete(`/fosil/${row.ID_FOSIL}/image`);
+        await api.delete(`/fosil/${row.ID_FOSIL}/image`, {
+          data: {
+            idPerfilAccion: idPerfilAccion,
+            usernameAccion: usernameAccion,
+          }, headers: {
+            "Content-Type": "application/json",
+          }
+        });
         showNotification("success", "¡Imagen eliminada!", `La imagen del fósil con ID: ${row.ID_FOSIL} ha sido eliminada.`);
         fetchData();
       } catch (err) {

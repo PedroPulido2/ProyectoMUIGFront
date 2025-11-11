@@ -16,7 +16,8 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
         foto: "",
         user: "",
         password: "",
-        isAdmin: ""
+        isAdmin: "",
+        estado: ""
     });
 
     const [showPassword, setShowPassword] = useState({
@@ -46,7 +47,8 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
                 foto: profileData.FOTO || "",
                 user: profileData.USER || "",
                 password: "",
-                isAdmin: profileData.IS_ADMIN || ""
+                isAdmin: profileData.IS_ADMIN || "",
+                estado: profileData.ESTADO || ""
             });
         } else {
             setFormData({
@@ -61,7 +63,8 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
                 foto: "",
                 user: "",
                 password: "",
-                isAdmin: ""
+                isAdmin: "",
+                estado: ""
             });
         }
     }, [profileData]);
@@ -147,12 +150,12 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
             return;
         }
 
-        if (formData.id_Perfil.length >= 1 && formData.id_Perfil.length < 5){
+        if (formData.id_Perfil.length >= 1 && formData.id_Perfil.length < 5) {
             showNotification("error", "Id Perfil invalido", "El id Perfil debe tener al menos 5 caracteres.");
             return;
         }
 
-        if (formData.telefono.length >= 1 && formData.telefono.length < 5){
+        if (formData.telefono.length >= 1 && formData.telefono.length < 5) {
             showNotification("error", "Telefono invalido", "El número de telefono debe tener al menos 5 caracteres.");
             return;
         }
@@ -304,6 +307,14 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
                                 <option value="1">Visitante</option>
                                 <option value="2">Administrador</option>
                                 <option value="3">Super-Administrador</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label>Estado:</label>
+                            <select className="styled-select" name="estado" value={formData.estado} onChange={handleChange} required>
+                                <option value="" disabled>Seleccione una opción</option>
+                                <option value="ACTIVO">Activo</option>
+                                <option value="BLOQUEADO">Bloqueado</option>
                             </select>
                         </div>
                         <button type="submit" className="save-button">

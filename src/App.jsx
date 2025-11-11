@@ -11,6 +11,7 @@ import Perfil from './pages/Perfil';
 import Profiles from './pages/Profiles';
 import AcercaDeCreador from './pages/AcercaDeCreador';
 import Register from './pages/Register';
+import Logs from './pages/Logs';
 
 function App() {
   // Obtener el estado inicial desde localStorage
@@ -88,10 +89,17 @@ function App() {
             </ProtectedRoute>}
         />
         <Route
-          path="/profiles"
+          path="/sd/profiles"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Profiles setAuth={handleAuthChange} />
+            </ProtectedRoute>}
+        />
+        <Route
+          path="/sd/logs"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Logs setAuth={handleAuthChange} />
             </ProtectedRoute>}
         />
       </Routes>

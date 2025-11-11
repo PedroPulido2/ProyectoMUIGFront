@@ -85,6 +85,8 @@ const Perfil = ({ setAuth }) => {
         });
 
         formData.append("foto", file); // Agrega la imagen
+        formData.append("idPerfilAccion", id_Perfil);
+        formData.append("usernameAccion", username);
 
         try {
             const response = await api.put(`/perfil/${perfil.id_Perfil}`, formData, {
@@ -105,7 +107,9 @@ const Perfil = ({ setAuth }) => {
         try {
             const cleanedData = {
                 ...updatedData,
-                fechaNacimiento: updatedData.fechaNacimiento?.split("T")[0]
+                fechaNacimiento: updatedData.fechaNacimiento?.split("T")[0],
+                idPerfilAccion: id_Perfil,
+                usernameAccion: username
             };
 
             const response = await api.put(`/perfil/${perfil.id_Perfil}`, cleanedData);
@@ -130,7 +134,7 @@ const Perfil = ({ setAuth }) => {
         }
         try {
             const response = await api.put(`/login/cPw/${username}`,
-                { password: newPassword },
+                { password: newPassword, idPerfilAccion: id_Perfil, usernameAccion: username },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             showNotification("success", "¡Éxito!", response.data.message);
@@ -146,7 +150,12 @@ const Perfil = ({ setAuth }) => {
 
         if (confirmDelete.isConfirmed) {
             try {
-                await api.delete(`/perfil/${perfil.id_Perfil}`);
+                await api.delete(`/perfil/${perfil.id_Perfil}`, {
+                    data: {
+                        idPerfilAccion: id_Perfil,
+                        usernameAccion: username,
+                    }
+                });
                 showNotification("success", "¡Perfil Eliminado!", `El perfil con ID ${perfil.id_Perfil} ha sido eliminado correctamente.`);
                 handleLogout(); // Cierra sesión después de eliminar el perfil
             } catch (error) {

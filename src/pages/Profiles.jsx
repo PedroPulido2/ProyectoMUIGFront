@@ -5,6 +5,8 @@ import '../styles/Main.css'
 import TableComponent from "../components/TableComponent";
 import ProfilesModalForm from "../components/modalForms/ProfilesModalForm";
 import { showNotification, showConfirmation } from "../utils/showNotification";
+import { data } from "react-router-dom";
+import { use } from "react";
 
 const Profiles = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
@@ -12,6 +14,9 @@ const Profiles = ({ setAuth }) => {
   const [profiles, setProfiles] = useState([]);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [currentProfile, setCurrentProfile] = useState(null);
+
+  const idPerfilAccion = localStorage.getItem("id_Perfil") || "";
+  const usernameAccion = localStorage.getItem("username") || "";
 
   useEffect(() => {
     document.title = "Gestión de Perfiles";
@@ -71,6 +76,9 @@ const Profiles = ({ setAuth }) => {
         }
       });
 
+      formData.append("idPerfilAccion", idPerfilAccion);
+      formData.append("usernameAccion", usernameAccion);
+
       if (currentProfile) {
         await api.put(`/perfil/${currentProfile.ID_PERFIL}`, formData, {
           headers: {
@@ -99,7 +107,14 @@ const Profiles = ({ setAuth }) => {
 
     if (confirmDelete.isConfirmed) {
       try {
-        await api.delete(`/perfil/${row.ID_PERFIL}`);
+        await api.delete(`/perfil/${row.ID_PERFIL}`, {
+          data: {
+            idPerfilAccion: idPerfilAccion,
+            usernameAccion: usernameAccion,
+          }, headers: {
+            "Content-Type": "application/json",
+          }
+        });
         showNotification("success", "¡Eliminado!", `El perfil con ID: ${row.ID_PERFIL} ha sido eliminado.`);
         fetchData();
       } catch (err) {
@@ -113,7 +128,12 @@ const Profiles = ({ setAuth }) => {
 
     if (confirmDelete.isConfirmed) {
       try {
-        await api.delete(`/perfil/${row.ID_PERFIL}/image`);
+        await api.delete(`/perfil/${row.ID_PERFIL}/image`, {
+          data: {
+            idPerfilAccion: idPerfilAccion,
+            usernameAccion: usernameAccion,
+          }
+        });
         showNotification("success", "¡Eliminada!", `La imagen del perfil con ID: ${row.ID_PERFIL} ha sido eliminada.`);
         fetchData();
       } catch (err) {
@@ -135,6 +155,7 @@ const Profiles = ({ setAuth }) => {
     "FOTO",
     "FECHA_CREACION",
     "ROL",
+    "ESTADO",
   ];
 
   const columns = [
@@ -149,6 +170,7 @@ const Profiles = ({ setAuth }) => {
     "TELEFONO",
     "FOTO",
     "ROL",
+    "ESTADO",
   ];
 
   return (
