@@ -2,31 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { jwtDecode } from 'jwt-decode';
-import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { showNotification } from '../utils/showNotification';
 import '../styles/Login.css';
 
-const Login = ({ setAuth }) => { // Recibimos setAuth como prop
+const Login = ({ setAuth }) => {
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
-        document.title = "Iniciar Sesion";
+        document.title = "Inventario MUIG";
     }, []);
 
-    const [showPassword, setShowPassword] = useState({
-        current: false,
-        new: false,
-        confirm: false
-    });
+    const [showPassword, setShowPassword] = useState(false);
 
-    const togglePasswordVisibility = (field) => {
-        setShowPassword(prev => ({
-            ...prev,
-            [field]: !prev[field]
-        }));
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     const handleLogin = async (e) => {
@@ -36,10 +29,8 @@ const Login = ({ setAuth }) => { // Recibimos setAuth como prop
         try {
             const response = await api.post('/login/auth', { user, password });
             if (response.status === 200) {
-                showNotification("success", "Inicio de Sesión exitoso!", response.data.message);
-
+                showNotification("success", "¡Bienvenido de nuevo!", response.data.message);
                 const token = response.data.token;
-
                 const decoded = jwtDecode(token);
 
                 localStorage.setItem('token', token);
@@ -48,56 +39,66 @@ const Login = ({ setAuth }) => { // Recibimos setAuth como prop
                 localStorage.setItem('isAdmin', decoded.isAdmin);
                 localStorage.setItem('urlFotoProfile', decoded.foto);
 
-                setAuth(true); // Actualizar estado global y localStorage
-                navigate('/home'); // Redirigir a página protegida
+                setAuth(true);
+                navigate('/home');
             }
         } catch (err) {
-            if (err.response && err.response.data && err.response.data.error) {
-                setError(err.response.data.error); // Mostrar mensaje del backend
-            } else {
-                setError('Ocurrió un error inesperado. Intente nuevamente.');
-            }
+            setError(err.response?.data?.error || 'Error de conexión. Intente nuevamente.');
         }
     };
 
     return (
         <div className="login-page">
-            <div className="login-form">
-                <h2>Inicio de Sesión</h2>
-                <form onSubmit={handleLogin}>
+            <div className="login-card">
+                <div className="login-header">
+                    <img src="/Logo.png" alt="Logo" className="login-logo" />
+                    <h2>Bienvenido</h2>
+                    <p>Ingresa tus credenciales para continuar</p>
+                </div>
+
+                <form onSubmit={handleLogin} className="login-form-content">
                     <div className="form-group">
-                        <label htmlFor="user">Usuario:</label>
+                        <label>Usuario</label>
                         <input
                             type="text"
-                            id="user"
                             value={user}
                             onChange={(e) => setUser(e.target.value)}
-                            placeholder="Ingrese su usuario"
+                            placeholder="Ej. usuario123"
                             required
                         />
                     </div>
+
                     <div className="form-group">
-                        <label htmlFor="password">Contraseña:</label>
-                        <div className='password-container'>
+                        <label>Contraseña</label>
+                        <div className='password-wrapper'>
                             <input
-                                type={showPassword.current ? "text" : "password"}
-                                id="password"
+                                type={showPassword ? "text" : "password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Ingrese su contraseña"
+                                placeholder="••••••••"
                                 required
                             />
-                            <button type="button" onClick={() => togglePasswordVisibility("current")}>
-                                {showPassword.current ? <EyeOff /> : <Eye />}
+                            <button 
+                                type="button" 
+                                className="toggle-pass"
+                                onClick={togglePasswordVisibility}
+                            >
+                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                             </button>
                         </div>
                     </div>
-                    {error && <p className="error-message">{error}</p>}
-                    <button type="submit" className="login-button">Ingresar</button>
+
+                    {error && <p className="error-text">{error}</p>}
+                    
+                    <button type="submit" className="btn-primary">Ingresar</button>
                 </form>
-                <button className="register-button" onClick={() => navigate('/register')}>
-                    Registrarse
-                </button>
+
+                <div className="login-footer">
+                    <span>¿No tienes cuenta?</span>
+                    <button className="btn-secondary" onClick={() => navigate('/register')}>
+                        Crear cuenta
+                    </button>
+                </div>
             </div>
         </div>
     );

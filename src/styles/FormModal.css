@@ -23,10 +23,12 @@
 }
 
 .modal-content-form {
-  background-color: #fff;
-  padding: 20px;
+  background: rgb(83, 83, 83);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e1b964;
+  padding: 1.9rem 1rem;
   border-radius: 12px;
-  width: 400px;
+  width: 450px;
   max-height: 80vh;
   /* Limita la altura máxima al 80% del viewport */
   overflow-y: auto;
@@ -34,6 +36,53 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   position: relative;
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.modal-content-form h3 {
+  color: #e1b964;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.id-container select {
+  background-color: rgba(255, 255, 255, 0.08);
+  ;
+  color: white;
+}
+
+
+.eyepassword {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: #e1b964;
+    cursor: pointer;
+    display: flex;
+    transition: color 0.3s;
+}
+
+.eyepassword:hover {
+    color: #8f8368;
+}
+
+/* Estilo específico para el botón "Seleccionar archivo" */
+.form-group input[type="file"]::file-selector-button {
+  background-color: rgb(76, 145, 175); /* Color de fondo */
+  color: white;              /* Color de texto */
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 15px;
+  transition: background .3s;
+}
+
+/* Efecto Hover */
+.form-group input[type="file"]::file-selector-button:hover {
+  background-color: rgb(42, 127, 163);
 }
 
 .close-form {
@@ -106,7 +155,8 @@ form {
   background-color: #fff;
   outline: none;
   cursor: pointer;
-  appearance: none; /* Quita la apariencia predeterminada del sistema */
+  appearance: none;
+  /* Quita la apariencia predeterminada del sistema */
   transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
@@ -124,10 +174,19 @@ form {
 /* Agregar una flecha personalizada al select */
 .styled-select {
   background-image: url('data:image/svg+xml;utf8,<svg fill="%23218838" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-color: rgb(83, 83, 83);
+  color: white;
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 20px;
-  padding-right: 35px; /* Espacio para la flecha */
+  padding-right: 35px;
+  /* Espacio para la flecha */
+}
+
+.styled-select option {
+  background-color: rgb(83, 83, 83);
+  color: white;
+  padding: 10px;
 }
 
 .error-message {
@@ -173,7 +232,8 @@ form {
 
 .password-container .validation-icon {
   position: absolute;
-  right: 40px; /* Separa el check/cross del botón del ojo */
+  right: 40px;
+  /* Separa el check/cross del botón del ojo */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -186,8 +246,13 @@ form {
 }
 
 .id-container select {
-  width: 120px;
+  width: 160px;
   border-radius: 5px;
+}
+
+.id-container option {
+  background-color: rgb(83, 83, 83);
+  color: white;
 }
 
 .id-container input {

@@ -101,8 +101,7 @@ const Register = () => {
         const age = today.getFullYear() - birthDate.getFullYear();
         const monthDiff = today.getMonth() - birthDate.getMonth();
 
-        if (
-            age < 14 ||
+        if (age < 14 ||
             (age === 14 && monthDiff < 0) ||
             (age === 14 && monthDiff === 0 && today.getDate() < birthDate.getDate())
         ) {
@@ -240,7 +239,7 @@ const Register = () => {
                                 placeholder="Ingrese su contraseña"
                                 required
                             />
-                            <button type="button" onClick={() => togglePasswordVisibility("new")}>
+                            <button className="toggle-pass" type="button" onClick={() => togglePasswordVisibility("new")}>
                                 {showPassword.new ? <EyeOff /> : <Eye />}
                             </button>
                         </div>
@@ -257,7 +256,7 @@ const Register = () => {
                                 placeholder="Repita la contraseña"
                                 required
                             />
-                            <button type="button" onClick={() => togglePasswordVisibility("confirm")}>
+                            <button className="toggle-pass" type="button" onClick={() => togglePasswordVisibility("confirm")}>
                                 {showPassword.confirm ? <EyeOff /> : <Eye />}
                             </button>
                             {formData.confirmPassword && (
@@ -280,14 +279,13 @@ const Register = () => {
                                 onChange={(e) =>
                                     setFormData({ ...formData, aceptaTerminos: e.target.checked })
                                 }
-                                required
                             />
                             <span className="checkmark"></span>
                             Acepto el tratamiento de mis datos personales según la política de privacidad.
                         </label>
                     </div>
-                    <br />
                     {error && <p className="error-message">{error}</p>}
+                    <br />
                     <button type="submit" className="register-button2">Registrar</button>
                 </form>
             </div>

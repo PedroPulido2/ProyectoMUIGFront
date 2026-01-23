@@ -17,10 +17,10 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-
     padding: 8px 12px;
-    background-color: #28a745;
-    color: white;
+    /* Cambio a Dorado */
+    background-color: #e1b964;
+    color: #1a1a1a;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -28,8 +28,11 @@
     font-size: 20px;
 }
 
+
 .create-button:hover {
-    background-color: #218838;
+    background: #fda64f;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(252, 144, 37, 0.3);
 }
 
 table {
@@ -37,36 +40,41 @@ table {
     min-width: 600px;
     border-collapse: collapse;
     margin-top: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: #ebebeb;
+    border-radius: 8px;
 }
 
 th,
 td {
-    border: 1px solid #ddd;
-    text-align: left;
+    /* Bordes dorados sutiles */
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    text-align: center;
     padding: 8px;
     word-break: break-word;
     white-space: normal;
+    color: #000000; /* Texto claro */
 }
 
 th {
     text-align: center;
     font-size: 1rem;
     padding: 12px;
-    color: white;
-    background-color: #04365d;
+    color: #e1b964; /* Encabezados en Dorado */
+    background-color: #3a3a3a; /* Fondo más oscuro */
     font-weight: bold;
 }
 
 tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: rgba(255, 255, 255, 0.445); /* Fila alterna muy sutil */
 }
 
 tr:hover {
-    background-color: #e3f2fd;
+    background-color: rgba(225, 185, 100, 0.08); /* Hover dorado suave */
     transition: background-color 0.3s ease-in-out;
 }
 
+/* Botones de acción */
 .update-button,
 .delete-button,
 .delete-image-button {
@@ -75,41 +83,23 @@ tr:hover {
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #e1b964;
+    border: 1px solid rgba(225, 185, 100, 0.3);
+}
+
+.update-button:hover {
+    background-color: #e1b964;
+    color: #1a1a1a;
 }
 
 .delete-button:hover,
-.delete-image-button:hover,
-.update-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.delete-image-button {
-    background-color: white;
-    color: black;
-}
-
 .delete-image-button:hover {
-    background-color: #dc3545;
+    background-color: #ff4d4d; /* Rojo para borrar */
+    color: white;
+    border-color: #ff4d4d;
 }
 
-.update-button {
-    background-color: white;
-    color: black;
-}
-
-.update-button:hover {
-    background-color: #facc15;
-}
-
-.delete-button {
-    background-color: white;
-    color: black;
-}
-
-.delete-button:hover {
-    background-color: #dc3545;
-}
 
 .search-create {
     display: flex;
@@ -120,16 +110,17 @@ tr:hover {
 
 .search-create input {
     width: 300px;
-    border: 1px solid #007bff;
-    border-radius: 4px;
+    background-color: #3a3a3a;
+    color: white;
+    border: 1px solid rgba(225, 185, 100, 0.3);
     padding: 8px;
     transition: all 0.3s ease-in-out;
 }
 
 .search-create input:focus {
-    border: 2px solid #0056b3;
+    border: 1px solid #e1b964;
     outline: none;
-    box-shadow: 0px 0px 5px rgba(0, 86, 179, 0.5);
+    box-shadow: 0px 0px 8px rgba(225, 185, 100, 0.3);
 }
 
 .action-buttons {
@@ -167,7 +158,7 @@ tr:hover {
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    background-color: #eef4ffb4;
+    background-color: #dbdbdb;
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -189,11 +180,11 @@ tr:hover {
 }
 
 .na-value {
-    color: #d72525;
-    /* Un color distinto, como rojo suave */
+    color: #ff6b6b;
     font-weight: bold;
-    background-color: #ffe6e2;
-    /* Un fondo suave */
+    background-color: rgba(255, 107, 107, 0.1);
+    padding: 2px 4px;
+    border-radius: 3px;
 }
 
 .pagination-controls {
@@ -205,22 +196,23 @@ tr:hover {
 }
 
 .pagination-controls button {
-    background-color: #0056b3;
-    color: white;
-    border: none;
+    background-color: #1a1a1a;
+    color: #e1b964;
+    border: 1px solid #e1b964;
     padding: 8px 12px;
     cursor: pointer;
     border-radius: 20px;
-    font-size: 14px;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
 }
 
-.pagination-controls button:hover {
-    background-color: #003d82;
+.pagination-controls button:hover:not(:disabled) {
+    background-color: #e1b964;
+    color: #1a1a1a;
 }
 
 .pagination-controls button:disabled {
-    background-color: #ccc;
+    border-color: #444;
+    color: #444;
     cursor: not-allowed;
 }
 
@@ -234,9 +226,11 @@ tr:hover {
 }
 
 .search-create select {
+    background-color: #3a3a3a;
+    color: #dbbc79;
     padding: 8px;
-    border: 1px solid #007bff;
-    border-radius: 4px;
+    border: 1px solid #e1b964;
+    border-radius: 10px;
     margin-right: 10px;
 }
 

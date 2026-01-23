@@ -1,5 +1,5 @@
 .main {
-    background: linear-gradient(to bottom, #f8f9fa, #eaeaea);
+    background: radial-gradient(circle at top left, #cacaca, #d1d1d1);
     padding: 30px;
     min-height: 80vh;
     display: flex;
@@ -12,6 +12,6 @@
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-    color: #06437c;
+    color: #000000;
     margin-bottom: 15px;
 }

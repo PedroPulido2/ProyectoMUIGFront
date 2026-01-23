@@ -83,10 +83,10 @@ const PerfilModalForm = ({ isOpen, closeModal, onSave, perfilData }) => {
                             Apellido:
                             <input type="text" name="apellido" value={formData.apellido} onChange={handleChange} required />
                         </label>
-                        <label>
+                        {/*<label>
                             Fecha de Nacimiento:
                             <input type="date" name="fechaNacimiento" value={formData.fechaNacimiento} onChange={handleChange} required />
-                        </label>
+                        </label>*/}
                         <label>
                             Género:
                             <select className="styled-select" name="genero" value={formData.genero} onChange={handleChange} required>

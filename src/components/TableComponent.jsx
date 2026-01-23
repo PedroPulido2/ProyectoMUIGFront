@@ -13,6 +13,7 @@ const TableComponent = ({
     onUpdate, //Funcion para el boton actulizar
     onDeleteImage, //Funcion para el boton BorrarImagen
     onDelete, //Funcion para el boton Borrar
+    enableExport = false,
 }) => {
     const isAdmin = Number(localStorage.getItem('isAdmin')) || 0;
 
@@ -44,6 +45,42 @@ const TableComponent = ({
         if (newPage > 0 && newPage <= totalPages) {
             setCurrentPage(newPage);
         }
+    };
+
+    const handleExport = () => {
+        if (filteredData.length === 0) {
+            alert("No hay datos para exportar");
+            return;
+        }
+
+        const csvHeaders = columns.join(",");
+        const csvRows = filteredData.map(row => {
+            return columns.map(col => {
+                let cell = row[col];
+                if (cell === null || cell === undefined) {
+                    cell = "";
+                }
+                cell = cell.toString();
+                // Escapar comillas dobles y poner el texto entre comillas si contiene comas
+                if (cell.includes(",") || cell.includes('"') || cell.includes("\n")) {
+                    cell = `"${cell.replace(/"/g, '""')}"`;
+                }
+                return cell;
+            }).join(",");
+        });
+
+        // Unir cabeceras y filas
+        const csvString = [csvHeaders, ...csvRows].join("\n");
+
+        //  Crear el archivo Blob y descargarlo
+        const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `auditoria_logs_${new Date().toISOString().slice(0, 10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     };
 
     //Configuracion de modales
@@ -83,6 +120,17 @@ const TableComponent = ({
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
+                    {enableExport && (
+                        <button
+                            className="export-button"
+                            onClick={handleExport}
+                            style={{ marginLeft: '10px', backgroundColor: '#28a745', color: 'white', border: 'none', padding: '8px 12px', borderRadius: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}
+                        >
+                            <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>download</span>
+                            Exportar
+                        </button>
+                    )}
+
                     {(isAdmin === 2 || isAdmin === 3) && onCreate && (<button className="create-button" onClick={onCreate}><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#e8eaed"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" /></svg> Crear Nuevo</button>)}
                 </div>
             </div>

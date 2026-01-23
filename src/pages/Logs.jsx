@@ -61,6 +61,7 @@ const Profiles = ({ setAuth }) => {
           allColumns={allColumns}
           columns={allColumns}
           data={logs}
+          enableExport={true}
         />
       </div>
     </PageLayout>

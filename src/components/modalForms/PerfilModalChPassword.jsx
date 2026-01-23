@@ -96,7 +96,7 @@ const PerfilModalChPassword = ({ isOpen, closeModal, onSave }) => {
                                     onChange={handleChange}
                                     required
                                 />
-                                <button type="button" onClick={() => togglePasswordVisibility("current")}>
+                                <button className="eyepassword" type="button" onClick={() => togglePasswordVisibility("current")}>
                                     {showPassword.current ? <EyeOff /> : <Eye />}
                                 </button>
                             </div>
@@ -110,7 +110,7 @@ const PerfilModalChPassword = ({ isOpen, closeModal, onSave }) => {
                                     onChange={handleChange}
                                     required
                                 />
-                                <button type="button" onClick={() => togglePasswordVisibility("new")}>
+                                <button className="eyepassword" type="button" onClick={() => togglePasswordVisibility("new")}>
                                     {showPassword.new ? <EyeOff /> : <Eye />}
                                 </button>
                             </div>
@@ -125,7 +125,7 @@ const PerfilModalChPassword = ({ isOpen, closeModal, onSave }) => {
                                     onChange={handleChange}
                                     required
                                 />
-                                <button type="button" onClick={() => togglePasswordVisibility("confirm")}>
+                                <button className="eyepassword" type="button" onClick={() => togglePasswordVisibility("confirm")}>
                                     {showPassword.confirm ? <EyeOff /> : <Eye />}
                                 </button>
                                 {formData.confirmPassword && (

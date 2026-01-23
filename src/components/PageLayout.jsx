@@ -177,7 +177,7 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
                     >
                         menu
                     </button>
-                    <h1>Gestion Inventario MUIG-UPTC</h1>
+                    <h1>Inventario MUIG-UPTC</h1>
                 </header>
 
                 <main className="page-main">

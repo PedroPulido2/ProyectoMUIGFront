@@ -2,15 +2,18 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    /* Cambiamos a Inter o Roboto para mayor modernidad */
+    font-family: 'Inter', 'Roboto', sans-serif;
 }
 
 /*Div Total*/
 .layout-container {
     display: flex;
-    background: #f5f5f5;
+    background: #121212;
+    /* Fondo oscuro profundo */
     min-height: 100vh;
 }
+
 
 /*Configuracion del sidebar*/
 .sidebar {
@@ -22,9 +25,12 @@
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
-    background: #06437c;
+    background: #1a1a1a;
+    /* Sidebar oscuro mate */
     padding: 25px 20px;
     transition: all 0.4s ease;
+    border-right: 1px solid rgba(225, 185, 100, 0.1);
+    /* Sutil borde dorado */
 }
 
 /*Header del sidebar*/
@@ -37,12 +43,16 @@
 .sidebar-header img {
     width: 50px;
     height: 50px;
-    border-radius: 50%;
+    border-radius: 12px;
+    /* Bordes más modernos que el círculo */
+    border: 2px solid #e1b964;
+    /* Borde dorado */
     object-fit: cover;
 }
 
 .sidebar-header h2 {
-    color: white;
+    color: #ffffff;
+    /* Texto blanco para contraste */
     font-size: 1.25rem;
     font-weight: 600;
     opacity: 0;
@@ -76,7 +86,8 @@
 }
 
 .sidebar-links h4 {
-    color: #fff;
+    color: #e1b964;
+    /* Títulos de sección en dorado */
     font-weight: 500;
     margin: 10px 0;
     white-space: nowrap;
@@ -103,7 +114,8 @@
     height: 1px;
     transform: scaleX(1);
     transform: translateY(-50%);
-    background: #ffffff;
+    background: rgba(225, 185, 100, 0.3);
+    /* Separador dorado tenue */
     transform-origin: right;
     transition-duration: 0.4s;
 }
@@ -118,7 +130,8 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    color: #dbdddbe3;
+    color: #aaaaaa;
+    /* Texto gris claro para items no activos */
     font-weight: 500;
     padding: 13px 12px;
     white-space: nowrap;
@@ -132,15 +145,17 @@
 
 .sidebar-links li a:hover,
 .sidebar-links button:hover {
-    background: #ffffff2d;
-    color: #fff;
-    border-radius: 4px;
+    background: rgba(225, 185, 100, 0.1);
+    /* Fondo dorado muy sutil */
+    color: #e1b964;
+    /* Texto cambia a dorado al pasar el mouse */
+    border-radius: 12px;
 }
 
 .sidebar-links li a:hover {
-    background: #ffffff2d;
-    color: #fff;
-    border-radius: 4px;
+    background: rgba(225, 185, 100, 0.1);
+    color: #e1b964;
+    border-radius: 12px;
 }
 
 /*Informacion del usuario*/
@@ -155,13 +170,14 @@
 .user-account .user-profile {
     display: flex;
     align-items: center;
-    color: #e5dede;
+    color: #ffffff;
 }
 
 .user-profile img {
     width: 42px;
     height: 42px;
     border-radius: 50%;
+    border: 1px solid #e1b964;
     object-fit: cover;
 }
 
@@ -173,6 +189,7 @@
 .user-profile h3 {
     font-size: 1rem;
     font-weight: 600;
+    color: #ffffff;
 }
 
 .user-profile span {
@@ -180,12 +197,13 @@
     font-weight: 500;
     display: block;
     margin-top: 5px;
+    color: #e1b964;
 }
 
 .sidebar:hover .user-account,
 .sidebar.open .user-account {
-    background: #ffffff2d;
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
 }
 
 /*Configuracion del cuerpo de la pagina*/
@@ -204,8 +222,11 @@
     left: 85px;
     z-index: 1000;
     /* Asegura que el header quede por encima de otros elementos */
-    background: #06437c;
-    color: #fff;
+    background: rgba(26, 26, 26, 0.9);
+    /* Header oscuro con transparencia */
+    backdrop-filter: blur(10px);
+    /* Efecto Glassmorphism */
+    color: #ffffff;
     padding: 20px;
     text-align: center;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
@@ -222,7 +243,7 @@
     width: calc(100% - 260px);
 }
 
-.menu-toggle{
+.menu-toggle {
     display: none;
 }
 
@@ -231,9 +252,10 @@
 
 /* Tablets y pantallas medianas */
 @media (max-width: 1024px) {
-    .menu-toggle{
+    .menu-toggle {
         display: block;
     }
+
     .sidebar {
         width: 70px;
         padding: 20px 10px;
@@ -314,6 +336,7 @@
         border: none;
         margin-right: 10px;
     }
+
     .page-content header h1 {
         flex-grow: 1;
         text-align: center;
@@ -379,7 +402,7 @@
     }
 
     .page-main {
-        grid-template-columns: 1fr; /* todo a una sola columna */
+        grid-template-columns: 1fr;
         padding: 10px;
         gap: 10px;
     }
