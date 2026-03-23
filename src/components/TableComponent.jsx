@@ -148,35 +148,51 @@ const TableComponent = ({
                         paginatedData.map((row, rowIndex) => (
                             <React.Fragment key={rowIndex}>
                                 <tr>
-                                    {columns.map((col, colIndex) => (
-                                        <td key={colIndex}
-                                            className={(!row[col] || String(row[col]).trim() === "N/A") ? "na-value" : ""}
-                                            onClick={() => toggleRowExpansion(rowIndex)}
-                                        >
-                                            {row[col] && row[col].toString().startsWith("http") ? (
-                                                <LazyLoadImage
-                                                    effect="blur"
-                                                    src={`${process.env.VITE_URL_BACK}/imagen/wm/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`}
-                                                    className="table-image"
-                                                    threshold={300}
-                                                    onError={(e) => (e.target.src = ErrorImage)}
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        openModal(`${process.env.VITE_URL_BACK}/imagen/wm/load/${row[col].split('/d/')[1]?.split('/')[0] || null}`);
-                                                    }}
-                                                />
-                                            ) : (
-                                                row[col] || "N/A"
-                                            )}
-                                        </td>
-                                    ))}
-                                    {(isAdmin === 2 || isAdmin === 3) && (onUpdate || onDeleteImage || onDelete) && (
-                                        <td className="action-buttons">
-                                            {onUpdate && (<button className="update-button" onClick={() => onUpdate(row)}><span className="material-symbols-outlined">Edit</span></button>)}
-                                            {onDeleteImage && (<button className="delete-image-button" onClick={() => onDeleteImage(row)}><span className="material-symbols-outlined"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#00000"><path d="m840-234-80-80v-446H314l-80-80h526q33 0 56.5 23.5T840-760v526ZM792-56l-64-64H200q-33 0-56.5-23.5T120-200v-528l-64-64 56-56 736 736-56 56ZM240-280l120-160 90 120 33-44-283-283v447h447l-80-80H240Zm297-257ZM424-424Z" /></svg></span></button>)}
-                                            {onDelete && (<button className="delete-button" onClick={() => onDelete(row)}><span className="material-symbols-outlined">Delete</span></button>)}
-                                        </td>
-                                    )}
+                                    {columns.map((col, colIndex) => {
+                                        const isImage = row[col] && String(row[col]).trim().startsWith("http");
+                                        const thumbnailUrl = isImage
+                                            ? `${process.env.VITE_URL_BACK}/imagen/wm/load/${row[col].split('/d/')[1]?.split('/')[0] || null}?width=150`
+                                            : "";
+
+                                        const highResUrl = isImage
+
+                                            ? `${process.env.VITE_URL_BACK}/imagen/wm/load/${row[col].split('/d/')[1]?.split('/')[0] || null}?width=1024`
+                                            : "";
+                                        return (
+                                            <td
+                                                key={colIndex}
+                                                className={(!row[col] || String(row[col]).trim() === "N/A") ? "na-value" : ""}
+                                                onClick={() => toggleRowExpansion(rowIndex)}
+                                            >
+                                                {isImage ? (
+                                                    <LazyLoadImage
+                                                        height={50}
+                                                        src={thumbnailUrl}
+                                                        effect="blur"
+                                                        placeholderSrc={ErrorImage}
+                                                        onError={(e) => { e.target.src = ErrorImage; }}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            setImageSrc(highResUrl); // Usamos la URL grande para el modal
+                                                            setIsOpen(true);
+                                                        }}
+                                                        className="table-image"
+                                                    />
+                                                ) : (
+                                                    row[col] || "N/A"
+                                                )}
+                                            </td>
+                                        );
+                                    })}
+                                    {
+                                        (isAdmin === 2 || isAdmin === 3) && (onUpdate || onDeleteImage || onDelete) && (
+                                            <td className="action-buttons">
+                                                {onUpdate && (<button className="update-button" onClick={() => onUpdate(row)}><span className="material-symbols-outlined">Edit</span></button>)}
+                                                {onDeleteImage && (<button className="delete-image-button" onClick={() => onDeleteImage(row)}><span className="material-symbols-outlined">hide_image</span></button>)}
+                                                {onDelete && (<button className="delete-button" onClick={() => onDelete(row)}><span className="material-symbols-outlined">Delete</span></button>)}
+                                            </td>
+                                        )
+                                    }
                                 </tr>
                                 {/**Detalles adicionales que no se muestran en la tabla */}
                                 {expandedRow === rowIndex && (

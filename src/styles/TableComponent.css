@@ -93,10 +93,15 @@ tr:hover {
     color: #1a1a1a;
 }
 
-.delete-button:hover,
 .delete-image-button:hover {
     background-color: #ff4d4d; /* Rojo para borrar */
-    color: white;
+    color: #1a1a1a;
+    border-color: #ff4d4d;
+}
+
+.delete-button:hover {
+    background-color: #ff4d4d; /* Rojo para borrar */
+    color: #1a1a1a;
     border-color: #ff4d4d;
 }
 

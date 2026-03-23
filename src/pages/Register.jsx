@@ -240,7 +240,7 @@ const Register = () => {
                                 required
                             />
                             <button className="toggle-pass" type="button" onClick={() => togglePasswordVisibility("new")}>
-                                {showPassword.new ? <EyeOff /> : <Eye />}
+                                {showPassword.new ? <Eye /> : <EyeOff />}
                             </button>
                         </div>
 
@@ -257,7 +257,7 @@ const Register = () => {
                                 required
                             />
                             <button className="toggle-pass" type="button" onClick={() => togglePasswordVisibility("confirm")}>
-                                {showPassword.confirm ? <EyeOff /> : <Eye />}
+                                {showPassword.confirm ? <Eye /> : <EyeOff />}
                             </button>
                             {formData.confirmPassword && (
                                 <div className="validation-icon">
