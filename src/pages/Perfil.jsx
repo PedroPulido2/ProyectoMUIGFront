@@ -9,7 +9,7 @@ import { showNotification, showConfirmation } from "../utils/showNotification";
 
 import PerfilModalForm from '../components/modalForms/PerfilModalForm';
 import PerfilModalChPassword from "../components/modalForms/PerfilModalChPassword";
-import '../styles/Perfil.css'
+import style from '../styles/Perfil.module.css';
 
 const Perfil = ({ setAuth }) => {
     const username = localStorage.getItem("username") || "Invitado";
@@ -167,59 +167,84 @@ const Perfil = ({ setAuth }) => {
 
     return (
         <PageLayout username={username} setAuth={setAuth} urlimgProfile={urlFoto}>
-            <div className="main">
+            <div className={style.profileHeader}>
                 <h2>Configuración del Perfil</h2>
-                <br />
-                <div className="infPerfil">
-                    <div className="imagen-container">
-                        <img src={perfil.foto ? `${process.env.VITE_URL_BACK}/imagen/load/${perfil.foto.split('/d/')[1]?.split('/')[0] || null}` : perfil.genero === "Masculino" ? imagenProfileMale : perfil.genero === "Femenino" ? imagenProfileFemale : imagenProfileOther}
-                            alt="Perfil"
-                            className="editable-img"
-                        />
-                        <input type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            className="input-file" />
-                    </div>
-                    <div className="info-container">
-                        <h3>Información personal</h3>
-                        <br />
-                        {perfil && perfil.id_Perfil ? (
-                            <>
-                                <p><strong>Id:</strong> {perfil.id_Perfil}</p>
-                                <p><strong>Tipo de Identificación:</strong> {perfil.tipoIdentificacion}</p>
-                                <p><strong>Nombre:</strong> {perfil.nombre}</p>
-                                <p><strong>Apellido:</strong> {perfil.apellido}</p>
-                                <p><strong>Fecha de Nacimiento:</strong> {perfil.fechaNacimiento ? new Date(perfil.fechaNacimiento.split("T")[0] + "T00:00:00").toLocaleDateString() : "No disponible"}</p>
-                                <p><strong>Género:</strong> {perfil.genero}</p>
-                                <p><strong>Correo:</strong> {perfil.correo}</p>
-                                <p><strong>Teléfono:</strong> {perfil.telefono}</p>
-                                <p><strong>Fecha de Creación:</strong> {perfil.fechaCreacion ? new Date(perfil.fechaCreacion).toLocaleDateString() : "No disponible"}</p>
-                                {perfil.isAdmin === 3 ? (
-                                    <p><strong>Es SuperAdministrador</strong></p>
-                                ) : perfil.isAdmin === 2 ? (
-                                    <p><strong>Es Administrador</strong></p>
-                                ) : (
-                                    <p><strong>Es Visitante</strong></p>
-                                )}
-                            </>
-                        ) : (
-                            <p>Cargando Información...</p>
-                        )}
-                    </div>
-                    <div className="button-container">
-                        <button className="edit-button" onClick={() => setIsFormModalOpen(true)}>
-                            <FaEdit /> Editar
-                        </button>
-                        <button className="btn-change-password" onClick={() => setIsPasswordModalOpen(true)}>
-                            <FaLock /> Cambiar Contraseña
-                        </button>
-                        <button className="btn-delete-account" onClick={handleDeleteProfile}>
-                            <FaTrash /> Eliminar Cuenta
-                        </button>
-                    </div>
+            </div>
+
+            <div className={style.infPerfil}>
+                <div className={style.imagenContainer}>
+                    <img
+                        src={perfil.foto ? `${process.env.VITE_URL_BACK}/imagen/load/${perfil.foto.split('/d/')[1]?.split('/')[0] || null}` : perfil.genero === "Masculino" ? imagenProfileMale : perfil.genero === "Femenino" ? imagenProfileFemale : imagenProfileOther}
+                        alt="Perfil"
+                        className={style.editableImg}
+                    />
+                    <div className={style.imageOverlay}>Cambiar Foto</div>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className={style.inputFile}
+                    />
+                </div>
+
+                <div className={style.infoContainer}>
+                    <h3>Información Personal</h3>
+
+                    {perfil && perfil.id_Perfil ? (
+                        <div className={style.dataGrid}>
+                            <div className={style.dataItem}>
+                                <span>Id</span>
+                                <p>{perfil.id_Perfil}</p>
+                            </div>
+                            <div className={style.dataItem}>
+                                <span>Tipo de Identificación</span>
+                                <p>{perfil.tipoIdentificacion}</p>
+                            </div>
+                            <div className={style.dataItem}>
+                                <span>Nombre Completo</span>
+                                <p>{perfil.nombre} {perfil.apellido}</p>
+                            </div>
+                            <div className={style.dataItem}>
+                                <span>Fecha de Nacimiento</span>
+                                <p>{perfil.fechaNacimiento ? new Date(perfil.fechaNacimiento.split("T")[0] + "T00:00:00").toLocaleDateString() : "No disponible"}</p>
+                            </div>
+                            <div className={style.dataItem}>
+                                <span>Género</span>
+                                <p>{perfil.genero}</p>
+                            </div>
+                            <div className={style.dataItem}>
+                                <span>Correo Electrónico</span>
+                                <p>{perfil.correo}</p>
+                            </div>
+                            <div className={style.dataItem}>
+                                <span>Teléfono</span>
+                                <p>{perfil.telefono}</p>
+                            </div>
+                            <div className={style.dataItem}>
+                                <span>Rol en el Sistema</span>
+                                <p className={style.roleBadge}>
+                                    {perfil.isAdmin === 3 ? "SuperAdministrador" : perfil.isAdmin === 2 ? "Administrador" : "Visitante"}
+                                </p>
+                            </div>
+                        </div>
+                    ) : (
+                        <p className={style.loadingText}>Cargando Información...</p>
+                    )}
+                </div>
+
+                <div className={style.buttonContainer}>
+                    <button className={style.editButton} onClick={() => setIsFormModalOpen(true)}>
+                        <FaEdit /> Editar Perfil
+                    </button>
+                    <button className={style.btnChangePassword} onClick={() => setIsPasswordModalOpen(true)}>
+                        <FaLock /> Contraseña
+                    </button>
+                    <button className={style.btnDeleteAccount} onClick={handleDeleteProfile}>
+                        <FaTrash /> Eliminar Cuenta
+                    </button>
                 </div>
             </div>
+
             <PerfilModalForm isOpen={isFormModalOpen} closeModal={() => setIsFormModalOpen(false)} onSave={handleSave} perfilData={perfil} />
             <PerfilModalChPassword isOpen={isPasswordModalOpen} closeModal={() => setIsPasswordModalOpen(false)} onSave={handleSavePassword} />
         </PageLayout>

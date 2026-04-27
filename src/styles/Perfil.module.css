@@ -1,0 +1,242 @@
+/* ---- Encabezado de la vista ---- */
+.profileHeader {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.profileHeader h2 {
+    font-size: 28px;
+    color: #1a1a1a;
+    border-bottom: 3px solid #e1b964; /* Acento dorado del layout */
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+/* ---- Contenedor Principal (Tarjeta) ---- */
+/* ---- Contenedor Principal (Tarjeta) ---- */
+.infPerfil {
+    position: relative;
+    display: flex; /* Corregido: antes decía 'center' */
+    flex-direction: column; /* Apila la foto, la info y los botones de arriba hacia abajo */
+    align-items: center; /* ¡Esta es la línea mágica que centra la foto! */
+    justify-content: flex-start;
+    gap: 30px; /* Espacio general entre secciones */
+    background: #ffffff;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 1000px; 
+    margin: 0 auto; /* Centra toda la tarjeta en la pantalla */
+}
+
+/* ---- Imagen de perfil ---- */
+.imagenContainer {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    min-width: 160px; /* Evita que se encoja */
+    cursor: pointer;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    border: 3px solid #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.imagenContainer:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 20px rgba(225, 185, 100, 0.4); /* Brillo dorado al hover */
+}
+
+.editableImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.3s ease;
+}
+
+/* Letrero de "Cambiar Foto" flotante */
+.imageOverlay {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: rgba(26, 26, 26, 0.8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: bold;
+    transition: bottom 0.3s ease;
+}
+
+.imagenContainer:hover .imageOverlay {
+    bottom: 0;
+}
+
+.imagenContainer:hover .editableImg {
+    filter: brightness(0.7);
+}
+
+.inputFile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* ---- Información Personal ---- */
+.infoContainer {
+    width: 100%; /* Obliga a la info a ocupar todo el ancho, manteniendo tu diseño de grid */
+    display: flex;
+    flex-direction: column;
+}
+
+.infoContainer h3 {
+    text-align: center; /* Mantiene el título "Información Personal" centrado */
+    margin-bottom: 20px;
+}
+
+/* La magia del Grid para los datos */
+.dataGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.dataItem {
+    background: #f8f9fa;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border-left: 3px solid #e1b964; /* Acento en cada dato */
+}
+
+.dataItem span {
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #777;
+    font-weight: bold;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+
+.dataItem p {
+    margin: 0;
+    font-size: 15px;
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+/* Estilo especial para el rol */
+.roleBadge {
+    display: inline-block;
+    background: #1a1a1a;
+    color: #e1b964 !important;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 13px !important;
+}
+
+.loadingText {
+    color: #666;
+    font-style: italic;
+}
+
+/* ---- Botones ---- */
+.buttonContainer {
+    display: flex;
+    flex-direction: column; /* Mantiene los botones uno encima del otro */
+    gap: 15px; /* Espacio entre el botón de editar y el de contraseña */
+    width: 100%; /* Hace que los botones ocupen todo el ancho disponible */
+    margin-top: 20px; /* ¡AQUÍ ESTÁ EL ESPACIO EXTRA QUE QUERÍAS! Separa los botones de la cuadrícula de info */
+}
+
+.buttonContainer button {
+    padding: 12px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.editButton {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.editButton:hover {
+    background-color: #333;
+    transform: translateY(-3px);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btnChangePassword {
+    background-color: #f8f9fa;
+    color: #1a1a1a;
+    border: 1px solid #ddd !important;
+}
+
+.btnChangePassword:hover {
+    background-color: #e2e6ea;
+    border-color: #ccc !important;
+    transform: translateY(-3px);
+}
+
+.btnDeleteAccount {
+    background-color: #fff0f0;
+    color: #dc3545;
+    border: 1px solid #ffd0d0 !important;
+}
+
+.btnDeleteAccount:hover {
+    background-color: #dc3545;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0px 5px 15px rgba(220, 53, 69, 0.3);
+}
+
+/* -------- RESPONSIVE -------- */
+@media (max-width: 900px) {
+    .infPerfil {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .infoContainer {
+        width: 100%;
+        text-align: center;
+    }
+
+    .dataItem {
+        text-align: left; /* Mantiene los datos legibles a la izquierda */
+    }
+
+    .buttonContainer {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+
+    .buttonContainer button {
+        flex: 1;
+        min-width: 150px;
+    }
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { showNotification } from "../../utils/showNotification";
-import '../../styles/FormModal.css';
+import styles from "../../styles/FormModal.module.css";
 
 const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
     const [formData, setFormData] = useState({
@@ -99,16 +99,16 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
 
     return (
         isOpen && (
-            <div className="modal-form" onClick={closeModal}>
-                <div className="modal-content-form" onClick={(e) => e.stopPropagation()}>
-                    <span className="close-form" onClick={closeModal}>
+            <div className={styles.modalForm} onClick={closeModal}>
+                <div className={styles.modalContentForm} onClick={(e) => e.stopPropagation()}>
+                    <span className={styles.closeForm} onClick={closeModal}>
                         &times;
                     </span>
                     <h3>{mineralData ? "Editar Mineral" : "Añadir Mineral"}</h3>
                     <form onSubmit={handleSubmit}>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>ID mineral:</label>
-                            <div className="id-container">
+                            <div className={styles.idContainer}>
                                 <select
                                     value={formData.ID_MINERAL_PREFIX || ""}
                                     onChange={(e) => setFormData(prev => ({ ...prev, ID_MINERAL_PREFIX: e.target.value }))}
@@ -118,7 +118,7 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
                                 <input
                                     type="text"
                                     name="ID_MINERAL_SUFFIX"
-                                    value={formData.ID_MINERAL_SUFFIX}
+                                    value={formData.ID_MINERAL_SUFFIX || ""}
                                     onChange={(e) => {
                                         const value = e.target.value;
                                         if (!/^[a-zA-Z0-9]*$/.test(value)) return;
@@ -129,125 +129,125 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
                                 />
                             </div>
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>N_Barrantes:</label>
                             <input
                                 type="text"
                                 name="N_BARRANTES"
-                                value={formData.N_BARRANTES}
+                                value={formData.N_BARRANTES || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Colección:</label>
                             <input
                                 type="text"
                                 name="COLECCION"
-                                value={formData.COLECCION}
+                                value={formData.COLECCION || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Nombre mineral:</label>
                             <input
                                 type="text"
                                 name="NOMBRE_MINERAL"
-                                value={formData.NOMBRE_MINERAL}
+                                value={formData.NOMBRE_MINERAL || ""}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Cantidad:</label>
                             <input
                                 type="text"
                                 name="CANTIDAD"
-                                value={formData.CANTIDAD}
+                                value={formData.CANTIDAD || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Grupo mineralogico:</label>
                             <input
                                 type="text"
                                 name="GRUPO_MINERALOGICO"
-                                value={formData.GRUPO_MINERALOGICO}
+                                value={formData.GRUPO_MINERALOGICO || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Region:</label>
                             <input
                                 type="text"
                                 name="REGION"
-                                value={formData.REGION}
+                                value={formData.REGION || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Subgrupo:</label>
                             <input
                                 type="text"
                                 name="SUBGRUPO"
-                                value={formData.SUBGRUPO}
+                                value={formData.SUBGRUPO || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Composición:</label>
                             <input
                                 type="text"
                                 name="COMPOSICION"
-                                value={formData.COMPOSICION}
+                                value={formData.COMPOSICION || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Caracteristicas:</label>
                             <input
                                 type="text"
                                 name="CARACTERISTICAS"
-                                value={formData.CARACTERISTICAS}
+                                value={formData.CARACTERISTICAS || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Tiempo Geológico:</label>
                             <input
                                 type="text"
                                 name="TIEMPO_GEOLOGICO"
-                                value={formData.TIEMPO_GEOLOGICO}
+                                value={formData.TIEMPO_GEOLOGICO || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Colector:</label>
                             <input
                                 type="text"
                                 name="COLECTOR"
-                                value={formData.COLECTOR}
+                                value={formData.COLECTOR || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Observaciones:</label>
                             <input
                                 type="text"
                                 name="OBSERVACIONES"
-                                value={formData.OBSERVACIONES}
+                                value={formData.OBSERVACIONES || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Ubicación:</label>
                             <input
                                 type="text"
                                 name="UBICACION"
-                                value={formData.UBICACION}
+                                value={formData.UBICACION || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Foto:</label>
                             <input
                                 type="file"
@@ -256,7 +256,7 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
                                 onChange={handleFileChange}
                             />
                         </div>
-                        <button type="submit" className="save-button">
+                        <button type="submit" className={styles.saveButton}>
                             {mineralData ? "Actualizar" : "Guardar"}
                         </button>
                     </form>

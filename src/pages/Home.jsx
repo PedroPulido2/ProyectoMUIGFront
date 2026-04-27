@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageLayout from "../components/PageLayout";
-import '../styles/Home.css';
+import styles from '../styles/Home.module.css';
 import { useNavigate } from "react-router-dom";
 import imagenFosil from '../styles/images/moduleFosil.jpg';
 import imagenInvestigacion from '../styles/images/moduleInvestigacion.jpg';
@@ -21,34 +21,42 @@ const Home = ({ setAuth }) => {
     setSelectedModule(module);
     navigate(`/${module}`);
   };
-
-  return (
+return (
     <PageLayout username={username} setAuth={setAuth}>
+        <div className={styles.welcomeHeader}>
+            <h2>Bienvenido a la página principal</h2>
+            <p>Por favor selecciona uno de los siguientes módulos:</p>
+        </div>
 
-      <div className="main">
-        <h2>Bienvenido a la página principal </h2>
-        <br />
-        <p>Por favor selecciona uno de los siguientes modulos:</p>
-        <br />
-        <div className="selectModules">
-          <div className="module" onClick={() => handleModuleSelection("fosil")}>
-            <img src={imagenFosil} alt="Gestión Fósiles" />
+        <div className={styles.selectModules}>
+          <div className={styles.module} onClick={() => handleModuleSelection("fosil")}>
+            <div className={styles.imageContainer}>
+                <img src={imagenFosil} alt="Gestión Fósiles" />
+            </div>
             <span>Gestión Fósiles</span>
           </div>
-          <div className="module" onClick={() => handleModuleSelection("mineral")}>
-            <img src={imagenMineral} alt="Gestión Minerales" />
+          
+          <div className={styles.module} onClick={() => handleModuleSelection("mineral")}>
+            <div className={styles.imageContainer}>
+                <img src={imagenMineral} alt="Gestión Minerales" />
+            </div>
             <span>Gestión Minerales</span>
           </div>
-          <div className="module" onClick={() => handleModuleSelection("roca")}>
-            <img src={imagenRoca} alt="Gestión Rocas" />
+          
+          <div className={styles.module} onClick={() => handleModuleSelection("roca")}>
+            <div className={styles.imageContainer}>
+                <img src={imagenRoca} alt="Gestión Rocas" />
+            </div>
             <span>Gestión Rocas</span>
           </div>
-          <div className="module" onClick={() => handleModuleSelection("investigacion")}>
-            <img src={imagenInvestigacion} alt="Gestión Investigación" />
+          
+          <div className={styles.module} onClick={() => handleModuleSelection("investigacion")}>
+            <div className={styles.imageContainer}>
+                <img src={imagenInvestigacion} alt="Gestión Investigación" />
+            </div>
             <span>Gestión Investigación</span>
           </div>
         </div>
-      </div>
     </PageLayout>
   );
 };

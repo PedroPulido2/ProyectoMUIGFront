@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import PageLayout from "../components/PageLayout";
 import api from "../services/api";
-import '../styles/Main.css'
 import TableComponent from "../components/TableComponent";
 import ProfilesModalForm from "../components/modalForms/ProfilesModalForm";
 import { showNotification, showConfirmation } from "../utils/showNotification";
 import { data } from "react-router-dom";
 import { use } from "react";
+import { Search, Info } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
 const Profiles = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
 
   const [profiles, setProfiles] = useState([]);
-  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
-  const [currentProfile, setCurrentProfile] = useState(null);
 
   const idPerfilAccion = localStorage.getItem("id_Perfil") || "";
   const usernameAccion = localStorage.getItem("username") || "";
@@ -37,14 +36,6 @@ const Profiles = ({ setAuth }) => {
         ROL: profile.IS_ADMIN === 1 ? "Visitante" :
           profile.IS_ADMIN === 2 ? "Administrador" :
             "Super-Administrador",
-
-        FECHA_NACIMIENTO: profile.FECHA_NACIMIENTO
-          ? profile.FECHA_NACIMIENTO.split("T")[0]
-          : "",
-
-        FECHA_CREACION: profile.FECHA_CREACION
-          ? profile.FECHA_CREACION.split("T")[0]
-          : ""
       }));
 
       setProfiles(formattedProfiles);
@@ -54,145 +45,14 @@ const Profiles = ({ setAuth }) => {
     }
   };
 
-  //Funcion Crear
-  const handleCreate = () => {
-    setCurrentProfile(null);
-    setIsFormModalOpen(true);
-  };
 
-  //Funcion actualizar
-  const handleUpdate = (row) => {
-    setCurrentProfile(row);
-    setIsFormModalOpen(true);
-  };
-
-  const handleSaveUpdate = async (data) => {
-    try {
-      const formData = new FormData();
-
-      Object.keys(data).forEach((key) => {
-        if (data[key]) {
-          formData.append(key, data[key]);
-        }
-      });
-
-      formData.append("idPerfilAccion", idPerfilAccion);
-      formData.append("usernameAccion", usernameAccion);
-
-      if (currentProfile) {
-        await api.put(`/perfil/${currentProfile.ID_PERFIL}`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        showNotification("success", "Perfil Actualizado", `El perfil con ID: ${currentProfile.ID_PERFIL} ha sido actualizado.`);
-      } else {
-        await api.post(`/perfil`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        showNotification("success", "¡Perfil Añadido!", "Nuevo perfil añadido exitosamente.");
-      }
-      setIsFormModalOpen(false);
-      fetchData();
-    } catch (err) {
-      console.error("Error al actualizar el perfil:", err);
-      showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
-    }
-  };
-
-  const handleDelete = async (row) => {
-    const confirmDelete = await showConfirmation("¿Está seguro?", `Esta acción eliminará el perfil con ID: ${row.ID_PERFIL}. ¡No se puede deshacer!`);
-
-    if (confirmDelete.isConfirmed) {
-      try {
-        await api.delete(`/perfil/${row.ID_PERFIL}`, {
-          data: {
-            idPerfilAccion: idPerfilAccion,
-            usernameAccion: usernameAccion,
-          }, headers: {
-            "Content-Type": "application/json",
-          }
-        });
-        showNotification("success", "¡Eliminado!", `El perfil con ID: ${row.ID_PERFIL} ha sido eliminado.`);
-        fetchData();
-      } catch (err) {
-        showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
-      }
-    }
-  };
-
-  const handleDeleteImage = async (row) => {
-    const confirmDelete = await showConfirmation("¿Está seguro?", `Esta acción eliminará la imagen del perfil con ID: ${row.ID_PERFIL}. ¡No se puede deshacer!`);
-
-    if (confirmDelete.isConfirmed) {
-      try {
-        await api.delete(`/perfil/${row.ID_PERFIL}/image`, {
-          data: {
-            idPerfilAccion: idPerfilAccion,
-            usernameAccion: usernameAccion,
-          }
-        });
-        showNotification("success", "¡Eliminada!", `La imagen del perfil con ID: ${row.ID_PERFIL} ha sido eliminada.`);
-        fetchData();
-      } catch (err) {
-        showNotification("error", "Error", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
-      }
-    }
-  };
-
-  const allColumns = [
-    "ID_PERFIL",
-    "USER",
-    "TIPO_IDENTIFICACION",
-    "NOMBRE",
-    "APELLIDO",
-    "FECHA_NACIMIENTO",
-    "GENERO",
-    "CORREO",
-    "TELEFONO",
-    "FOTO",
-    "FECHA_CREACION",
-    "ROL",
-    "ESTADO",
-  ];
-
-  const columns = [
-    "ID_PERFIL",
-    "USER",
-    "TIPO_IDENTIFICACION",
-    "NOMBRE",
-    "APELLIDO",
-    "FECHA_NACIMIENTO",
-    "GENERO",
-    "CORREO",
-    "TELEFONO",
-    "FOTO",
-    "ROL",
-    "ESTADO",
-  ];
+  
 
   return (
     <PageLayout username={username} setAuth={setAuth}>
       <div className="main">
-        <h2>Configuración Perfiles</h2>
-        <TableComponent
-          allColumns={allColumns}
-          columns={columns}
-          data={profiles}
-          onCreate={handleCreate}
-          onUpdate={handleUpdate}
-          onDeleteImage={handleDeleteImage}
-          onDelete={handleDelete}
-        />
+        
       </div>
-      <ProfilesModalForm
-        isOpen={isFormModalOpen}
-        closeModal={() => setIsFormModalOpen(false)}
-        profileData={currentProfile}
-        onSave={handleSaveUpdate}
-      />
     </PageLayout>
   );
 };

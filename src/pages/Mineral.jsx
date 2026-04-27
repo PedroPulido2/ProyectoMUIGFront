@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import PageLayout from "../components/PageLayout";
-import '../styles/Main.css'
 import TableComponent from "../components/TableComponent";
 import MineralFormModal from "../components/modalForms/MineralModalForm";
 import api from '../services/api';

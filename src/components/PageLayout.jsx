@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import '../styles/PageLayout.css';
+import styles from '../styles/PageLayout.module.css';
 import rutaLogo from '../styles/images/Logo-simuig3.png';
 import { Link } from "react-router-dom";
 import imagenProfileOther from '../styles/images/profile-other.jpg';
@@ -98,17 +98,16 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
     };
 
     return (
-        <div className="layout-container">
+        <div className={styles.layoutContainer}>
             {/* Sidebar */}
-            <div ref={sidebarRef} className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
-                <div className="sidebar-header">
-                    <img src={rutaLogo} alt="Logo del sistema" />
-                    <h2>Museo Universitario Ingeniería Geológica</h2>
-                </div>
-                <ul className="sidebar-links">
+            <div ref={sidebarRef} className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ""}`}>                <div className={styles.sidebarHeader}>
+                <img src={rutaLogo} alt="Logo del sistema" />
+                <h2>Museo Universitario Ingeniería Geológica</h2>
+            </div>
+                <ul className={styles.sidebarLinks}>
                     <h4>
                         <span>Menú Principal</span>
-                        <div className="menu-separator"></div>
+                        <div className={styles.menuSeparator}></div>
                     </h4>
                     <li>
                         <Link to="/home"><span className="material-symbols-outlined">Home</span>Inicio</Link>
@@ -137,30 +136,30 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
                     }
                     <h4>
                         <span>Cuenta</span>
-                        <div className="menu-separator"></div>
+                        <div className={styles.menuSeparator}></div>
                     </h4>
                     <li>
                         <Link to="/perfil"><span className="material-symbols-outlined">account_circle</span>Perfil</Link>
                     </li>
                     <h4>
                         <span>Creador</span>
-                        <div className="menu-separator"></div>
+                        <div className={styles.menuSeparator}></div>
                     </h4>
                     <li>
                         <Link to="/aboutCreator"><span className="material-symbols-outlined">shield_person</span>Acerca del Creador</Link>
                     </li>
                     <h4>
                         <span>Acciones</span>
-                        <div className="menu-separator"></div>
+                        <div className={styles.menuSeparator}></div>
                     </h4>
                     <li>
                         <button onClick={handleLogout}><span className="material-symbols-outlined">Logout</span>Cerrar Sesión</button>
                     </li>
                 </ul>
-                <div className="user-account">
-                    <div className="user-profile">
+                <div className={styles.userAccount}>
+                    <div className={styles.userProfile}>
                         <img src={getProfileImage()} alt="profile-img" />
-                        <div className="user-detail">
+                        <div className={styles.userDetail}>
                             <h3>{username}</h3>
                             <span>{isAdmin === 3 ? "Super-Administrador" : isAdmin === 2 ? "Administrador" : "Visitante"}</span>
                         </div>
@@ -168,19 +167,19 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
                 </div>
             </div>
             {/* Contenido Principal */}
-            <div className="page-content">
-                <header className="page-header">
+            <div className={styles.pageContent}>
+                <header className={styles.pageHeader}>
                     <button
                         ref={buttonRef}
-                        className="menu-toggle material-symbols-outlined"
+                        className={styles.menuToggle}
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                     >
-                        menu
+                        <span className="material-symbols-outlined">menu</span>
                     </button>
                     <h1>Inventario MUIG-UPTC</h1>
                 </header>
 
-                <main className="page-main">
+                <main className={styles.pageMain}>
                     {children} {/* Esto renderiza los hijos pasados desde Home.jsx */}
                 </main>
 

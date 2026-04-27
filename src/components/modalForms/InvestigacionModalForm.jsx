@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { showNotification } from "../../utils/showNotification";
-import '../../styles/FormModal.css';
+import styles from "../../styles/FormModal.module.css";
 
 const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData }) => {
     const [formData, setFormData] = useState({
@@ -112,16 +112,16 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
 
     return (
         isOpen && (
-            <div className="modal-form" onClick={closeModal}>
-                <div className="modal-content-form" onClick={(e) => e.stopPropagation()}>
-                    <span className="close-form" onClick={closeModal}>
+            <div className={styles.modalForm} onClick={closeModal}>
+                <div className={styles.modalContentForm} onClick={(e) => e.stopPropagation()}>
+                    <span className={styles.closeForm} onClick={closeModal}>
                         &times;
                     </span>
                     <h3>{investigacionData ? "Editar Investigación" : "Añadir Investigación"}</h3>
                     <form onSubmit={handleSubmit}>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>ID pieza:</label>
-                            <div className="id-container">
+                            <div className={styles.idContainer}>
                                 <select
                                     value={formData.ID_PIEZA_PREFIX || ""}
                                     onChange={(e) => setFormData(prev => ({ ...prev, ID_PIEZA_PREFIX: e.target.value }))}
@@ -133,7 +133,7 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
                                 <input
                                     type="text"
                                     name="ID_PIEZA_SUFFIX"
-                                    value={formData.ID_PIEZA_SUFFIX}
+                                    value={formData.ID_PIEZA_SUFFIX || ""}
                                     onChange={(e) => {
                                         const value = e.target.value;
                                         if (!/^[a-zA-Z0-9]*$/.test(value)) return;
@@ -144,152 +144,152 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
                                 />
                             </div>
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Colección:</label>
                             <input
                                 type="text"
                                 name="COLECCION"
-                                value={formData.COLECCION}
+                                value={formData.COLECCION || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Repositorio:</label>
                             <input
                                 type="text"
                                 name="REPOSITORIO"
-                                value={formData.REPOSITORIO}
+                                value={formData.REPOSITORIO || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Filo:</label>
                             <input
                                 type="text"
                                 name="FILO"
-                                value={formData.FILO}
+                                value={formData.FILO || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Subfilo:</label>
                             <input
                                 type="text"
                                 name="SUBFILO"
-                                value={formData.SUBFILO}
+                                value={formData.SUBFILO || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Clase:</label>
                             <input
                                 type="text"
                                 name="CLASE"
-                                value={formData.CLASE}
+                                value={formData.CLASE || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Orden:</label>
                             <input
                                 type="text"
                                 name="ORDEN"
-                                value={formData.ORDEN}
+                                value={formData.ORDEN || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Familia:</label>
                             <input
                                 type="text"
                                 name="FAMILIA"
-                                value={formData.FAMILIA}
+                                value={formData.FAMILIA || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Genero:</label>
                             <input
                                 type="text"
                                 name="GENERO"
-                                value={formData.GENERO}
+                                value={formData.GENERO || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Nombre:</label>
                             <input
                                 type="text"
                                 name="NOMBRE"
-                                value={formData.NOMBRE}
+                                value={formData.NOMBRE || ""}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Periodo Geológico:</label>
                             <input
                                 type="text"
                                 name="PERIODO_GEOLOGICO"
-                                value={formData.PERIODO_GEOLOGICO}
+                                value={formData.PERIODO_GEOLOGICO || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Era Geológica:</label>
                             <input
                                 type="text"
                                 name="ERA_GEOLOGICA"
-                                value={formData.ERA_GEOLOGICA}
+                                value={formData.ERA_GEOLOGICA || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Formación Geológica:</label>
                             <input
                                 type="text"
                                 name="FORMACION_GEOLOGICA"
-                                value={formData.FORMACION_GEOLOGICA}
+                                value={formData.FORMACION_GEOLOGICA || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Sección Estratigráfica:</label>
                             <input
                                 type="text"
                                 name="SECCION_ESTRATIGRAFICA"
-                                value={formData.SECCION_ESTRATIGRAFICA}
+                                value={formData.SECCION_ESTRATIGRAFICA || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Colector:</label>
                             <input
                                 type="text"
                                 name="COLECTOR"
-                                value={formData.COLECTOR}
+                                value={formData.COLECTOR || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Localidad:</label>
                             <input
                                 type="text"
                                 name="LOCALIDAD"
-                                value={formData.LOCALIDAD}
+                                value={formData.LOCALIDAD || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Observaciones:</label>
                             <input
                                 type="text"
                                 name="OBSERVACIONES"
-                                value={formData.OBSERVACIONES}
+                                value={formData.OBSERVACIONES || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Foto:</label>
                             <input
                                 type="file"
@@ -298,7 +298,7 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
                                 onChange={handleFileChange}
                             />
                         </div>
-                        <button type="submit" className="save-button">
+                        <button type="submit" className={styles.saveButton}>
                             {investigacionData ? "Actualizar" : "Guardar"}
                         </button>
                     </form>

@@ -4,7 +4,7 @@ import api from '../services/api';
 import { jwtDecode } from 'jwt-decode';
 import { Eye, EyeOff } from "lucide-react";
 import { showNotification } from '../utils/showNotification';
-import '../styles/Login.css';
+import styles from '../styles/Login.module.css';
 
 const Login = ({ setAuth }) => {
     const [user, setUser] = useState('');
@@ -48,16 +48,16 @@ const Login = ({ setAuth }) => {
     };
 
     return (
-        <div className="login-page">
-            <div className="login-card">
-                <div className="login-header">
-                    <img src="/Logo.png" alt="Logo" className="login-logo" />
+        <div className={styles.loginPage}>
+            <div className={styles.loginCard}>
+                <div className={styles.loginHeader}>
+                    <img src="/Logo.png" alt="Logo" className={styles.loginLogo} />
                     <h2>Bienvenido</h2>
                     <p>Ingresa tus credenciales para continuar</p>
                 </div>
 
-                <form onSubmit={handleLogin} className="login-form-content">
-                    <div className="form-group">
+                <form onSubmit={handleLogin} className={styles.loginFormContent}>
+                    <div className={styles.formGroup}>
                         <label>Usuario</label>
                         <input
                             type="text"
@@ -68,9 +68,9 @@ const Login = ({ setAuth }) => {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className={styles.formGroup}>
                         <label>Contraseña</label>
-                        <div className='password-wrapper'>
+                        <div className={styles.passwordWrapper}>
                             <input
                                 type={showPassword ? "text" : "password"}
                                 value={password}
@@ -80,7 +80,7 @@ const Login = ({ setAuth }) => {
                             />
                             <button 
                                 type="button" 
-                                className="toggle-pass"
+                                className={styles.togglePass}
                                 onClick={togglePasswordVisibility}
                             >
                                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -88,14 +88,14 @@ const Login = ({ setAuth }) => {
                         </div>
                     </div>
 
-                    {error && <p className="error-text">{error}</p>}
+                    {error && <p className={styles.errorText}>{error}</p>}
                     
-                    <button type="submit" className="btn-primary">Ingresar</button>
+                    <button type="submit" className={styles.saveButton}>Ingresar</button>
                 </form>
 
-                <div className="login-footer">
+                <div className={styles.loginFooter}>
                     <span>¿No tienes cuenta?</span>
-                    <button className="btn-secondary" onClick={() => navigate('/register')}>
+                    <button className={styles.registerButton} onClick={() => navigate('/register')}>
                         Crear cuenta
                     </button>
                 </div>

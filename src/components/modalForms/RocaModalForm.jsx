@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { showNotification } from "../../utils/showNotification";
-import '../../styles/FormModal.css';
+import styles from "../../styles/FormModal.module.css";
 
 const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
     const [formData, setFormData] = useState({
@@ -98,18 +98,18 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
 
     return (
         isOpen && (
-            <div className="modal-form" onClick={closeModal}>
-                <div className="modal-content-form" onClick={(e) => e.stopPropagation()}>
-                    <span className="close-form" onClick={closeModal}>
+            <div className={styles.modalForm} onClick={closeModal}>
+                <div className={styles.modalContentForm} onClick={(e) => e.stopPropagation()}>
+                    <span className={styles.closeForm} onClick={closeModal}>
                         &times;
                     </span>
                     <h3>{rocaData ? "Editar Roca" : "Añadir Roca"}</h3>
                     <form onSubmit={handleSubmit}>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>ID roca:</label>
-                            <div className="id-container">
+                            <div className={styles.idContainer}>
                                 <select
-                                    value={formData.ID_ROCA_PREFIX}
+                                    value={formData.ID_ROCA_PREFIX || ""}
                                     onChange={(e) => setFormData(prev => ({ ...prev, ID_ROCA_PREFIX: e.target.value }))}
                                 >
                                     <option value="MGUPTC-CPT-">MGUPTC-CPT-</option>
@@ -117,7 +117,7 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
                                 <input
                                     type="text"
                                     name="ID_ROCA_SUFFIX"
-                                    value={formData.ID_ROCA_SUFFIX}
+                                    value={formData.ID_ROCA_SUFFIX || ""}
                                     onChange={(e) => {
                                         const value = e.target.value;
                                         if (!/^[a-zA-Z0-9]*$/.test(value)) return;
@@ -128,116 +128,116 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
                                 />
                             </div>
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>N_Barrantes:</label>
                             <input
                                 type="text"
                                 name="N_BARRANTES"
-                                value={formData.N_BARRANTES}
+                                value={formData.N_BARRANTES || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Otros:</label>
                             <input
                                 type="text"
                                 name="OTROS"
-                                value={formData.OTROS}
+                                value={formData.OTROS || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>BD_C_VARGAS:</label>
                             <input
                                 type="text"
                                 name="BD_C_VARGAS"
-                                value={formData.BD_C_VARGAS}
+                                value={formData.BD_C_VARGAS || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Tipo:</label>
                             <input
                                 type="text"
                                 name="TIPO"
-                                value={formData.TIPO}
+                                value={formData.TIPO || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Colección:</label>
                             <input
                                 type="text"
                                 name="COLECCION"
-                                value={formData.COLECCION}
+                                value={formData.COLECCION || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Nombre de la Pieza:</label>
                             <input
                                 type="text"
                                 name="NOMBRE_PIEZA"
-                                value={formData.NOMBRE_PIEZA}
+                                value={formData.NOMBRE_PIEZA || ""}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Departamento:</label>
                             <input
                                 type="text"
                                 name="DEPARTAMENTO"
-                                value={formData.DEPARTAMENTO}
+                                value={formData.DEPARTAMENTO || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Municipio:</label>
                             <input
                                 type="text"
                                 name="MUNICIPIO"
-                                value={formData.MUNICIPIO}
+                                value={formData.MUNICIPIO || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Colector o Donador:</label>
                             <input
                                 type="text"
                                 name="COLECTOR_DONADOR"
-                                value={formData.COLECTOR_DONADOR}
+                                value={formData.COLECTOR_DONADOR || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Caracteristicas:</label>
                             <input
                                 type="text"
                                 name="CARACTERISTICAS"
-                                value={formData.CARACTERISTICAS}
+                                value={formData.CARACTERISTICAS || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Observaciones:</label>
                             <input
                                 type="text"
                                 name="OBSERVACIONES"
-                                value={formData.OBSERVACIONES}
+                                value={formData.OBSERVACIONES || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Ubicación:</label>
                             <input
                                 type="text"
                                 name="UBICACION"
-                                value={formData.UBICACION}
+                                value={formData.UBICACION || ""}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Foto:</label>
                             <input
                                 type="file"
@@ -246,7 +246,7 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
                                 onChange={handleFileChange}
                             />
                         </div>
-                        <button type="submit" className="save-button">
+                        <button type="submit" className={styles.saveButton}>
                             {rocaData ? "Actualizar" : "Guardar"}
                         </button>
                     </form>

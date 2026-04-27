@@ -1,11 +1,11 @@
-.image-grid {
+.imageGrid {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
 }
 
-.preview-image {
+.previewImage {
   cursor: pointer;
   width: 100px;
   height: auto;
@@ -14,7 +14,7 @@
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.preview-image:hover {
+.previewImage:hover {
   transform: scale(1.1);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -32,7 +32,7 @@
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.modal-content {
+.modalContent {
   max-width: 90%;
   max-height: 90%;
   border-radius: 10px;
@@ -61,7 +61,7 @@
 
 /* Responsividad */
 @media (max-width: 600px) {
-  .preview-image {
+  .previewImage {
     width: 80px;
   }
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../styles/TableComponent.css'
+import styles from '../styles/TableComponent.module.css'
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import ErrorImage from '../styles/images/Error-imagen.jpg'
@@ -100,9 +100,9 @@ const TableComponent = ({
     };
 
     return (
-        <div className="table-container">
-            <div className="table-header">
-                <div className="search-create">
+        <div className={styles.tableContainer}>
+            <div className={styles.tableHeader}>
+                <div className={styles.searchCreate}>
                     <select
                         value={selectedColumn}
                         onChange={(e) => setSelectedColumn(e.target.value)}
@@ -122,16 +122,15 @@ const TableComponent = ({
                     />
                     {enableExport && (
                         <button
-                            className="export-button"
+                            className={styles.exportButton}
                             onClick={handleExport}
-                            style={{ marginLeft: '10px', backgroundColor: '#28a745', color: 'white', border: 'none', padding: '8px 12px', borderRadius: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}
                         >
                             <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>download</span>
                             Exportar
                         </button>
                     )}
 
-                    {(isAdmin === 2 || isAdmin === 3) && onCreate && (<button className="create-button" onClick={onCreate}><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#e8eaed"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" /></svg> Crear Nuevo</button>)}
+                    {(isAdmin === 2 || isAdmin === 3) && onCreate && (<button className={styles.createButton} onClick={onCreate}><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#e8eaed"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" /></svg> Crear Nuevo</button>)}
                 </div>
             </div>
             <table>
@@ -161,6 +160,7 @@ const TableComponent = ({
                                         return (
                                             <td
                                                 key={colIndex}
+                                                data-label={col}
                                                 className={(!row[col] || String(row[col]).trim() === "N/A") ? "na-value" : ""}
                                                 onClick={() => toggleRowExpansion(rowIndex)}
                                             >
@@ -176,7 +176,7 @@ const TableComponent = ({
                                                             setImageSrc(highResUrl); // Usamos la URL grande para el modal
                                                             setIsOpen(true);
                                                         }}
-                                                        className="table-image"
+                                                        className={styles.tableImage}
                                                     />
                                                 ) : (
                                                     row[col] || "N/A"
@@ -186,10 +186,10 @@ const TableComponent = ({
                                     })}
                                     {
                                         (isAdmin === 2 || isAdmin === 3) && (onUpdate || onDeleteImage || onDelete) && (
-                                            <td className="action-buttons">
-                                                {onUpdate && (<button className="update-button" onClick={() => onUpdate(row)}><span className="material-symbols-outlined">Edit</span></button>)}
-                                                {onDeleteImage && (<button className="delete-image-button" onClick={() => onDeleteImage(row)}><span className="material-symbols-outlined">hide_image</span></button>)}
-                                                {onDelete && (<button className="delete-button" onClick={() => onDelete(row)}><span className="material-symbols-outlined">Delete</span></button>)}
+                                            <td className={styles.actionButtons}>
+                                                {onUpdate && (<button className={styles.updateButton} onClick={() => onUpdate(row)}><span className="material-symbols-outlined">Edit</span></button>)}
+                                                {onDeleteImage && (<button className={styles.deleteImageButton} onClick={() => onDeleteImage(row)}><span className="material-symbols-outlined">hide_image</span></button>)}
+                                                {onDelete && (<button className={styles.deleteButton} onClick={() => onDelete(row)}><span className="material-symbols-outlined">Delete</span></button>)}
                                             </td>
                                         )
                                     }
@@ -199,15 +199,15 @@ const TableComponent = ({
                                     <tr>
                                         <td colSpan={columns.length + 1}>
                                             <div className={`expanded-details-wrapper ${expandedRow === rowIndex ? "open" : ""}`}>
-                                                <div className="expanded-details">
-                                                    <div className="details-column">
+                                                <div className={styles.expandedDetails}>
+                                                    <div className={styles.detailsColumn}>
                                                         {Object.entries(row).filter(([key]) => key !== "FOTO").slice(0, Math.ceil(Object.entries(row).length / 2)).map(([key, value]) => (
                                                             <p key={key}>
                                                                 <strong>{key}</strong>: {value || "N/A"}
                                                             </p>
                                                         ))}
                                                     </div>
-                                                    <div className="details-column">
+                                                    <div className={styles.detailsColumn}>
                                                         {Object.entries(row).filter(([key]) => key !== "FOTO").slice(Math.ceil(Object.entries(row).length / 2)).map(([key, value]) => (
                                                             <p key={key}>
                                                                 <strong>{key}</strong>: {value || "N/A"}
@@ -231,7 +231,7 @@ const TableComponent = ({
                 </tbody>
             </table>
             {/**Controles de paginacion */}
-            <div className="pagination-controls">
+            <div className={styles.paginationControls}>
                 <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
                     Anterior
                 </button>

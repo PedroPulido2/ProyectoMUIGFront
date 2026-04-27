@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import '../../styles/FormModal.css';
+import styles from "../../styles/FormModal.module.css";
 import { Eye, EyeOff } from "lucide-react";
 import { showNotification } from "../../utils/showNotification";
 
@@ -178,27 +178,27 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
 
     return (
         isOpen && (
-            <div className="modal-form" onClick={closeModal}>
-                <div className="modal-content-form" onClick={(e) => e.stopPropagation()}>
-                    <span className="close-form" onClick={closeModal}>
+            <div className={styles.modalForm} onClick={closeModal}>
+                <div className={styles.modalContentForm} onClick={(e) => e.stopPropagation()}>
+                    <span className={styles.closeForm} onClick={closeModal}>
                         &times;
                     </span>
                     <h3>{profileData ? "Editar Perfil" : "Añadir Perfil"}</h3>
                     <form onSubmit={handleSubmit}>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>ID Perfil:</label>
                             <input
                                 type="text"
                                 name="id_Perfil"
-                                value={formData.id_Perfil}
+                                value={formData.id_Perfil || ""}
                                 onChange={handleChange}
                                 required
                             //disabled={fosilData} // No editable para edición
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Tipo de identificación:</label>
-                            <select className="styled-select" name="tipoIdentificacion" value={formData.tipoIdentificacion} onChange={handleChange} required>
+                            <select className={styles.styledSelect} name="tipoIdentificacion" value={formData.tipoIdentificacion || ""} onChange={handleChange} required>
                                 <option value="" disabled>Seleccione una opción</option>
                                 <option value="Tarjeta de identidad">Targeta de identidad (TI)</option>
                                 <option value="Cedula de Ciudadania">Cedula de Ciudadania (CC)</option>
@@ -208,66 +208,66 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
                                 <option value="Permiso especial de permanencia">Permiso especial de permanencia (PEP)</option>
                             </select>
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Nombre:</label>
                             <input
                                 type="text"
                                 name="nombre"
-                                value={formData.nombre}
+                                value={formData.nombre || ""}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Apellido:</label>
                             <input
                                 type="text"
                                 name="apellido"
-                                value={formData.apellido}
+                                value={formData.apellido || ""}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Fecha de nacimiento:</label>
                             <input
                                 type="date"
                                 name="fechaNacimiento"
-                                value={formData.fechaNacimiento}
+                                value={formData.fechaNacimiento || ""}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Genero:</label>
-                            <select className="styled-select" name="genero" value={formData.genero} onChange={handleChange} required>
+                            <select className={styles.styledSelect} name="genero" value={formData.genero || ""} onChange={handleChange} required>
                                 <option value="" disabled>Seleccione una opción</option>
                                 <option value="Masculino">Masculino</option>
                                 <option value="Femenino">Femenino</option>
                                 <option value="Otro">Otro</option>
                             </select>
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Correo:</label>
                             <input
                                 type="text"
                                 name="correo"
-                                value={formData.correo}
+                                value={formData.correo || ""}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Telefono:</label>
                             <input
                                 type="number"
                                 name="telefono"
-                                value={formData.telefono}
+                                value={formData.telefono || ""}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Foto:</label>
                             <input
                                 type="file"
@@ -276,23 +276,23 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
                                 onChange={handleFileChange}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Usuario:</label>
                             <input
                                 type="text"
                                 name="user"
-                                value={formData.user}
+                                value={formData.user || ""}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Password:</label>
-                            <div className="password-container">
+                            <div className={styles.passwordContainer}>
                                 <input
                                     type={showPassword.new ? "text" : "password"}
                                     name="password"
-                                    value={formData.password}
+                                    value={formData.password || ""}
                                     onChange={handleChange}
                                 />
                                 <button type="button" onClick={() => togglePasswordVisibility("new")}>
@@ -300,24 +300,24 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
                                 </button>
                             </div>
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Tipo de Rol:</label>
-                            <select className="styled-select" name="isAdmin" value={formData.isAdmin} onChange={handleChange} required>
+                            <select className={styles.styledSelect} name="isAdmin" value={formData.isAdmin || ""} onChange={handleChange} required>
                                 <option value="" disabled>Seleccione una opción</option>
                                 <option value="1">Visitante</option>
                                 <option value="2">Administrador</option>
                                 <option value="3">Super-Administrador</option>
                             </select>
                         </div>
-                        <div className="form-group">
+                        <div className={styles.formGroup}>
                             <label>Estado:</label>
-                            <select className="styled-select" name="estado" value={formData.estado} onChange={handleChange} required>
+                            <select className={styles.styledSelect} name="estado" value={formData.estado || ""} onChange={handleChange} required>
                                 <option value="" disabled>Seleccione una opción</option>
                                 <option value="ACTIVO">Activo</option>
                                 <option value="BLOQUEADO">Bloqueado</option>
                             </select>
                         </div>
-                        <button type="submit" className="save-button">
+                        <button type="submit" className={styles.saveButton}>
                             {profileData ? "Actualizar" : "Guardar"}
                         </button>
                     </form>

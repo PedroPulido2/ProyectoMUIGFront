@@ -1,0 +1,457 @@
+/* ---- Contenedor Principal ---- */
+.tableContainer {
+    width: 100%;
+    max-width: calc(100vw - 120px);
+    margin: 0 auto;
+    background: #ffffff;
+    /* Fondo blanco o claro para contrastar si el main es gris */
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+}
+
+/* ---- Barra Superior (Buscador y Botones) ---- */
+.tableHeader {
+    margin-bottom: 25px;
+}
+
+.searchCreate {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+}
+
+.searchCreate select,
+.searchCreate input {
+    background-color: #f8f9fa;
+    color: #333;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.searchCreate select:focus,
+.searchCreate input:focus {
+    border-color: #e1b964;
+    box-shadow: 0 0 0 3px rgba(225, 185, 100, 0.2);
+}
+
+.searchCreate input {
+    flex: 1;
+    /* Hace que el buscador ocupe el espacio disponible */
+    min-width: 200px;
+}
+
+/* ---- Botones Principales ---- */
+.createButton,
+.exportButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.createButton {
+    background-color: #1a1a1a;
+    /* Oscuro mate */
+    color: #e1b964;
+    /* Letras doradas */
+    margin-left: auto;
+    /* Empuja el botón a la derecha */
+}
+
+.createButton svg {
+    fill: #e1b964;
+}
+
+.createButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.exportButton {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.exportButton:hover {
+    background-color: #2e7d32;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* ---- Tabla ---- */
+table {
+    width: 100%;
+    min-width: 800px;
+    /* Asegura que no se aplaste en pantallas pequeñas */
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 10px;
+}
+
+th {
+    background-color: #1a1a1a;
+    color: #e1b964;
+    padding: 16px;
+    text-align: center;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 3px solid #e1b964;
+    /* Línea dorada base */
+}
+
+th:first-child {
+    border-top-left-radius: 8px;
+}
+
+th:last-child {
+    border-top-right-radius: 8px;
+}
+
+td {
+    padding: 14px 16px;
+    text-align: center;
+    color: #444;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+/* Efecto Hover en las filas */
+tbody tr {
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+tbody tr:hover {
+    background-color: #fcfaf5;
+    /* Un tono crema/dorado muy muy suave */
+}
+
+td[data-label="FOTO"] {
+    padding: 0 0 20px 0 !important; 
+    /* Forza a que no haya espacio blanco */
+    width: 100px;
+    /* Fija un ancho ideal para la columna de fotos */
+    position: relative;
+    overflow: hidden;
+    /* CRÍTICO: Hace que cuando la foto haga zoom, no tape los textos vecinos */
+}
+
+/* 2. La foto ocupa absolutamente todo el espacio disponible */
+.tableImage {
+    /* Usa .tableImage si así lo tienes en tu JSX */
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 90px;
+    /* Asegura que la celda tenga una altura mínima decente */
+    object-fit: cover;
+    /* Evita que la foto se deforme o se aplaste */
+    border-radius: 6px;
+    /* Le quitamos las curvas para que encaje perfecto en la esquina */
+    border: none;
+    /* Quitamos el borde gris */
+    margin: 0;
+    cursor: pointer;
+    transition: transform 0.4s ease;
+}
+
+/* 3. Mantenemos el efecto Hover */
+.tableImage:hover {
+    transform: scale(1.0);
+    /* La foto se acerca "por dentro" de la celda al pasar el mouse */
+}
+
+/* ---- Botones de Acción (Iconos) ---- */
+.actionButtons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.actionButtons button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.updateButton {
+    color: #007bff;
+}
+
+.updateButton:hover {
+    background: rgba(0, 123, 255, 0.1);
+}
+
+.deleteImageButton {
+    color: #6c757d;
+}
+
+.deleteImageButton:hover {
+    background: rgba(108, 117, 125, 0.1);
+    color: #343a40;
+}
+
+.deleteButton {
+    color: #dc3545;
+}
+
+.deleteButton:hover {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+/* ---- Detalles Expandidos ---- */
+.expandedDetails {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #fdfbf7;
+    padding: 20px 25px;
+    border-radius: 8px;
+    margin: 10px 20px;
+    border-left: 4px solid #e1b964;
+    box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.02);
+    gap: 30px;
+}
+
+.detailsColumn {
+    flex: 1;
+    min-width: 250px;
+    text-align: left;
+}
+
+.detailsColumn p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #555;
+    border-bottom: 1px dashed #e0e0e0;
+    padding-bottom: 4px;
+    gap: 5px;
+}
+
+.detailsColumn p strong {
+    flex: 0 0 auto;
+    max-width: 50%;
+    color: #1a1a1a;
+    display: inline-block;
+    width: 140px;
+    word-break: break-word;
+    /* Alinea los dos puntos para que parezca un formulario */
+}
+
+/* ---- Paginación ---- */
+.paginationControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 0 10px 0;
+    margin-top: 10px;
+}
+
+.paginationControls button {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.paginationControls button:hover:not(:disabled) {
+    background-color: #1a1a1a;
+    color: #e1b964;
+    border-color: #1a1a1a;
+}
+
+.paginationControls button:disabled {
+    background-color: #f8f9fa;
+    color: #aaa;
+    border-color: #eee;
+    cursor: not-allowed;
+}
+
+.paginationControls span {
+    font-weight: 600;
+    color: #444;
+}
+/* =========================================
+   2. MODO TELÉFONO Y TABLET (Vista de Tarjetas)
+   ========================================= */
+@media (max-width: 1024px) {
+    
+    /* Apagar el modo Sticky */
+    th:first-child,
+    td:first-child,
+    th:last-child,
+    td:last-child {
+        position: static;
+    }
+
+    th:first-child::after,
+    td:first-child::after,
+    th:last-child::before,
+    td:last-child::before {
+        display: none;
+    }
+
+    /* Ocultar la cabecera original */
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    table,
+    tbody,
+    tr,
+    td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* ---- TARJETA PRINCIPAL ---- */
+    tbody tr {
+        margin-bottom: 25px;
+        border: 1px solid #eaeaea; /* Borde más sutil */
+        border-top: 4px solid #e1b964; /* Acento dorado en la parte superior para estilo MUIG */
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06); /* Sombra más suave y difuminada */
+        background: #ffffff;
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Pequeño efecto al tocar la tarjeta */
+    tbody tr:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ---- EL TRUCO FLEXBOX PARA LAS CELDAS ---- */
+    td {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center; /* Centramos verticalmente para que se vea más limpio */
+        padding: 14px 20px; /* Un poco más de aire arriba y abajo */
+        border-bottom: 1px solid #f5f5f5; /* Línea separadora súper sutil */
+        text-align: left;
+        min-height: auto;
+        word-break: break-word;
+        font-size: 14px;
+        color: #1a1a1a; /* El valor principal en un color oscuro y fuerte */
+    }
+
+    td:last-child {
+        border-bottom: none;
+    }
+
+    /* El Título (data-label) */
+    td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        font-size: 11px; /* Un poquito más pequeño para contrastar con el valor */
+        color: #888; /* Gris más suave */
+        text-transform: uppercase;
+        letter-spacing: 0.5px; /* Espaciado que le da un toque técnico y moderno */
+        text-align: left;
+        flex-basis: 40%; /* Le damos un poco más de espacio (40%) para títulos largos */
+        min-width: 130px;
+        flex-shrink: 0;
+        padding-right: 15px;
+    }
+
+    /* Excepción para la fila expandida (Detalles Adicionales) */
+    td[colspan] {
+        display: block;
+        text-align: left;
+        padding: 0; /* El padding se maneja en el div interno de los detalles */
+        background-color: #fcfcfc; /* Un fondo casi blanco para diferenciar los detalles */
+    }
+
+    td[colspan]::before {
+        display: none;
+    }
+
+   td[data-label="FOTO"] {
+        display: flex !important;
+        justify-content: center !important; 
+        align-items: center !important;
+        width: 100% !important;
+        
+        /* CAMBIO CLAVE: Padding superior en 0 para eliminar el espacio blanco */
+        padding: 0 0 100px 0 !important; 
+        
+        border-bottom: 1px solid #f5f5f5 !important;
+        background-color: #fcfcfc; /* Un fondo muy claro por si la foto no es 1:1 */
+    }
+
+    /* 2. ELIMINAR EL TEXTO "FOTO" (Esta es la línea crítica que te falta) */
+    td[data-label="FOTO"]::before {
+        content: none !important; /* Desaparece el texto */
+        display: none !important; /* Elimina el bloque para que no ocupe espacio */
+        width: 0 !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+
+    /* 2. Ajuste de la imagen para que encaje con el borde */
+    .tableImage {
+        width: 160px !important;
+        height: 160px !important;
+        object-fit: cover;
+        
+        /* Quitamos cualquier margen superior que pueda tener la imagen */
+        margin-top: 0 !important; 
+        
+        /* Redondeamos un poco menos las esquinas de arriba para que se vean bien 
+           cerca del borde dorado de la tarjeta */
+        border-radius: 4px 4px 16px 16px; 
+        
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    /* Zona de Botones de Acción */
+    .actionButtons {
+        display: flex; /* Aseguramos que el contenedor use flex */
+        width: 100%;
+        justify-content: center; /* CORREGIDO: flex-center no existe, es 'center' */
+        align-items: center;
+        gap: 25px; /* Más espacio entre botones para evitar toques accidentales con el dedo */
+        padding: 15px 0; /* Espacio extra arriba y abajo del área de botones */
+        background-color: #fafafa; /* Fondo ligeramente gris para separar las acciones de los datos */
+    }
+    
+    /* Hacemos los botones un poquito más grandes para pantallas táctiles */
+    .actionButtons button {
+        padding: 10px;
+        border-radius: 8px;
+    }
+}

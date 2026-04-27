@@ -1,15 +1,15 @@
 import React from "react";
-import '../styles/ImageModal.css';
+import styles from '../styles/ImageModal.module.css';
 
 const ImageModal = ({ isOpen, modalImage, closeModal }) => {
     return (
         <div>
             {isOpen && (
-                <div className="modal" onClick={closeModal}>
-                    <span className="close" onClick={closeModal}>
+                <div className={styles.modal} onClick={closeModal}>
+                    <span className={styles.close} onClick={closeModal}>
                         &times;
                     </span>
-                    <img src={modalImage} alt="Modal Preview" className="modal-content" />
+                    <img src={modalImage} alt="Modal Preview" className={styles.modalContent} />
                 </div>
             )}
         </div>

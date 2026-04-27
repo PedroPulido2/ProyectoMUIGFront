@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { Eye, EyeOff, XCircle, CheckCircle } from "lucide-react";
 import { showNotification } from "../utils/showNotification";
-import "../styles/Register.css";
+import styles from "../styles/Register.module.css";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -175,13 +175,13 @@ const Register = () => {
     const passwordsMatch = formData.password === formData.confirmPassword;
 
     return (
-        <div className="register-page">
-            <div className="register-form">
+        <div className={styles.registerPage}>
+            <div className={styles.registerForm}>
                 <h2>Registro de Usuario</h2>
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group">
+                    <div className={styles.formGroup}>
                         <label>Tipo de Documento:</label>
-                        <select className="styled-select" name="tipoIdentificacion" value={formData.tipoIdentificacion} onChange={handleChange} required>
+                        <select className={styles.styledSelect} name="tipoIdentificacion" value={formData.tipoIdentificacion} onChange={handleChange} required>
                             <option value="" disabled>Seleccione una opción</option>
                             <option value="Tarjeta de identidad">Tarjeta de identidad (TI)</option>
                             <option value="Cedula de Ciudadania">Cédula de Ciudadanía (CC)</option>
@@ -191,46 +191,46 @@ const Register = () => {
                             <option value="Permiso especial de permanencia">Permiso especial de permanencia (PEP)</option>
                         </select>
                     </div>
-                    <div className="form-group">
+                    <div className={styles.formGroup}>
                         <label>Número de Documento:</label>
                         <input type="text" name="id_Perfil" value={formData.id_Perfil} onChange={handleChange} placeholder="Ingrese su número de documento" required />
                     </div>
-                    <div className="form-group">
+                    <div className={styles.formGroup}>
                         <label>Nombres:</label>
                         <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Ingrese sus nombres" required />
                     </div>
-                    <div className="form-group">
+                    <div className={styles.formGroup}>
                         <label>Apellidos:</label>
                         <input type="text" name="apellido" value={formData.apellido} onChange={handleChange} placeholder="Ingrese sus apellidos" required />
                     </div>
-                    <div className="form-group">
+                    <div className={styles.formGroup}>
                         <label>Fecha de Nacimiento:</label>
                         <input type="date" name="fechaNacimiento" value={formData.fechaNacimiento} onChange={handleChange} required />
                     </div>
-                    <div className="form-group">
+                    <div className={styles.formGroup}>
                         <label>Género:</label>
-                        <select className="styled-select" name="genero" value={formData.genero} onChange={handleChange} required>
+                        <select className={styles.styledSelect} name="genero" value={formData.genero} onChange={handleChange} required>
                             <option value="" disabled>Seleccione una opción</option>
                             <option value="Masculino">Masculino</option>
                             <option value="Femenino">Femenino</option>
                             <option value="Otro">Otro</option>
                         </select>
                     </div>
-                    <div className="form-group">
+                    <div className={styles.formGroup}>
                         <label>Correo:</label>
                         <input type="email" name="correo" value={formData.correo} onChange={handleChange} placeholder="Ingrese su correo" required />
                     </div>
-                    <div className="form-group">
+                    <div className={styles.formGroup}>
                         <label>Teléfono:</label>
                         <input type="text" name="telefono" value={formData.telefono} onChange={handleChange} placeholder="Ingrese su telefono" required />
                     </div>
-                    <div className="form-group">
+                    <div className={styles.formGroup}>
                         <label>Usuario:</label>
                         <input type="text" name="user" value={formData.user} onChange={handleChange} placeholder="Ingrese su usuario" required />
                     </div>
-                    <div className="form-group">
+                    <div className={styles.formGroup}>
                         <label htmlFor="password">Contraseña:</label>
-                        <div className="password-container">
+                        <div className={styles.passwordContainer}>
                             <input
                                 type={showPassword.new ? "text" : "password"}
                                 name="password"
@@ -239,15 +239,15 @@ const Register = () => {
                                 placeholder="Ingrese su contraseña"
                                 required
                             />
-                            <button className="toggle-pass" type="button" onClick={() => togglePasswordVisibility("new")}>
+                            <button className={styles.togglePass} type="button" onClick={() => togglePasswordVisibility("new")}>
                                 {showPassword.new ? <Eye /> : <EyeOff />}
                             </button>
                         </div>
 
                     </div>
-                    <div className="form-group">
+                    <div className={styles.formGroup}>
                         <label>Confirmar Contraseña:</label>
-                        <div className="password-container">
+                        <div className={styles.passwordContainer}>
                             <input
                                 type={showPassword.confirm ? "text" : "password"}
                                 name="confirmPassword"
@@ -256,22 +256,22 @@ const Register = () => {
                                 placeholder="Repita la contraseña"
                                 required
                             />
-                            <button className="toggle-pass" type="button" onClick={() => togglePasswordVisibility("confirm")}>
+                            <button className={styles.togglePass} type="button" onClick={() => togglePasswordVisibility("confirm")}>
                                 {showPassword.confirm ? <Eye /> : <EyeOff />}
                             </button>
                             {formData.confirmPassword && (
-                                <div className="validation-icon">
+                                <div className={styles.validationIcon}>
                                     {passwordsMatch ? (
-                                        <CheckCircle className="icon-success" />
+                                        <CheckCircle className={styles.iconSuccess} />
                                     ) : (
-                                        <XCircle className="icon-error" />
+                                        <XCircle className={styles.iconError} />
                                     )}
                                 </div>
                             )}
                         </div>
                     </div>
-                    <div className="form-group checkbox-group">
-                        <label className="custom-checkbox">
+                    <div className={styles.formGroup}>
+                        <label className={styles.customCheckbox}>
                             <input
                                 type="checkbox"
                                 name="aceptaTerminos"
@@ -280,13 +280,13 @@ const Register = () => {
                                     setFormData({ ...formData, aceptaTerminos: e.target.checked })
                                 }
                             />
-                            <span className="checkmark"></span>
+                            <span className={styles.checkmark}></span>
                             Acepto el tratamiento de mis datos personales según la política de privacidad.
                         </label>
                     </div>
-                    {error && <p className="error-message">{error}</p>}
+                    {error && <p className={styles.errorMessage}>{error}</p>}
                     <br />
-                    <button type="submit" className="register-button2">Registrar</button>
+                    <button type="submit" className={styles.registerButton}>Registrar</button>
                 </form>
             </div>
         </div>

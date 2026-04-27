@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
-import '../../styles/FormModal.css';
+import styles from "../../styles/FormModal.module.css";
 import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
 import { showNotification } from "../../utils/showNotification";
 
@@ -78,67 +78,69 @@ const PerfilModalChPassword = ({ isOpen, closeModal, onSave }) => {
 
     return (
         isOpen && (
-            <div className="modal-form" onClick={closeModal}>
-                <div className="modal-content-form" onClick={(e) => e.stopPropagation()}>
-                    <span className="close-form" onClick={closeModal}>
+            <div className={styles.modalForm} onClick={closeModal}>
+                <div className={styles.modalContentForm} onClick={(e) => e.stopPropagation()}>
+                    <span className={styles.closeForm} onClick={closeModal}>
                         &times;
                     </span>
                     <h3>Cambiar Contraseña</h3>
                     <br />
                     <br />
-                    <form onSubmit={handleSubmit}>
-                        <label>
-                            Contraseña Actual:
-                            <div className="password-container">
-                                <input
-                                    type={showPassword.current ? "text" : "password"}
-                                    name="currentPassword"
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <button className="eyepassword" type="button" onClick={() => togglePasswordVisibility("current")}>
-                                    {showPassword.current ? <Eye /> : <EyeOff />}
-                                </button>
-                            </div>
-                        </label>
-                        <label>
-                            Nueva Contraseña:
-                            <div className="password-container">
-                                <input
-                                    type={showPassword.new ? "text" : "password"}
-                                    name="newPassword"
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <button className="eyepassword" type="button" onClick={() => togglePasswordVisibility("new")}>
-                                    {showPassword.new ? <Eye /> : <EyeOff />}
-                                </button>
-                            </div>
-                        </label>
+                    <div className={styles.formGroup}>
+                        <form onSubmit={handleSubmit}>
+                            <label>
+                                Contraseña Actual:
+                                <div className={styles.passwordContainer}>
+                                    <input
+                                        type={showPassword.current ? "text" : "password"}
+                                        name="currentPassword"
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    <button className={styles.eyepassword} type="button" onClick={() => togglePasswordVisibility("current")}>
+                                        {showPassword.current ? <Eye /> : <EyeOff />}
+                                    </button>
+                                </div>
+                            </label>
+                            <label>
+                                Nueva Contraseña:
+                                <div className={styles.passwordContainer}>
+                                    <input
+                                        type={showPassword.new ? "text" : "password"}
+                                        name="newPassword"
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    <button className={styles.eyepassword} type="button" onClick={() => togglePasswordVisibility("new")}>
+                                        {showPassword.new ? <Eye /> : <EyeOff />}
+                                    </button>
+                                </div>
+                            </label>
 
-                        <label>
-                            Confirmar Contraseña:
-                            <div className="password-container">
-                                <input
-                                    type={showPassword.confirm ? "text" : "password"}
-                                    name="confirmPassword"
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <button className="eyepassword" type="button" onClick={() => togglePasswordVisibility("confirm")}>
-                                    {showPassword.confirm ? <Eye/> : <EyeOff />}
-                                </button>
-                                {formData.confirmPassword && (
-                                    <div className="validation-icon">
-                                        {passwordsMatch ? <CheckCircle className="icon-success" /> : <XCircle className="icon-error" />}
-                                    </div>
-                                )}
-                            </div>
-                        </label>
-                        {errorMessage && <p className="error-message">{errorMessage}</p>}
-                        <br />
-                        <button type="submit" className="save-button">Guardar</button>
-                    </form>
+                            <label>
+                                Confirmar Contraseña:
+                                <div className={styles.passwordContainer}>
+                                    <input
+                                        type={showPassword.confirm ? "text" : "password"}
+                                        name="confirmPassword"
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    <button className={styles.eyepassword} type="button" onClick={() => togglePasswordVisibility("confirm")}>
+                                        {showPassword.confirm ? <Eye /> : <EyeOff />}
+                                    </button>
+                                    {formData.confirmPassword && (
+                                        <div className={styles.validationIcon}>
+                                            {passwordsMatch ? <CheckCircle className={styles.iconSuccess} /> : <XCircle className={styles.iconError} />}
+                                        </div>
+                                    )}
+                                </div>
+                            </label>
+                            {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+                            <br />
+                            <button type="submit" className={styles.saveButton}>Guardar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         )

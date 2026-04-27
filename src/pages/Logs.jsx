@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageLayout from "../components/PageLayout";
 import api from "../services/api";
-import '../styles/Main.css'
 import { showNotification, showConfirmation } from "../utils/showNotification";
 import TableComponent from "../components/TableComponent";
 

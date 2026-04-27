@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import PageLayout from "../components/PageLayout";
-import '../styles/Main.css'
 import TableComponent from "../components/TableComponent";
 import RocaFormModal from "../components/modalForms/RocaModalForm";
 import api from '../services/api';

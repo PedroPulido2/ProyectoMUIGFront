@@ -1,0 +1,104 @@
+/* ---- Encabezado ---- */
+.welcomeHeader {
+  text-align: center;
+  margin-bottom: 40px; /* Reemplaza los <br /> */
+}
+
+.welcomeHeader h2 {
+  font-size: 28px;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+}
+
+.welcomeHeader p {
+  color: #555;
+  font-size: 18px;
+}
+
+/* ---- Contenedor Principal (Grid) ---- */
+.selectModules {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Crea exactamente 2 columnas */
+  gap: 30px;
+  max-width: 900px; /* Evita que las tarjetas se estiren demasiado */
+  width: 100%;
+  margin: 0 auto; /* Centra el grid horizontalmente */
+}
+
+/* ---- Tarjetas ---- */
+.module {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08); /* Borde súper sutil */
+  border-radius: 16px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animación más fluida y con ligero rebote */
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.05); /* Sombra elegante */
+}
+
+/* Contenedor de la imagen para efecto Zoom interno */
+.imageContainer {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden; /* Oculta lo que se salga al hacer zoom */
+  margin-bottom: 15px;
+}
+
+.module img {
+  width: 100%;
+  aspect-ratio: 16 / 10; /* Fuerza a que todas las imágenes sean del mismo tamaño */
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.module span {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  padding-bottom: 5px;
+}
+
+/* ---- Efectos Hover ---- */
+.module:hover {
+  transform: translateY(-8px); /* En lugar de crecer, la tarjeta "flota" hacia arriba */
+  border-color: #e1b964; /* El dorado de tu layout */
+  box-shadow: 0px 15px 30px rgba(225, 185, 100, 0.15); /* Sombra con un ligero tono dorado */
+}
+
+.module:hover img {
+  transform: scale(1.08); /* La imagen hace un zoom suave por dentro */
+}
+
+.module:hover span {
+  color: #e1b964; /* El texto también resalta */
+}
+
+
+/* -------- RESPONSIVE -------- */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .selectModules {
+    gap: 20px;
+  }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+  .selectModules {
+    grid-template-columns: 1fr; /* Pasa a 1 sola columna en móviles */
+    max-width: 400px; /* Centra la columna única */
+  }
+
+  .welcomeHeader h2 {
+    font-size: 24px;
+  }
+
+  .welcomeHeader p {
+    font-size: 16px;
+  }
+}

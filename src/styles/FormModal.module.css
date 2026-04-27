@@ -1,4 +1,4 @@
-.modal-form {
+.modalForm {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,7 +7,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
   z-index: 1000;
   animation: fadeIn 0.3s ease-in-out;
 }
@@ -22,23 +23,36 @@
   }
 }
 
-.modal-content-form {
-  background: rgb(83, 83, 83);
+.modalContentForm {
+  background: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: #e1b964;
-  padding: 1.9rem 1rem;
-  border-radius: 12px;
+  padding: 35px 40px;
+  border-radius: 16px;
   width: 450px;
-  max-height: 80vh;
+  max-height: 85vh;
   /* Limita la altura máxima al 80% del viewport */
   overflow-y: auto;
   /* Permite desplazamiento vertical */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-.modal-content-form h3 {
+
+.modalContentForm h2 {
+  color: #1a1a1a;
+  font-size: 24px;
+  margin-bottom: 25px;
+  text-align: left;
+  border-bottom: 3px solid #e1b964;
+  /* Línea dorada decorativa */
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+
+.modalContentForm h3 {
   color: #e1b964;
   font-weight: 600;
   letter-spacing: -0.5px;
@@ -46,32 +60,33 @@
   margin-bottom: 15px;
 }
 
-.id-container select {
-  background-color: rgba(255, 255, 255, 0.08);
-  ;
-  color: white;
+.idContainer select {
+  border: 1px solid #000000;
+  color: rgb(0, 0, 0);
 }
 
 
 .eyepassword {
-    position: absolute;
-    right: 12px;
-    background: none;
-    border: none;
-    color: #e1b964;
-    cursor: pointer;
-    display: flex;
-    transition: color 0.3s;
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #e1b964;
+  cursor: pointer;
+  display: flex;
+  transition: color 0.3s;
 }
 
 .eyepassword:hover {
-    color: #8f8368;
+  color: #8f8368;
 }
 
 /* Estilo específico para el botón "Seleccionar archivo" */
-.form-group input[type="file"]::file-selector-button {
-  background-color: rgb(76, 145, 175); /* Color de fondo */
-  color: white;              /* Color de texto */
+.formGroup input[type="file"]::file-selector-button {
+  background-color: rgb(76, 145, 175);
+  /* Color de fondo */
+  color: #f8f9fa;
+  /* Color de texto */
   padding: 8px 16px;
   border: none;
   border-radius: 5px;
@@ -81,55 +96,65 @@
 }
 
 /* Efecto Hover */
-.form-group input[type="file"]::file-selector-button:hover {
+.formGroup input[type="file"]::file-selector-button:hover {
   background-color: rgb(42, 127, 163);
 }
 
-.close-form {
+.closeForm {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #333;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 24px;
   cursor: pointer;
-  transition: color 0.3s ease-in-out;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 
-.close-form:hover {
-  color: #d9534f;
-  /* Rojo claro al pasar el mouse */
+.closeForm:hover {
+  color: #dc3545;
+  background-color: #fff0f0;
+  transform: rotate(90deg);
 }
 
 form {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
-.form-group {
+.formGroup {
   margin-bottom: 10px;
 }
 
-.form-group label {
+.formGroup label {
   margin-bottom: 5px;
 }
 
-.form-group input {
+.formGroup input {
   padding: 10px;
   font-size: 1rem;
   border-radius: 6px;
+  color: #333;
   /* Bordes más suaves */
-  border: 1px solid #ccc;
+  border: 1px solid #000000;
   outline: none;
   transition: border-color 0.3s ease-in-out;
 }
 
-.form-group input:focus {
+.formGroup input:focus {
   border-color: #28a745;
   box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
 }
 
-.save-button {
+.saveButton {
   padding: 12px;
   background: linear-gradient(135deg, #28a745, #218838);
   color: #fff;
@@ -140,13 +165,13 @@ form {
   transition: background 0.3s ease-in-out, transform 0.2s;
 }
 
-.save-button:hover {
+.saveButton:hover {
   background: linear-gradient(135deg, #218838, #1e7e34);
   transform: scale(1.05);
 }
 
 /* Estilos personalizados para el select */
-.styled-select {
+.styledSelect {
   width: 100%;
   padding: 10px;
   font-size: 1rem;
@@ -161,21 +186,22 @@ form {
 }
 
 /* Cambia el borde al pasar el mouse */
-.styled-select:hover {
+.styledSelect:hover {
   border-color: #218838;
 }
 
 /* Efecto cuando el usuario hace clic en el select */
-.styled-select:focus {
+.styledSelect:focus {
   border-color: #28a745;
   box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
 }
 
 /* Agregar una flecha personalizada al select */
-.styled-select {
+.styledSelect {
   background-image: url('data:image/svg+xml;utf8,<svg fill="%23218838" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M7 10l5 5 5-5z"/></svg>');
-  background-color: rgb(83, 83, 83);
-  color: white;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border: 1px solid #000000;
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 20px;
@@ -183,13 +209,12 @@ form {
   /* Espacio para la flecha */
 }
 
-.styled-select option {
-  background-color: rgb(83, 83, 83);
-  color: white;
+.styledSelect option {
+  color: rgb(0, 0, 0);
   padding: 10px;
 }
 
-.error-message {
+.errorMessage {
   color: red;
   font-size: 15px;
   margin-top: 5px;
@@ -197,19 +222,19 @@ form {
 
 
 /*Decoracion para modal ChPassword*/
-.password-container {
+.passwordContainer {
   display: flex;
   align-items: center;
   position: relative;
   width: 100%;
 }
 
-.password-container input {
+.passwordContainer input {
   flex: 1;
   padding-right: 60px;
 }
 
-.password-container button {
+.passwordContainer button {
   background: none;
   border: none;
   cursor: pointer;
@@ -220,17 +245,17 @@ form {
   justify-content: center;
 }
 
-.icon-success {
+.iconSuccess {
   color: green;
   margin-left: 5px;
 }
 
-.icon-error {
+.iconError {
   color: red;
   margin-left: 5px;
 }
 
-.password-container .validation-icon {
+.passwordContainer .validationIcon {
   position: absolute;
   right: 40px;
   /* Separa el check/cross del botón del ojo */
@@ -240,21 +265,21 @@ form {
 }
 
 
-.id-container {
+.idContainer {
   display: flex;
   gap: 5px;
 }
 
-.id-container select {
+.idContainer select {
   width: 160px;
   border-radius: 5px;
 }
 
-.id-container option {
+.idContainer option {
   background-color: rgb(83, 83, 83);
   color: white;
 }
 
-.id-container input {
+.idContainer input {
   flex: 1;
 }
