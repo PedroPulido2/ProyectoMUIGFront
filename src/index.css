@@ -3,4 +3,13 @@
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-primary: #785a0a;
+  --color-brand-primary-light: #e1b964;
+  --color-brand-on-primary: #ffffff;
+  --color-brand-surface: #f9f9f9;
+  --color-brand-on-surface: #1a1c1c;
+  --color-brand-on-surface-variant: #4e4638;
+  --color-brand-outline: #7f7666;
+  --color-brand-outline-variant: #d1c5b3;
 }

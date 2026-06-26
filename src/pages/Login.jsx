@@ -38,6 +38,11 @@ const Login = ({ setAuth }) => {
                 localStorage.setItem('username', user);
                 localStorage.setItem('isAdmin', decoded.isAdmin);
                 localStorage.setItem('urlFotoProfile', decoded.foto);
+                localStorage.setItem('perm_fosil', decoded.perm_fosil);
+                localStorage.setItem('perm_mineral', decoded.perm_mineral);
+                localStorage.setItem('perm_roca', decoded.perm_roca);
+                localStorage.setItem('perm_investigacion', decoded.perm_investigacion);
+                localStorage.setItem('perm_perfil', decoded.perm_perfil);
 
                 setAuth(true);
                 navigate('/home');
@@ -78,8 +83,8 @@ const Login = ({ setAuth }) => {
                                 placeholder="••••••••"
                                 required
                             />
-                            <button 
-                                type="button" 
+                            <button
+                                type="button"
                                 className={styles.togglePass}
                                 onClick={togglePasswordVisibility}
                             >
@@ -89,7 +94,7 @@ const Login = ({ setAuth }) => {
                     </div>
 
                     {error && <p className={styles.errorText}>{error}</p>}
-                    
+
                     <button type="submit" className={styles.saveButton}>Ingresar</button>
                 </form>
 

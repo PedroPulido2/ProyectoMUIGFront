@@ -8,6 +8,11 @@ import { showNotification, showConfirmation } from "../utils/showNotification";
 const Roca = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
 
+  const current_isAdmin = Number(localStorage.getItem("isAdmin")) || 0;
+  const perm_roca = Number(localStorage.getItem("perm_roca")) || 0;
+
+  const canManage = current_isAdmin === 3 || (current_isAdmin === 2 && perm_roca === 1);
+
   const [rocas, setRocas] = useState([]);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [currentRocas, setCurrentRocas] = useState(null);
@@ -165,6 +170,7 @@ const Roca = ({ setAuth }) => {
           onUpdate={handleUpdate}
           onDeleteImage={handleDeleteImage}
           onDelete={handleDelete}
+          canManage={canManage}
         />
       </div>
       <RocaFormModal

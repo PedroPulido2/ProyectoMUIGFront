@@ -8,6 +8,11 @@ import { showNotification, showConfirmation } from "../utils/showNotification";
 const Fosil = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
 
+  const current_isAdmin = Number(localStorage.getItem("isAdmin")) || 0;
+  const perm_fosil = Number(localStorage.getItem("perm_fosil")) || 0;
+
+  const canManage = current_isAdmin === 3 || (current_isAdmin === 2 && perm_fosil === 1);
+
   const [fosiles, setFosiles] = useState([]);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [currentFosil, setCurrentFosil] = useState(null);
@@ -170,6 +175,7 @@ const Fosil = ({ setAuth }) => {
           onUpdate={handleUpdate}
           onDeleteImage={handleDeleteImage}
           onDelete={handleDelete}
+          canManage={canManage}
         />
       </div>
       <FosilFormModal

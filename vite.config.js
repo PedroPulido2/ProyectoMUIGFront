@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
 
     //base: '/',
     define: {
-      'process.env.VITE_URL_BACK': JSON.stringify('http://localhost:3000/api')
+      'process.env.VITE_URL_BACK': JSON.stringify('http://localhost:3001/api')
     },
     resolve: {
       alias: {

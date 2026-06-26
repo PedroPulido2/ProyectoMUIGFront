@@ -1,0 +1,377 @@
+.container {
+  min-height: 100vh;
+  padding: 40px 24px;
+  max-width: 896px;
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #4e4638;
+  margin-bottom: 24px;
+}
+
+.breadcrumb a {
+  transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+  color: #785a0a;
+}
+
+.headerCard {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid #e2e2e2;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .headerCard {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.headerGradient {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 256px;
+  height: 256px;
+  background: rgba(120, 90, 10, 0.05);
+  border-radius: 50%;
+  filter: blur(48px);
+  transform: translate(50%, -50%);
+  pointer-events: none;
+}
+
+.profileImageContainer {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  flex-shrink: 0;
+}
+
+.profileImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid white;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.headerInfo {
+  flex: 1;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .headerInfo {
+    text-align: left;
+  }
+}
+
+.nameRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+@media (min-width: 768px) {
+  .nameRow {
+    flex-direction: row;
+  }
+}
+
+.name {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #1a1c1c;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 9999px;
+  border: 1px solid #a7f3d0;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+}
+
+.roleTitle {
+  font-size: 18px;
+  color: #4e4638;
+  margin-bottom: 24px;
+}
+
+.actionButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .actionButtons {
+    justify-content: flex-start;
+  }
+}
+
+.btnPrimary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #785a0a;
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.btnPrimary:hover {
+  background: #634900;
+}
+
+.btnSecondary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: white;
+  color: #4e4638;
+  border: 1px solid #e2e2e2;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.btnSecondary:hover {
+  background: #f3f3f4;
+}
+
+.section {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid #e2e2e2;
+  margin-top: 32px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1c1c;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px 24px;
+}
+
+@media (min-width: 640px) {
+  .infoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .infoGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #4e4638;
+}
+
+.value {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1c1c;
+}
+
+.valueLink {
+  color: #785a0a;
+  cursor: pointer;
+}
+
+.valueLink:hover {
+  text-decoration: underline;
+}
+
+.footerInfo {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid #e2e2e2;
+}
+
+.footerLabel {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #4e4638;
+  margin-bottom: 4px;
+}
+
+.footerText {
+  font-size: 14px;
+  color: #4e4638;
+}
+
+.accessHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+@media (min-width: 640px) {
+  .accessHeader {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.accessGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .accessGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.accessCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border: 1px solid #e2e2e2;
+  border-radius: 12px;
+  background: #f9f9f9;
+  transition: box-shadow 0.2s;
+}
+
+.accessCard:hover {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.accessInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.accessIcon {
+  width: 40px;
+  height: 40px;
+  background: rgba(120, 90, 10, 0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #785a0a;
+}
+
+.accessName {
+  font-weight: 600;
+  color: #1a1c1c;
+}
+
+.accessDesc {
+  font-size: 14px;
+  color: #4e4638;
+}
+
+.toggle {
+  position: relative;
+  display: inline-flex;
+  height: 24px;
+  width: 44px;
+  flex-shrink: 0;
+  cursor: pointer;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  transition: background-color 0.2s;
+}
+
+.toggle[data-state='active'] {
+  background-color: #785a0a;
+}
+
+.toggle[data-state='inactive'] {
+  background-color: #e2e2e2;
+}
+
+.toggleHandle {
+  pointer-events: none;
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.toggle[data-state='active'] .toggleHandle {
+  transform: translateX(20px);
+}
+
+.toggle[data-state='inactive'] .toggleHandle {
+  transform: translateX(0);
+}

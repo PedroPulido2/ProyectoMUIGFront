@@ -8,6 +8,11 @@ import { showNotification, showConfirmation } from "../utils/showNotification";
 const Mineral = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
 
+  const current_isAdmin = Number(localStorage.getItem("isAdmin")) || 0;
+  const perm_mineral = Number(localStorage.getItem("perm_mineral")) || 0;
+
+  const canManage = current_isAdmin === 3 || (current_isAdmin === 2 && perm_mineral === 1);
+
   const [minerales, setMinerales] = useState([]);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [currentMineral, setCurrentMineral] = useState(null);
@@ -164,6 +169,7 @@ const Mineral = ({ setAuth }) => {
           onUpdate={handleUpdate}
           onDeleteImage={handleDeleteImage}
           onDelete={handleDelete}
+          canManage={canManage}
         />
       </div>
       <MineralFormModal

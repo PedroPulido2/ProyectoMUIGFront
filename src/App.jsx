@@ -12,6 +12,8 @@ import Profiles from './pages/Profiles';
 import AcercaDeCreador from './pages/AcercaDeCreador';
 import Register from './pages/Register';
 import Logs from './pages/Logs';
+import InfoProfile from './pages/InfoProfile';
+import EditProfile from './pages/EditProfile';
 
 function App() {
   // Obtener el estado inicial desde localStorage
@@ -93,6 +95,20 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Profiles setAuth={handleAuthChange} />
+            </ProtectedRoute>}
+        />
+        <Route
+          path="/perfil/:id"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <InfoProfile setAuth={handleAuthChange} />
+            </ProtectedRoute>}
+        />
+        <Route
+          path="/perfil/edit/:id"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <EditProfile setAuth={handleAuthChange} />
             </ProtectedRoute>}
         />
         <Route

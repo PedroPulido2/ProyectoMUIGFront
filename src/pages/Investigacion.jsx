@@ -8,6 +8,11 @@ import { showNotification, showConfirmation } from "../utils/showNotification";
 const Investigacion = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
 
+  const current_isAdmin = Number(localStorage.getItem("isAdmin")) || 0;
+  const perm_investigacion = Number(localStorage.getItem("perm_investigacion")) || 0;
+
+  const canManage = current_isAdmin === 3 || (current_isAdmin === 2 && perm_investigacion === 1);
+
   const [investigacion, setInvestigacion] = useState([]);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [currentInvestigacion, setCurrentInvestigacion] = useState(null);
@@ -170,6 +175,7 @@ const Investigacion = ({ setAuth }) => {
           onUpdate={handleUpdate}
           onDeleteImage={handleDeleteImage}
           onDelete={handleDelete}
+          canManage={canManage}
         />
       </div>
       <InvestigacionFormModal
