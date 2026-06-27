@@ -1,3 +1,6 @@
+/* ==================================================
+   1. Modal Overlay (Backdrop)
+   ================================================== */
 .modalForm {
   display: flex;
   justify-content: center;
@@ -7,10 +10,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
   z-index: 1000;
-  animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes fadeIn {
@@ -23,205 +26,255 @@
   }
 }
 
+/* ==================================================
+   2. Modal Card Container
+   ================================================== */
 .modalContentForm {
   background: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #e1b964;
-  padding: 35px 40px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #1a1c1c;
+  padding: 32px 36px;
   border-radius: 16px;
-  width: 450px;
+  width: 100%;
+  max-width: 480px;
   max-height: 85vh;
-  /* Limita la altura máxima al 80% del viewport */
   overflow-y: auto;
-  /* Permite desplazamiento vertical */
-  box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.2);
-  animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
+  box-sizing: border-box;
 }
 
+@keyframes slideUp {
+  from {
+    transform: translateY(24px) scale(0.96);
+    opacity: 0;
+  }
 
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Scrollbar styling for modal card */
+.modalContentForm::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modalContentForm::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modalContentForm::-webkit-scrollbar-thumb {
+  background: #e2e2e2;
+  border-radius: 10px;
+}
+
+.modalContentForm::-webkit-scrollbar-thumb:hover {
+  background: #c4bcae;
+}
+
+/* ==================================================
+   3. Typography
+   ================================================== */
 .modalContentForm h2 {
-  color: #1a1a1a;
-  font-size: 24px;
-  margin-bottom: 25px;
+  color: #1a1c1c;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 24px 0;
   text-align: left;
-  border-bottom: 3px solid #e1b964;
-  /* Línea dorada decorativa */
+  border-bottom: 3px solid #785a0a;
   display: inline-block;
-  padding-bottom: 5px;
+  padding-bottom: 4px;
 }
-
 
 .modalContentForm h3 {
-  color: #e1b964;
-  font-weight: 600;
-  letter-spacing: -0.5px;
+  color: #785a0a;
+  font-size: 20px;
+  font-weight: 700;
   text-align: center;
-  margin-bottom: 15px;
+  margin: 0 0 20px 0;
+  border-bottom: 2px solid rgba(120, 90, 10, 0.1);
+  padding-bottom: 12px;
 }
 
-.idContainer select {
-  border: 1px solid #000000;
-  color: rgb(0, 0, 0);
-}
-
-
-.eyepassword {
-  position: absolute;
-  right: 12px;
-  background: none;
-  border: none;
-  color: #e1b964;
-  cursor: pointer;
-  display: flex;
-  transition: color 0.3s;
-}
-
-.eyepassword:hover {
-  color: #8f8368;
-}
-
-/* Estilo específico para el botón "Seleccionar archivo" */
-.formGroup input[type="file"]::file-selector-button {
-  background-color: rgb(76, 145, 175);
-  /* Color de fondo */
-  color: #f8f9fa;
-  /* Color de texto */
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 15px;
-  transition: background .3s;
-}
-
-/* Efecto Hover */
-.formGroup input[type="file"]::file-selector-button:hover {
-  background-color: rgb(42, 127, 163);
-}
-
+/* ==================================================
+   4. Close Button
+   ================================================== */
 .closeForm {
   position: absolute;
   top: 20px;
   right: 20px;
   background: none;
   border: none;
-  color: #aaa;
+  color: #888888;
   font-size: 24px;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
 }
 
 .closeForm:hover {
-  color: #dc3545;
-  background-color: #fff0f0;
+  color: #ef4444;
+  background-color: #fef2f2;
   transform: rotate(90deg);
 }
 
+/* ==================================================
+   5. Form Controls and Styling
+   ================================================== */
 form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
 }
 
 .formGroup {
-  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .formGroup label {
-  margin-bottom: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #4e4638;
 }
 
 .formGroup input {
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 6px;
-  color: #333;
-  /* Bordes más suaves */
-  border: 1px solid #000000;
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  background-color: #fcfcfc;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  color: #1a1c1c;
   outline: none;
-  transition: border-color 0.3s ease-in-out;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 .formGroup input:focus {
-  border-color: #28a745;
-  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+  border-color: #785a0a;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(120, 90, 10, 0.15);
 }
 
-.saveButton {
-  padding: 12px;
-  background: linear-gradient(135deg, #28a745, #218838);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s ease-in-out, transform 0.2s;
-}
-
-.saveButton:hover {
-  background: linear-gradient(135deg, #218838, #1e7e34);
-  transform: scale(1.05);
-}
-
-/* Estilos personalizados para el select */
+/* Select Box */
 .styledSelect {
   width: 100%;
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background-color: #fff;
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  background-color: #fcfcfc;
+  color: #1a1c1c;
   outline: none;
   cursor: pointer;
   appearance: none;
-  /* Quita la apariencia predeterminada del sistema */
-  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-/* Cambia el borde al pasar el mouse */
-.styledSelect:hover {
-  border-color: #218838;
-}
-
-/* Efecto cuando el usuario hace clic en el select */
-.styledSelect:focus {
-  border-color: #28a745;
-  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
-}
-
-/* Agregar una flecha personalizada al select */
-.styledSelect {
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23218838" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M7 10l5 5 5-5z"/></svg>');
-  background-color: rgb(255, 255, 255);
-  color: rgb(0, 0, 0);
-  border: 1px solid #000000;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23785a0a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M7 10l5 5 5-5z"/></svg>');
   background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 20px;
-  padding-right: 35px;
-  /* Espacio para la flecha */
+  background-position: right 12px center;
+  background-size: 18px;
+  padding-right: 38px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.styledSelect:hover {
+  border-color: #785a0a;
+}
+
+.styledSelect:focus {
+  border-color: #785a0a;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(120, 90, 10, 0.15);
 }
 
 .styledSelect option {
-  color: rgb(0, 0, 0);
-  padding: 10px;
+  color: #1a1c1c;
+  background-color: #ffffff;
+  padding: 8px;
 }
 
+/* File Selector Styling */
+.formGroup input[type="file"] {
+  background-color: #fcfcfc;
+  border: 1px dashed #dcdcdc;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.formGroup input[type="file"]::file-selector-button {
+  background-color: #785a0a;
+  color: #ffffff;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 12px;
+  transition: background-color 0.2s;
+}
+
+.formGroup input[type="file"]::file-selector-button:hover {
+  background-color: #634900;
+}
+
+/* ==================================================
+   6. Save Button (Submit)
+   ================================================== */
+.saveButton {
+  width: 100%;
+  padding: 12px;
+  background: #785a0a;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+  box-shadow: 0 2px 8px rgba(120, 90, 10, 0.15);
+}
+
+.saveButton:hover {
+  background: #634900;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(120, 90, 10, 0.25);
+}
+
+.saveButton:active {
+  transform: translateY(0);
+}
+
+/* ==================================================
+   7. Error & Validation Fields
+   ================================================== */
 .errorMessage {
-  color: red;
-  font-size: 15px;
-  margin-top: 5px;
+  color: #ef4444;
+  background-color: #fef2f2;
+  border: 1px solid #fee2e2;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-top: 4px;
+  font-weight: 500;
 }
 
-
-/*Decoracion para modal ChPassword*/
 .passwordContainer {
   display: flex;
   align-items: center;
@@ -231,7 +284,7 @@ form {
 
 .passwordContainer input {
   flex: 1;
-  padding-right: 60px;
+  padding-right: 64px;
 }
 
 .passwordContainer button {
@@ -243,41 +296,63 @@ form {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
+  color: #888888;
+  transition: color 0.2s;
 }
 
-.iconSuccess {
-  color: green;
-  margin-left: 5px;
+.passwordContainer button:hover {
+  color: #785a0a;
 }
 
-.iconError {
-  color: red;
-  margin-left: 5px;
-}
-
-.passwordContainer .validationIcon {
+.eyepassword {
   position: absolute;
-  right: 40px;
-  /* Separa el check/cross del botón del ojo */
+  right: 12px;
+  background: none;
+  border: none;
+  color: #888888;
+  cursor: pointer;
+  display: flex;
+  transition: color 0.2s;
+}
+
+.eyepassword:hover {
+  color: #785a0a;
+}
+
+.validationIcon {
+  position: absolute;
+  right: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.iconSuccess {
+  color: #10b981;
+}
 
+.iconError {
+  color: #ef4444;
+}
+
+/* ==================================================
+   8. Specific Layout Containers
+   ================================================== */
 .idContainer {
   display: flex;
-  gap: 5px;
+  gap: 8px;
+  width: 100%;
 }
 
 .idContainer select {
-  width: 160px;
-  border-radius: 5px;
+  width: 130px;
+  flex-shrink: 0;
 }
 
 .idContainer option {
-  background-color: rgb(83, 83, 83);
-  color: white;
+  background-color: #ffffff;
+  color: #1a1c1c;
 }
 
 .idContainer input {
