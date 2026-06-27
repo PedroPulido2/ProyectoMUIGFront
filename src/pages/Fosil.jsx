@@ -16,14 +16,30 @@ const Fosil = ({ setAuth }) => {
   const [fosiles, setFosiles] = useState([]);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [currentFosil, setCurrentFosil] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 10;
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedColumn, setSelectedColumn] = useState("ID_FOSIL");
 
   const idPerfilAccion = localStorage.getItem("id_Perfil") || "";
   const usernameAccion = localStorage.getItem("username") || "";
 
   useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      fetchData(1, selectedColumn, searchTerm);
+    }, 1000);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm, selectedColumn]);
+
+  useEffect(() => {
     document.title = "Gestion Fosiles";
-    fetchData();
-  }, []);
+    if (currentPage !== 1) {
+      fetchData(currentPage);
+    }
+  }, [currentPage]);
 
   //Funcion crear
   const handleCreate = () => {
@@ -39,12 +55,15 @@ const Fosil = ({ setAuth }) => {
 
   //---Peticiones al Backend---
   //Petición obtener los datos
-  const fetchData = async () => {
+  const fetchData = async (page = 1, searchCol = selectedColumn, searchVal = searchTerm) => {
     try {
-      const response = await api.get("/fosil");
-      setFosiles(response.data);
+      const response = await api.get(`/fosil?page=${page}&limit=${limit}&searchColumn=${searchCol}&searchTerm=${searchVal}`);
+
+      setFosiles(response.data.data);
+      setCurrentPage(response.data.currentPage);
+      setTotalPages(response.data.totalPages);
     } catch (err) {
-      showNotification("error", "Error al obtener los datos!", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
+      showNotification("error", "Error al obtener los datos!", err.response?.data?.error || "Ocurrió un error inesperado.");
     }
   };
 
@@ -176,6 +195,13 @@ const Fosil = ({ setAuth }) => {
           onDeleteImage={handleDeleteImage}
           onDelete={handleDelete}
           canManage={canManage}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(newPage) => setCurrentPage(newPage)}
+          searchTerm={searchTerm}
+          onSearchChange={(val) => setSearchTerm(val)}
+          selectedColumn={selectedColumn}
+          onColumnChange={(val) => setSelectedColumn(val)}
         />
       </div>
       <FosilFormModal

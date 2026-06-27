@@ -16,14 +16,30 @@ const Mineral = ({ setAuth }) => {
   const [minerales, setMinerales] = useState([]);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [currentMineral, setCurrentMineral] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 10;
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedColumn, setSelectedColumn] = useState("ID_MINERAL");
 
   const idPerfilAccion = localStorage.getItem("id_Perfil") || "";
   const usernameAccion = localStorage.getItem("username") || "";
 
   useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      fetchData(1, selectedColumn, searchTerm);
+    }, 1000);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm, selectedColumn]);
+
+  useEffect(() => {
     document.title = "Gestion Minerales";
-    fetchData();
-  }, []);
+    if (currentPage !== 1) {
+      fetchData(currentPage);
+    }
+  }, [currentPage]);
 
   //Funcion crear
   const handleCreate = () => {
@@ -39,12 +55,15 @@ const Mineral = ({ setAuth }) => {
 
   //---Peticiones al Backend---
   //Petición obtener los datos
-  const fetchData = async () => {
+  const fetchData = async (page = 1, searchCol = selectedColumn, searchVal = searchTerm) => {
     try {
-      const response = await api.get("/mineral");
-      setMinerales(response.data);
+      const response = await api.get(`/mineral?page=${page}&limit=${limit}&searchColumn=${searchCol}&searchTerm=${searchVal}`);
+
+      setMinerales(response.data.data);
+      setCurrentPage(response.data.currentPage);
+      setTotalPages(response.data.totalPages);
     } catch (err) {
-      showNotification("error", "Error al obtener los datos!", err.response?.data?.error || "Ocurrió un error inesperado. Intente nuevamente.");
+      showNotification("error", "Error al obtener los datos!", err.response?.data?.error || "Ocurrió un error inesperado.");
     }
   };
 
@@ -170,6 +189,13 @@ const Mineral = ({ setAuth }) => {
           onDeleteImage={handleDeleteImage}
           onDelete={handleDelete}
           canManage={canManage}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(newPage) => setCurrentPage(newPage)}
+          searchTerm={searchTerm}
+          onSearchChange={(val) => setSearchTerm(val)}
+          selectedColumn={selectedColumn}
+          onColumnChange={(val) => setSelectedColumn(val)}
         />
       </div>
       <MineralFormModal

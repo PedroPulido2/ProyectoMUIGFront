@@ -15,34 +15,22 @@ const TableComponent = ({
     onDelete, //Funcion para el boton Borrar
     enableExport = false,
     canManage = false,
+    currentPage = 1,
+    totalPages = 1,
+    onPageChange,
+    searchTerm,
+    onSearchChange,
+    selectedColumn,
+    onColumnChange
 }) => {
     const [expandedRow, setExpandedRow] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [imageSrc, setImageSrc] = useState("");
-    const [searchTerm, setSearchTerm] = useState("");
-    const [selectedColumn, setSelectedColumn] = useState(allColumns[0]);
-
-    //PAGINACION
-    const rowsPerPage = 10;
-    const [currentPage, setCurrentPage] = useState(1);
-
-    //Filtracion de consulta por id
-    const filteredData = data.filter((row) =>
-        row[selectedColumn]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    //Paginacion con los datos filtrados
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-
-    const paginatedData = filteredData.slice(
-        (currentPage - 1) * rowsPerPage,
-        currentPage * rowsPerPage
-    );
 
     // Manejo de cambio de página
     const handlePageChange = (newPage) => {
-        if (newPage > 0 && newPage <= totalPages) {
-            setCurrentPage(newPage);
+        if (newPage > 0 && newPage <= totalPages && onPageChange) {
+            onPageChange(newPage);
         }
     };
 
@@ -104,7 +92,7 @@ const TableComponent = ({
                 <div className={styles.searchCreate}>
                     <select
                         value={selectedColumn}
-                        onChange={(e) => setSelectedColumn(e.target.value)}
+                        onChange={(e) => onColumnChange(e.target.value)}
                     >
                         {allColumns
                             .filter(col => col !== "FOTO")
@@ -117,7 +105,7 @@ const TableComponent = ({
                         type="text"
                         placeholder="Buscar..."
                         value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onChange={(e) => onSearchChange(e.target.value)}
                     />
                     {enableExport && (
                         <button
@@ -142,8 +130,8 @@ const TableComponent = ({
                     </tr>
                 </thead>
                 <tbody>
-                    {paginatedData.length > 0 ? (
-                        paginatedData.map((row, rowIndex) => (
+                    {data && data.length > 0 ? (
+                        data.map((row, rowIndex) => (
                             <React.Fragment key={rowIndex}>
                                 <tr>
                                     {columns.map((col, colIndex) => {
