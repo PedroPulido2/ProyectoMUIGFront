@@ -13,6 +13,8 @@ RUN npm ci
 # Copiar el resto del proyecto
 COPY . .
 
+RUN npm rebuild @tailwindcss/oxide
+
 # Construir la aplicación
 RUN npm run build
 
