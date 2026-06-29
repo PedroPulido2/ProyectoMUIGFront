@@ -1,9 +1,9 @@
-# Etapa 1: Construcción usando Debian Slim (Evita conflictos con binarios de Rust/C++)
-FROM node:18-slim AS build
+# Etapa 1: Construcción usando Debian Slim con Node 20
+FROM node:20-slim AS build
 
 WORKDIR /app
 
-# Instalar herramientas básicas necesarias para binarios nativos (opcional por seguridad)
+# Instalar herramientas básicas necesarias para binarios nativos
 RUN apt-get update && apt-get install -y python3 build-essential && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
@@ -16,7 +16,7 @@ COPY . .
 # Compilar la aplicación estática
 RUN npm run build
 
-# Etapa 2: Servidor de producción ultra ligero con Nginx Alpine
+# Etapa 2: Servidor de producción con Nginx Alpine
 FROM nginx:alpine
 
 # Copiar los archivos estáticos generados por Vite
