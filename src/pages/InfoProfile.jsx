@@ -194,7 +194,7 @@ const InfoProfile = ({ setAuth }) => {
 
   const fotoFinal = perfil.foto
     ? (perfil.foto.includes('drive.google.com')
-      ? `${import.meta.env.VITE_URL_BACK}/imagen/load/${perfil.foto.split('/d/')[1]?.split('/')[0] || null}`
+      ? `/api/imagen/load/${perfil.foto.split('/d/')[1]?.split('/')[0] || null}`
       : perfil.foto)
     : (perfil.genero === "Masculino" ? imagenProfileMale : perfil.genero === "Femenino" ? imagenProfileFemale : imagenProfileOther);
 

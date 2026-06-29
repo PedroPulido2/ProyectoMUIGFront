@@ -89,7 +89,7 @@ const Profiles = ({ setAuth }) => {
               >
                 <div className="relative mb-2">
                   <img
-                    src={admin.FOTO ? `${import.meta.env.VITE_URL_BACK}/imagen/load/${admin.FOTO.split('/d/')[1]?.split('/')[0] || null}` : admin.GENERO === "Masculino" ? imagenProfileMale : admin.GENERO === "Femenino" ? imagenProfileFemale : imagenProfileOther}
+                    src={admin.FOTO ? `/api/imagen/load/${admin.FOTO.split('/d/')[1]?.split('/')[0] || null}` : admin.GENERO === "Masculino" ? imagenProfileMale : admin.GENERO === "Femenino" ? imagenProfileFemale : imagenProfileOther}
                     alt={admin.NOMBRE}
                     className="w-16 h-16 rounded-full object-cover border-2 border-[var(--color-brand-primary)] shadow-sm group-hover:scale-105 transition-transform"
                   />
@@ -127,7 +127,7 @@ const Profiles = ({ setAuth }) => {
               >
                 <div className={styles.avatarWrapper}>
                   <img
-                    src={perfil.FOTO ? `${import.meta.env.VITE_URL_BACK}/imagen/load/${perfil.FOTO.split('/d/')[1]?.split('/')[0] || null}` : perfil.GENERO === "Masculino" ? imagenProfileMale : perfil.GENERO === "Femenino" ? imagenProfileFemale : imagenProfileOther}
+                    src={perfil.FOTO ? `/api/imagen/load/${perfil.FOTO.split('/d/')[1]?.split('/')[0] || null}` : perfil.GENERO === "Masculino" ? imagenProfileMale : perfil.GENERO === "Femenino" ? imagenProfileFemale : imagenProfileOther}
                     alt={perfil.NOMBRE}
                     className={styles.avatar}
                   />

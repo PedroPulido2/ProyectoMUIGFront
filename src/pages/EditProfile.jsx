@@ -48,7 +48,6 @@ const EditProfile = ({ setAuth }) => {
     genero: "",
     correo: "",
     telefono: "",
-    user: "",
     password: "",
     confirmPassword: "",
     isAdmin: "1",
@@ -121,7 +120,6 @@ const EditProfile = ({ setAuth }) => {
         genero: profileData.genero || "",
         correo: profileData.correo || "",
         telefono: profileData.telefono || "",
-        user: usernameVal || "",
         password: "",
         confirmPassword: "",
         isAdmin: String(profileData.isAdmin || "1"),
@@ -245,13 +243,6 @@ const EditProfile = ({ setAuth }) => {
       return;
     }
 
-    // Validar usuario
-    if (formData.user.length < 5) {
-      showNotification("error", "Usuario inválido", "El usuario debe tener al menos 5 caracteres.");
-      setSaving(false);
-      return;
-    }
-
     // Validar contraseña si se ingresó alguna
     if (formData.password && formData.password.trim() !== "") {
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
@@ -282,7 +273,6 @@ const EditProfile = ({ setAuth }) => {
       data.append("genero", formData.genero);
       data.append("correo", formData.correo);
       data.append("telefono", formData.telefono);
-      data.append("user", formData.user);
 
       if (formData.password && formData.password.trim() !== "") {
         data.append("password", formData.password);
@@ -396,7 +386,7 @@ const EditProfile = ({ setAuth }) => {
 
   const fotoFinal = fotoPreview || (urlFoto
     ? (urlFoto.includes("drive.google.com")
-      ? `${import.meta.env.VITE_URL_BACK}/imagen/load/${urlFoto.split("/d/")[1]?.split("/")[0] || null}`
+      ? `/api/imagen/load/${urlFoto.split("/d/")[1]?.split("/")[0] || null}`
       : urlFoto)
     : (formData.genero === "Masculino" ? imagenProfileMale : formData.genero === "Femenino" ? imagenProfileFemale : imagenProfileOther));
 
@@ -559,18 +549,6 @@ const EditProfile = ({ setAuth }) => {
                 />
               </div>
 
-              <div className={style.formGroup}>
-                <label className={style.label}>Usuario de Acceso</label>
-                <input
-                  type="text"
-                  name="user"
-                  value={formData.user}
-                  onChange={handleChange}
-                  placeholder="Nombre de usuario"
-                  className={style.input}
-                  required
-                />
-              </div>
               {current_isAdmin === 3 && (
                 <div className={style.formGroup}>
                   <label className={style.label}>Rol en el Sistema</label>

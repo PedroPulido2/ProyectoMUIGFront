@@ -1,7 +1,7 @@
 /* ---- Contenedor Principal ---- */
 .tableContainer {
     width: 100%;
-    max-width: calc(100vw - 120px);
+    max-width: calc(100vw - 40px);
     margin: 0 auto;
     background: #ffffff;
     /* Fondo blanco o claro para contrastar si el main es gris */
@@ -146,7 +146,7 @@ tbody tr:hover {
 }
 
 td[data-label="FOTO"] {
-    padding: 0 0 20px 0 !important; 
+    padding: 0 0 20px 0 !important;
     /* Forza a que no haya espacio blanco */
     width: 100px;
     /* Fija un ancho ideal para la columna de fotos */
@@ -300,11 +300,12 @@ td[data-label="FOTO"] {
     font-weight: 600;
     color: #444;
 }
+
 /* =========================================
    2. MODO TELÉFONO Y TABLET (Vista de Tarjetas)
    ========================================= */
 @media (max-width: 1024px) {
-    
+
     /* Apagar el modo Sticky */
     th:first-child,
     td:first-child,
@@ -339,10 +340,13 @@ td[data-label="FOTO"] {
     /* ---- TARJETA PRINCIPAL ---- */
     tbody tr {
         margin-bottom: 25px;
-        border: 1px solid #eaeaea; /* Borde más sutil */
-        border-top: 4px solid #e1b964; /* Acento dorado en la parte superior para estilo MUIG */
+        border: 1px solid #eaeaea;
+        /* Borde más sutil */
+        border-top: 4px solid #e1b964;
+        /* Acento dorado en la parte superior para estilo MUIG */
         border-radius: 12px;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06); /* Sombra más suave y difuminada */
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        /* Sombra más suave y difuminada */
         background: #ffffff;
         overflow: hidden;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -357,15 +361,19 @@ td[data-label="FOTO"] {
     /* ---- EL TRUCO FLEXBOX PARA LAS CELDAS ---- */
     td {
         display: flex;
-        justify-content: flex-start;
-        align-items: center; /* Centramos verticalmente para que se vea más limpio */
-        padding: 14px 20px; /* Un poco más de aire arriba y abajo */
-        border-bottom: 1px solid #f5f5f5; /* Línea separadora súper sutil */
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 12px 20px;
+        /* Un poco más de aire arriba y abajo */
+        border-bottom: 1px solid #f5f5f5;
+        /* Línea separadora súper sutil */
         text-align: left;
         min-height: auto;
         word-break: break-word;
         font-size: 14px;
-        color: #1a1a1a; /* El valor principal en un color oscuro y fuerte */
+        color: #1a1a1a;
+        /* El valor principal en un color oscuro y fuerte */
     }
 
     td:last-child {
@@ -376,82 +384,127 @@ td[data-label="FOTO"] {
     td::before {
         content: attr(data-label);
         font-weight: 700;
-        font-size: 11px; /* Un poquito más pequeño para contrastar con el valor */
-        color: #888; /* Gris más suave */
+        font-size: 11px;
+        /* Un poquito más pequeño para contrastar con el valor */
+        color: #888;
+        /* Gris más suave */
         text-transform: uppercase;
-        letter-spacing: 0.5px; /* Espaciado que le da un toque técnico y moderno */
+        letter-spacing: 0.5px;
+        /* Espaciado que le da un toque técnico y moderno */
         text-align: left;
-        flex-basis: 40%; /* Le damos un poco más de espacio (40%) para títulos largos */
-        min-width: 130px;
+        margin-bottom: 4px;
+        flex-basis: auto;
+        min-width: 0;
         flex-shrink: 0;
-        padding-right: 15px;
+        padding-right: 0;
     }
 
     /* Excepción para la fila expandida (Detalles Adicionales) */
     td[colspan] {
         display: block;
         text-align: left;
-        padding: 0; /* El padding se maneja en el div interno de los detalles */
-        background-color: #fcfcfc; /* Un fondo casi blanco para diferenciar los detalles */
+        padding: 0;
+        /* El padding se maneja en el div interno de los detalles */
+        background-color: #fcfcfc;
+        /* Un fondo casi blanco para diferenciar los detalles */
     }
 
     td[colspan]::before {
         display: none;
     }
 
-   td[data-label="FOTO"] {
+    td[data-label="FOTO"] {
         display: flex !important;
-        justify-content: center !important; 
+        justify-content: center !important;
         align-items: center !important;
         width: 100% !important;
-        
-        /* CAMBIO CLAVE: Padding superior en 0 para eliminar el espacio blanco */
-        padding: 0 0 100px 0 !important; 
-        
+        padding: 20px 0 !important;
+        /* 💡 Un padding uniforme arriba y abajo elimina el corte */
         border-bottom: 1px solid #f5f5f5 !important;
-        background-color: #fcfcfc; /* Un fondo muy claro por si la foto no es 1:1 */
+        background-color: #fcfcfc;
     }
 
     /* 2. ELIMINAR EL TEXTO "FOTO" (Esta es la línea crítica que te falta) */
     td[data-label="FOTO"]::before {
-        content: none !important; /* Desaparece el texto */
-        display: none !important; /* Elimina el bloque para que no ocupe espacio */
+        content: none !important;
+        /* Desaparece el texto */
+        display: none !important;
+        /* Elimina el bloque para que no ocupe espacio */
         width: 0 !important;
         min-width: 0 !important;
         margin: 0 !important;
         padding: 0 !important;
     }
-    
 
-    /* 2. Ajuste de la imagen para que encaje con el borde */
-    .tableImage {
+    .photoCell {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 100% !important;
+        padding: 20px 0 !important;
+        border-bottom: 1px solid #f5f5f5 !important;
+        background-color: #fcfcfc;
+    }
+
+    /* Ocultar el pseudo-elemento "FOTO" para que no altere el centrado */
+    .photoCell::before {
+        content: none !important;
+        display: none !important;
+    }
+
+    /* Contenedor wrapper para forzar el tamaño en la cuadrícula móvil */
+    .imageWrapper {
         width: 160px !important;
         height: 160px !important;
-        object-fit: cover;
-        
-        /* Quitamos cualquier margen superior que pueda tener la imagen */
-        margin-top: 0 !important; 
-        
-        /* Redondeamos un poco menos las esquinas de arriba para que se vean bien 
-           cerca del borde dorado de la tarjeta */
-        border-radius: 4px 4px 16px 16px; 
-        
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        overflow: hidden !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+        background-color: #ffffff !important;
     }
+
+    /* 💡 CRÍTICO: Forzar al contenedor span de la librería LazyLoad a medir el 100% */
+    .imageWrapper :global(.lazy-load-image-background) {
+        width: 100% !important;
+        height: 100% !important;
+        display: block !important;
+    }
+
+    /* Estilo final de la imagen limpia */
+    .tableImage {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        /* Muestra el mineral centrado ocupando el recuadro sin cortarse de forma extraña */
+        margin: 0 !important;
+        border-radius: 12px !important;
+    }
+
     /* Zona de Botones de Acción */
     .actionButtons {
-        display: flex; /* Aseguramos que el contenedor use flex */
-        width: 100%;
-        justify-content: center; /* CORREGIDO: flex-center no existe, es 'center' */
-        align-items: center;
-        gap: 25px; /* Más espacio entre botones para evitar toques accidentales con el dedo */
-        padding: 15px 0; /* Espacio extra arriba y abajo del área de botones */
-        background-color: #fafafa; /* Fondo ligeramente gris para separar las acciones de los datos */
+        display: flex !important;
+        flex-direction: row !important;
+        width: 100% !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 20px !important;
+        padding: 15px 0 !important;
+        background-color: #fafafa;
+        border-top: 1px solid #f0f0f0;
     }
-    
-    /* Hacemos los botones un poquito más grandes para pantallas táctiles */
+
     .actionButtons button {
-        padding: 10px;
-        border-radius: 8px;
+        display: inline-flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 10px !important;
+        background: transparent !important;
+        border-radius: 50% !important;
+        width: 44px !important;
+        height: 44px !important;
+        box-sizing: border-box !important;
     }
 }

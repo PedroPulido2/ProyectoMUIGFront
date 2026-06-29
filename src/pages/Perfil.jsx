@@ -174,7 +174,7 @@ const Perfil = ({ setAuth }) => {
             <div className={style.infPerfil}>
                 <div className={style.imagenContainer}>
                     <img
-                        src={perfil.foto ? `${process.env.VITE_URL_BACK}/imagen/load/${perfil.foto.split('/d/')[1]?.split('/')[0] || null}` : perfil.genero === "Masculino" ? imagenProfileMale : perfil.genero === "Femenino" ? imagenProfileFemale : imagenProfileOther}
+                        src={perfil.foto ? `/api/imagen/load/${perfil.foto.split('/d/')[1]?.split('/')[0] || null}` : perfil.genero === "Masculino" ? imagenProfileMale : perfil.genero === "Femenino" ? imagenProfileFemale : imagenProfileOther}
                         alt="Perfil"
                         className={style.editableImg}
                     />

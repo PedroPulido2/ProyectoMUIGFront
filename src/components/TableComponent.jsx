@@ -137,34 +137,36 @@ const TableComponent = ({
                                     {columns.map((col, colIndex) => {
                                         const isImage = row[col] && String(row[col]).trim().startsWith("http");
                                         const thumbnailUrl = isImage
-                                            ? `${process.env.VITE_URL_BACK}/imagen/wm/load/${row[col].split('/d/')[1]?.split('/')[0] || null}?width=150`
+                                            ? `/api/imagen/wm/load/${row[col].split('/d/')[1]?.split('/')[0] || null}?width=150`
                                             : "";
 
                                         const highResUrl = isImage
 
-                                            ? `${process.env.VITE_URL_BACK}/imagen/wm/load/${row[col].split('/d/')[1]?.split('/')[0] || null}?width=1024`
+                                            ? `/api/imagen/wm/load/${row[col].split('/d/')[1]?.split('/')[0] || null}?width=1024`
                                             : "";
                                         return (
                                             <td
                                                 key={colIndex}
                                                 data-label={col}
-                                                className={(!row[col] || String(row[col]).trim() === "N/A") ? "na-value" : ""}
+                                                className={`${(!row[col] || String(row[col]).trim() === "N/A") ? "na-value" : ""
+                                                    } ${col.toUpperCase() === "FOTO" ? styles.photoCell : ""}`}
                                                 onClick={() => toggleRowExpansion(rowIndex)}
                                             >
                                                 {isImage ? (
-                                                    <LazyLoadImage
-                                                        height={50}
-                                                        src={thumbnailUrl}
-                                                        effect="blur"
-                                                        placeholderSrc={ErrorImage}
-                                                        onError={(e) => { e.target.src = ErrorImage; }}
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            setImageSrc(highResUrl); // Usamos la URL grande para el modal
-                                                            setIsOpen(true);
-                                                        }}
-                                                        className={styles.tableImage}
-                                                    />
+                                                    <div className={styles.imageWrapper}>
+                                                        <LazyLoadImage
+                                                            src={thumbnailUrl}
+                                                            effect="blur"
+                                                            placeholderSrc={ErrorImage}
+                                                            onError={(e) => { e.target.src = ErrorImage; }}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                setImageSrc(highResUrl);
+                                                                setIsOpen(true);
+                                                            }}
+                                                            className={styles.tableImage}
+                                                        />
+                                                    </div>
                                                 ) : (
                                                     row[col] || "N/A"
                                                 )}
