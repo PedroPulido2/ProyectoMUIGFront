@@ -8,12 +8,10 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalar dependencias
-RUN npm ci
+RUN npm install
 
 # Copiar el resto del proyecto
 COPY . .
-
-RUN npm rebuild @tailwindcss/oxide
 
 # Construir la aplicación
 RUN npm run build
