@@ -1,32 +1,30 @@
-# Etapa 1: Construcción
-FROM node:18-alpine AS build
+# Etapa 1: Construcción usando Debian Slim (Evita conflictos con binarios de Rust/C++)
+FROM node:18-slim AS build
 
-# Directorio de trabajo
 WORKDIR /app
 
-# Copiar archivos necesarios
+# Instalar herramientas básicas necesarias para binarios nativos (opcional por seguridad)
+RUN apt-get update && apt-get install -y python3 build-essential && rm -rf /var/lib/apt/lists/*
+
 COPY package*.json ./
 
-# Instalar dependencias
-RUN npm install
+# Limpiamos e instalamos dependencias de forma estricta
+RUN npm ci
 
-# Copiar el resto del proyecto
 COPY . .
 
-# Construir la aplicación
+# Compilar la aplicación estática
 RUN npm run build
 
-# Etapa 2: Servidor de producción con Nginx
+# Etapa 2: Servidor de producción ultra ligero con Nginx Alpine
 FROM nginx:alpine
 
-# Copiar archivos de compilación al contenedor de Nginx
+# Copiar los archivos estáticos generados por Vite
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Eliminar configuración por defecto de Nginx y usar una propia si la tienes
+# Configuración personalizada de Nginx para React Router
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Exponer el puerto
 EXPOSE 80
 
-# Comando para correr Nginx
 CMD ["nginx", "-g", "daemon off;"]
