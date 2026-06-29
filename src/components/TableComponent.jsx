@@ -35,13 +35,13 @@ const TableComponent = ({
     };
 
     const handleExport = () => {
-        if (filteredData.length === 0) {
-            alert("No hay datos para exportar");
+        if (!data || data.length === 0) {
+            showNotification("warning", "Advertencia", "No hay datos para exportar");
             return;
         }
 
         const csvHeaders = columns.join(",");
-        const csvRows = filteredData.map(row => {
+        const csvRows = data.map(row => {
             return columns.map(col => {
                 let cell = row[col];
                 if (cell === null || cell === undefined) {

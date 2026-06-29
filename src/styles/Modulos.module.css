@@ -1,0 +1,265 @@
+.container {
+  min-height: 100vh;
+  padding: 40px 24px;
+  max-width: 1024px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+}
+
+.header {
+  margin-bottom: 32px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1c1c;
+  margin: 0 0 8px 0;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: #4e4638;
+  margin: 0;
+}
+
+/* Dashboard Cards Grid */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  border: 1px solid #e2e2e2;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 160px;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(120, 90, 10, 0.12);
+  border-color: #e1b964;
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1c1c;
+  margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cardMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.cardCount {
+  font-size: 13px;
+  color: #4e4638;
+  font-weight: 500;
+}
+
+.cardDate {
+  font-size: 11px;
+  color: #8c8577;
+}
+
+.cardActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btnView {
+  font-size: 13px;
+  font-weight: 600;
+  color: #785a0a;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btnDelete {
+  font-size: 13px;
+  color: #ef4444;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnDelete:hover {
+  background-color: #fef2f2;
+}
+
+/* Card Create Button */
+.cardCreate {
+  background: transparent;
+  border: 2px dashed #c4bcae;
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: #4e4638;
+  gap: 12px;
+}
+
+.cardCreate:hover {
+  border-color: #785a0a;
+  background-color: rgba(120, 90, 10, 0.02);
+  color: #785a0a;
+}
+
+.createIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(120, 90, 10, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.cardCreate:hover .createIcon {
+  transform: scale(1.1);
+}
+
+.createLabel {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* Column dynamic editor in modal */
+.columnsBuilder {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.builderInputRow {
+  display: flex;
+  gap: 8px;
+}
+
+.builderInputRow input {
+  flex: 1;
+}
+
+.btnAddColumn {
+  background-color: #785a0a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btnAddColumn:hover {
+  background-color: #634900;
+}
+
+.columnsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.columnTag {
+  background-color: #f1f1f1;
+  color: #1a1c1c;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  border: 1px solid #e2e2e2;
+}
+
+.btnRemoveColumn {
+  background: transparent;
+  border: none;
+  color: #888888;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.btnRemoveColumn:hover {
+  color: #ef4444;
+}
+
+/* View Data page Styles */
+.viewContainer {
+  min-height: 100vh;
+  padding: 40px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.backRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.backRow a {
+  color: #4e4638;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.backRow a:hover {
+  color: #785a0a;
+}

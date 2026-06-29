@@ -124,6 +124,11 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
                     <li>
                         <Link to="/investigacion"><span className="material-symbols-outlined">science</span>Investigación</Link>
                     </li>
+                    {isAdmin === 3 ?
+                        <li>
+                            <Link to="/modulos"><span className="material-symbols-outlined">view_module</span>Módulos</Link>
+                        </li> : <></>
+                    }
                     <li>
                         <Link to="/sd/profiles"><span className="material-symbols-outlined">manage_accounts</span>Perfiles</Link>
                     </li>

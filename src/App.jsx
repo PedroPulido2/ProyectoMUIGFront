@@ -14,6 +14,8 @@ import Register from './pages/Register';
 import Logs from './pages/Logs';
 import InfoProfile from './pages/InfoProfile';
 import EditProfile from './pages/EditProfile';
+import ModulosDashboard from './pages/ModulosDashboard';
+import ModuloDataView from './pages/ModuloDataView';
 
 function App() {
   // Obtener el estado inicial desde localStorage
@@ -109,6 +111,20 @@ function App() {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <EditProfile setAuth={handleAuthChange} />
+            </ProtectedRoute>}
+        />
+        <Route
+          path="/modulos"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <ModulosDashboard setAuth={handleAuthChange} />
+            </ProtectedRoute>}
+        />
+        <Route
+          path="/modulos/:id"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <ModuloDataView setAuth={handleAuthChange} />
             </ProtectedRoute>}
         />
         <Route
