@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { motion } from 'motion/react';
 import PageLayout from "../components/PageLayout";
-import api from "../services/api";
+import api, { getImagenUrl } from "../services/api";
 import { showNotification, showConfirmation } from "../utils/showNotification";
 
 import style from '../styles/InfoProfile.module.css';
@@ -194,7 +194,7 @@ const InfoProfile = ({ setAuth }) => {
 
   const fotoFinal = perfil.foto
     ? (perfil.foto.includes('drive.google.com')
-      ? `/api/imagen/load/${perfil.foto.split('/d/')[1]?.split('/')[0] || null}`
+      ? getImagenUrl(perfil.foto) ?? perfil.foto
       : perfil.foto)
     : (perfil.genero === "Masculino" ? imagenProfileMale : perfil.genero === "Femenino" ? imagenProfileFemale : imagenProfileOther);
 

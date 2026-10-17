@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 import PageLayout from "../components/PageLayout";
-import api from "../services/api";
+import api, { getImagenUrl } from "../services/api";
 import { showNotification } from "../utils/showNotification";
 
 import style from "../styles/EditProfile.module.css";
@@ -386,7 +386,7 @@ const EditProfile = ({ setAuth }) => {
 
   const fotoFinal = fotoPreview || (urlFoto
     ? (urlFoto.includes("drive.google.com")
-      ? `/api/imagen/load/${urlFoto.split("/d/")[1]?.split("/")[0] || null}`
+      ? getImagenUrl(urlFoto) ?? urlFoto
       : urlFoto)
     : (formData.genero === "Masculino" ? imagenProfileMale : formData.genero === "Femenino" ? imagenProfileFemale : imagenProfileOther));
 

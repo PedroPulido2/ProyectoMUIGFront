@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaEdit, FaLock, FaTrash } from "react-icons/fa";
 import PageLayout from "../components/PageLayout";
-import api from "../services/api";
+import api, { getImagenUrl } from "../services/api";
 import imagenProfileFemale from '../styles/images/profile-female.jpg';
 import imagenProfileMale from '../styles/images/profile-male.jpg';
 import imagenProfileOther from '../styles/images/profile-other.jpg';
@@ -174,7 +174,7 @@ const Perfil = ({ setAuth }) => {
             <div className={style.infPerfil}>
                 <div className={style.imagenContainer}>
                     <img
-                        src={perfil.foto ? `/api/imagen/load/${perfil.foto.split('/d/')[1]?.split('/')[0] || null}` : perfil.genero === "Masculino" ? imagenProfileMale : perfil.genero === "Femenino" ? imagenProfileFemale : imagenProfileOther}
+                        src={perfil.foto ? (getImagenUrl(perfil.foto) || (perfil.genero === "Masculino" ? imagenProfileMale : perfil.genero === "Femenino" ? imagenProfileFemale : imagenProfileOther)) : perfil.genero === "Masculino" ? imagenProfileMale : perfil.genero === "Femenino" ? imagenProfileFemale : imagenProfileOther}
                         alt="Perfil"
                         className={style.editableImg}
                     />

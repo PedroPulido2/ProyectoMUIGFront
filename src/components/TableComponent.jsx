@@ -4,6 +4,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import ErrorImage from '../styles/images/Error-imagen.jpg'
 import ImageModal from "./ImageModal";
+import { getImagenUrl } from "../services/api";
 
 const TableComponent = ({
     allColumns, //Array de todas las columnas
@@ -137,12 +138,12 @@ const TableComponent = ({
                                     {columns.map((col, colIndex) => {
                                         const isImage = row[col] && String(row[col]).trim().startsWith("http");
                                         const thumbnailUrl = isImage
-                                            ? `/api/imagen/wm/load/${row[col].split('/d/')[1]?.split('/')[0] || null}?width=150`
+                                            ? getImagenUrl(row[col], { wm: true, width: 150 }) || ErrorImage
                                             : "";
 
                                         const highResUrl = isImage
 
-                                            ? `/api/imagen/wm/load/${row[col].split('/d/')[1]?.split('/')[0] || null}?width=1024`
+                                            ? getImagenUrl(row[col], { wm: true, width: 1024 }) || ErrorImage
                                             : "";
                                         return (
                                             <td

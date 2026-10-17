@@ -4,7 +4,7 @@ import rutaLogo from '../styles/images/Logo-simuig3.png';
 import { Link } from "react-router-dom";
 import imagenProfileOther from '../styles/images/profile-other.jpg';
 import { showNotification } from "../utils/showNotification";
-import api from "../services/api";
+import api, { getImagenUrl } from "../services/api";
 
 const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
     const [urlFoto, setUrlFoto] = useState(localStorage.getItem('urlFotoProfile') || urlimgProfile);
@@ -89,8 +89,7 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
     const getProfileImage = () => {
         try {
             if (!urlFoto) return imagenProfileOther;
-            const photoId = urlFoto.split('/d/')[1]?.split('/')[0];
-            return `/api/imagen/load/${photoId}`;
+            return getImagenUrl(urlFoto) ?? imagenProfileOther;
         } catch (error) {
             console.error("Error al obtener la imagen de perfil:", error);
             return imagenProfileOther;
