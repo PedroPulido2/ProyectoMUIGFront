@@ -99,6 +99,7 @@ const InfoProfile = ({ setAuth }) => {
     try {
       const response = await api.put(`/perfil/${perfil.id_Perfil}/permissions`, {
         ...permissions,
+        idPerfilAccion: current_user_id_perfil,
         usernameAccion: username
       });
 
@@ -159,7 +160,11 @@ const InfoProfile = ({ setAuth }) => {
   };
 
   const handleDeleteProfile = async () => {
-    const confirmDelete = await showConfirmation("¿Está seguro?", "Esta acción eliminará su perfil permanentemente.");
+    if (String(perfil.id_Perfil) === String(current_user_id_perfil)) {
+      showNotification("warning", "Acción no permitida", "No puedes eliminar tu propia cuenta desde aquí. Usa la opción Eliminar cuenta en Mi perfil.");
+      return;
+    }
+    const confirmDelete = await showConfirmation("¿Está seguro?", `Esta acción eliminará el perfil de ${perfil.nombre || ''} ${perfil.apellido || ''} permanentemente y no se puede deshacer.`);
     if (confirmDelete.isConfirmed) {
       try {
         await api.delete(`/perfil/${perfil.id_Perfil}`, {
@@ -169,13 +174,7 @@ const InfoProfile = ({ setAuth }) => {
           }
         });
         showNotification("success", "¡Perfil Eliminado!", "El perfil ha sido eliminado.");
-        if (perfil.id_Perfil == current_user_id_perfil) {
-          localStorage.clear();
-          if (setAuth) setAuth(false);
-          navigate("/");
-        } else {
-          navigate("/profiles");
-        }
+        navigate("/sd/profiles");
       } catch (error) {
         console.error("Error al eliminar el perfil:", error);
         showNotification("error", "Error", error.response?.data?.error || "Ocurrió un error inesperado.");
@@ -227,7 +226,7 @@ const InfoProfile = ({ setAuth }) => {
 
           <div className={style.profileImageContainer}>
             <img src={fotoFinal} alt={perfil.nombre} className={style.profileImage} />
-            {current_isAdmin === 3 || (current_isAdmin === 2 && current_perm_perfil === 1) && (
+            {(current_isAdmin === 3 || (current_isAdmin === 2 && current_perm_perfil === 1)) && (
               <label htmlFor="upload-photo" className="absolute bottom-0 right-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white cursor-pointer hover:scale-110 transition-transform shadow-md">
                 <Pencil className="w-4 h-4" />
                 <input type="file" id="upload-photo" hidden onChange={handleImageChange} accept="image/*" />
@@ -256,15 +255,15 @@ const InfoProfile = ({ setAuth }) => {
             </div>
 
             {/* Renderizado condicional de los botones de acción */}
-            {(current_isAdmin >= 2 && current_perm_perfil === 1) && (
+            {(current_isAdmin === 3 || (current_isAdmin === 2 && current_perm_perfil === 1)) && (
               <div className={style.actionButtons}>
                 <button className={style.btnPrimary} onClick={() => navigate(`/perfil/edit/${perfil.id_Perfil}`)}>
                   <Pencil className="w-4 h-4" />
-                  Edit Profile
+                  Editar perfil
                 </button>
                 <button className={style.btnSecondary} onClick={handleDeleteProfile}>
                   <Ban className="w-4 h-4" />
-                  Delete Profile
+                  Eliminar perfil
                 </button>
               </div>
             )}
@@ -289,7 +288,7 @@ const InfoProfile = ({ setAuth }) => {
             <InfoField label="Rol" value={
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-slate-400" />
-                {perfil.isAdmin === 2 ? 'Admin' : 'User'}
+                {perfil.isAdmin === 3 ? 'Super-Administrador' : perfil.isAdmin === 2 ? 'Administrador' : 'Visitante'}
               </div>
             } />
             <InfoField label="Nombre y Apellido" value={`${perfil.nombre} ${perfil.apellido}`} />

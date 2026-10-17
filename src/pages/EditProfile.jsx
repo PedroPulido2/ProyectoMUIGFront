@@ -14,7 +14,7 @@ import {
 import { motion } from "motion/react";
 import PageLayout from "../components/PageLayout";
 import api, { getImagenUrl } from "../services/api";
-import { showNotification } from "../utils/showNotification";
+import { showNotification, showConfirmation } from "../utils/showNotification";
 
 import style from "../styles/EditProfile.module.css";
 
@@ -35,6 +35,7 @@ const EditProfile = ({ setAuth }) => {
   const [saving, setSaving] = useState(false);
   const [isAuthorized, setIsAuthorized] = useState(null);
   const [originalId, setOriginalId] = useState("");
+  const [originalIsAdmin, setOriginalIsAdmin] = useState("");
   const [urlFoto, setUrlFoto] = useState("");
   const [fotoFile, setFotoFile] = useState(null);
   const [fotoPreview, setFotoPreview] = useState(null);
@@ -127,6 +128,7 @@ const EditProfile = ({ setAuth }) => {
       });
 
       setOriginalId(profileData.id_Perfil || "");
+      setOriginalIsAdmin(String(profileData.isAdmin || "1"));
       setUrlFoto(profileData.foto || "");
     } catch (err) {
       console.error("Error al obtener datos:", err);
@@ -205,6 +207,34 @@ const EditProfile = ({ setAuth }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
+
+    const isSelf = String(originalId) === String(current_user_id_perfil);
+
+    // Autoprotección: el superadmin no puede degradarse ni bloquearse a sí mismo
+    if (isSelf && current_isAdmin === 3) {
+      if (String(formData.isAdmin) !== "3") {
+        showNotification("warning", "Acción no permitida", "No puedes quitarte tu propio rol de Super-Administrador.");
+        setSaving(false);
+        return;
+      }
+      if (formData.estado !== "ACTIVO") {
+        showNotification("warning", "Acción no permitida", "No puedes bloquear tu propia cuenta.");
+        setSaving(false);
+        return;
+      }
+    }
+
+    // Confirmación al degradar/bloquear a otro superadministrador
+    if (!isSelf && originalIsAdmin === "3" && String(formData.isAdmin) !== "3") {
+      const confirmDemote = await showConfirmation(
+        "¿Degradar superadministrador?",
+        "Estás quitando el rol de Super-Administrador a otro usuario. ¿Deseas continuar?"
+      );
+      if (!confirmDemote.isConfirmed) {
+        setSaving(false);
+        return;
+      }
+    }
 
     // Validar edad mínima (14 años)
     const today = new Date();
@@ -298,6 +328,7 @@ const EditProfile = ({ setAuth }) => {
           perm_roca: 1,
           perm_investigacion: 1,
           perm_perfil: 1,
+          idPerfilAccion: current_user_id_perfil,
           usernameAccion: username
         });
 
@@ -311,6 +342,7 @@ const EditProfile = ({ setAuth }) => {
           perm_roca: 0,
           perm_investigacion: 0,
           perm_perfil: 0,
+          idPerfilAccion: current_user_id_perfil,
           usernameAccion: username
         });
 
@@ -335,10 +367,9 @@ const EditProfile = ({ setAuth }) => {
 
       if (response.status === 200) {
         showNotification("success", "¡Éxito!", "Perfil actualizado correctamente.");
-        // Si el perfil editado es el del usuario actual, y cambió su foto/nombre, podemos forzar refresco
-        if (originalId === current_user_id_perfil) {
-          localStorage.setItem("username", formData.user);
-          localStorage.setItem("isAdmin", formData.isAdmin);
+        // Si el perfil editado es el del usuario actual, refrescar rol/foto en sesión
+        if (String(originalId) === String(current_user_id_perfil)) {
+          localStorage.setItem("isAdmin", String(formData.isAdmin));
           // Si el backend retornó nueva url de foto, se actualiza en localStorage
           if (response.data && response.data.foto) {
             localStorage.setItem("urlFotoProfile", response.data.foto);
