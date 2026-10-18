@@ -302,9 +302,46 @@ td[data-label="FOTO"] {
 }
 
 /* =========================================
-   2. MODO TELÉFONO Y TABLET (Vista de Tarjetas)
+   2. TABLETS (769px - 1024px): tabla real con ajustes
    ========================================= */
 @media (max-width: 1024px) {
+    .tableContainer {
+        padding: 16px;
+        max-width: 100%;
+    }
+
+    .searchCreate {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .searchCreate select,
+    .searchCreate input {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .createButton {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .exportButton {
+        width: 100%;
+    }
+}
+
+/* =========================================
+   3. MODO TELÉFONO (Vista de Tarjetas)
+   ========================================= */
+@media (max-width: 768px) {
+
+    .tableContainer {
+        overflow-x: visible;
+        max-width: 100%;
+        width: 100%;
+        padding: 12px;
+    }
 
     /* Apagar el modo Sticky */
     th:first-child,
@@ -334,12 +371,19 @@ td[data-label="FOTO"] {
     td {
         display: block;
         width: 100%;
+        max-width: 100%;
         box-sizing: border-box;
+    }
+
+    table {
+        min-width: 0 !important;
     }
 
     /* ---- TARJETA PRINCIPAL ---- */
     tbody tr {
-        margin-bottom: 25px;
+        margin: 0 0 16px 0;
+        width: 100%;
+        max-width: 100%;
         border: 1px solid #eaeaea;
         /* Borde más sutil */
         border-top: 4px solid #e1b964;
@@ -413,74 +457,54 @@ td[data-label="FOTO"] {
         display: none;
     }
 
-    td[data-label="FOTO"] {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
+    /* Foto como banner a todo el ancho de la tarjeta */
+    td[data-label="FOTO"],
+    .photoCell {
+        display: block !important;
         width: 100% !important;
-        padding: 20px 0 !important;
-        /* 💡 Un padding uniforme arriba y abajo elimina el corte */
+        max-width: 100% !important;
+        padding: 0 !important;
         border-bottom: 1px solid #f5f5f5 !important;
         background-color: #fcfcfc;
     }
 
-    /* 2. ELIMINAR EL TEXTO "FOTO" (Esta es la línea crítica que te falta) */
-    td[data-label="FOTO"]::before {
+    /* Eliminar el texto "FOTO" para que no altere el banner */
+    td[data-label="FOTO"]::before,
+    .photoCell::before {
         content: none !important;
-        /* Desaparece el texto */
         display: none !important;
-        /* Elimina el bloque para que no ocupe espacio */
         width: 0 !important;
         min-width: 0 !important;
         margin: 0 !important;
         padding: 0 !important;
     }
 
-    .photoCell {
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: center !important;
-        align-items: center !important;
-        width: 100% !important;
-        padding: 20px 0 !important;
-        border-bottom: 1px solid #f5f5f5 !important;
-        background-color: #fcfcfc;
-    }
-
-    /* Ocultar el pseudo-elemento "FOTO" para que no altere el centrado */
-    .photoCell::before {
-        content: none !important;
-        display: none !important;
-    }
-
-    /* Contenedor wrapper para forzar el tamaño en la cuadrícula móvil */
+    /* Banner: ocupa todo el ancho, altura fija */
     .imageWrapper {
-        width: 160px !important;
-        height: 160px !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 180px !important;
+        display: block !important;
         overflow: hidden !important;
-        border-radius: 12px !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
-        background-color: #ffffff !important;
+        border-radius: 12px 12px 0 0 !important;
+        box-shadow: none !important;
+        background-color: #f0f0f0 !important;
     }
 
-    /* 💡 CRÍTICO: Forzar al contenedor span de la librería LazyLoad a medir el 100% */
-    .imageWrapper :global(.lazy-load-image-background) {
+    /* Forzar al span que renderiza la librería LazyLoad a medir el 100% */
+    .imageWrapper > span {
         width: 100% !important;
         height: 100% !important;
         display: block !important;
     }
 
-    /* Estilo final de la imagen limpia */
+    /* Estilo final de la imagen del banner */
     .tableImage {
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
-        /* Muestra el mineral centrado ocupando el recuadro sin cortarse de forma extraña */
         margin: 0 !important;
-        border-radius: 12px !important;
+        border-radius: 12px 12px 0 0 !important;
     }
 
     /* Zona de Botones de Acción */
@@ -506,5 +530,27 @@ td[data-label="FOTO"] {
         width: 44px !important;
         height: 44px !important;
         box-sizing: border-box !important;
+    }
+
+    /* Detalles expandidos sin desborde en móvil */
+    td[colspan] {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .expandedDetails {
+        margin: 0 !important;
+        padding: 16px !important;
+        gap: 16px !important;
+    }
+
+    .detailsColumn {
+        min-width: 0 !important;
+        flex: 1 1 100% !important;
+    }
+
+    .paginationControls {
+        flex-wrap: wrap;
+        gap: 10px;
     }
 }
