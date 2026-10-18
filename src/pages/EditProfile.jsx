@@ -3,12 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import {
   ChevronRight,
   Save,
-  X,
-  Eye,
-  EyeOff,
   ShieldAlert,
-  CheckCircle,
-  XCircle,
   Upload
 } from "lucide-react";
 import { motion } from "motion/react";
@@ -49,16 +44,11 @@ const EditProfile = ({ setAuth }) => {
     genero: "",
     correo: "",
     telefono: "",
-    password: "",
-    confirmPassword: "",
     isAdmin: "1",
     estado: "ACTIVO"
   });
 
-  const [showPassword, setShowPassword] = useState({
-    new: false,
-    confirm: false
-  });
+  const isSelf = String(originalId) !== "" && String(originalId) === String(current_user_id_perfil);
 
   useEffect(() => {
     document.title = "Editar Perfil";
@@ -121,8 +111,6 @@ const EditProfile = ({ setAuth }) => {
         genero: profileData.genero || "",
         correo: profileData.correo || "",
         telefono: profileData.telefono || "",
-        password: "",
-        confirmPassword: "",
         isAdmin: String(profileData.isAdmin || "1"),
         estado: estadoVal
       });
@@ -137,13 +125,6 @@ const EditProfile = ({ setAuth }) => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const togglePasswordVisibility = (field) => {
-    setShowPassword((prev) => ({
-      ...prev,
-      [field]: !prev[field]
-    }));
   };
 
   const handleChange = (e) => {
@@ -208,8 +189,6 @@ const EditProfile = ({ setAuth }) => {
     e.preventDefault();
     setSaving(true);
 
-    const isSelf = String(originalId) === String(current_user_id_perfil);
-
     // Autoprotección: el superadmin no puede degradarse ni bloquearse a sí mismo
     if (isSelf && current_isAdmin === 3) {
       if (String(formData.isAdmin) !== "3") {
@@ -273,26 +252,6 @@ const EditProfile = ({ setAuth }) => {
       return;
     }
 
-    // Validar contraseña si se ingresó alguna
-    if (formData.password && formData.password.trim() !== "") {
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
-      if (!passwordRegex.test(formData.password)) {
-        showNotification(
-          "error",
-          "Contraseña débil",
-          "La contraseña debe tener mínimo 6 caracteres, al menos una mayúscula, una minúscula y un número."
-        );
-        setSaving(false);
-        return;
-      }
-
-      if (formData.password !== formData.confirmPassword) {
-        showNotification("error", "Error de confirmación", "Las contraseñas no coinciden.");
-        setSaving(false);
-        return;
-      }
-    }
-
     try {
       const data = new FormData();
       data.append("id_Perfil", formData.id_Perfil);
@@ -303,10 +262,6 @@ const EditProfile = ({ setAuth }) => {
       data.append("genero", formData.genero);
       data.append("correo", formData.correo);
       data.append("telefono", formData.telefono);
-
-      if (formData.password && formData.password.trim() !== "") {
-        data.append("password", formData.password);
-      }
 
       data.append("isAdmin", formData.isAdmin);
       data.append("estado", formData.estado);
@@ -420,8 +375,6 @@ const EditProfile = ({ setAuth }) => {
       ? getImagenUrl(urlFoto) ?? urlFoto
       : urlFoto)
     : (formData.genero === "Masculino" ? imagenProfileMale : formData.genero === "Femenino" ? imagenProfileFemale : imagenProfileOther));
-
-  const passwordsMatch = formData.password === formData.confirmPassword;
 
   return (
     <PageLayout username={username} setAuth={setAuth}>
@@ -580,7 +533,7 @@ const EditProfile = ({ setAuth }) => {
                 />
               </div>
 
-              {current_isAdmin === 3 && (
+              {current_isAdmin === 3 && !isSelf && (
                 <div className={style.formGroup}>
                   <label className={style.label}>Rol en el Sistema</label>
                   <select
@@ -610,48 +563,6 @@ const EditProfile = ({ setAuth }) => {
                 </select>
               </div>
 
-              <div className={style.formGroup}>
-                <label className={style.label}>Cambiar Contraseña (Opcional)</label>
-                <div className={style.passwordWrapper}>
-                  <input
-                    type={showPassword.new ? "text" : "password"}
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Nueva contraseña"
-                    className={style.input}
-                  />
-                  <button type="button" className={style.togglePass} onClick={() => togglePasswordVisibility("new")}>
-                    {showPassword.new ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
-                </div>
-              </div>
-
-              <div className={style.formGroup}>
-                <label className={style.label}>Confirmar Contraseña</label>
-                <div className={style.passwordWrapper}>
-                  <input
-                    type={showPassword.confirm ? "text" : "password"}
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    placeholder="Repita la contraseña"
-                    className={style.input}
-                  />
-                  <button type="button" className={style.togglePass} onClick={() => togglePasswordVisibility("confirm")}>
-                    {showPassword.confirm ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
-                  {formData.confirmPassword && (
-                    <div className={style.validationIcon}>
-                      {passwordsMatch ? (
-                        <CheckCircle size={18} className={style.iconSuccess} />
-                      ) : (
-                        <XCircle size={18} className={style.iconError} />
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
             </div>
 
             {/* Botones de acción */}

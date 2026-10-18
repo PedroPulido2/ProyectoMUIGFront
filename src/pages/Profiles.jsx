@@ -14,6 +14,7 @@ import imagenProfileOther from '../styles/images/profile-other.jpg';
 const Profiles = ({ setAuth }) => {
   const username = localStorage.getItem("username") || "Invitado";
   const [profiles, setProfiles] = useState([]);
+  const [superAdmins, setSuperAdmins] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const isAdmin = Number(localStorage.getItem('isAdmin')) || 0;
   const current_perm_perfil = Number(localStorage.getItem("perm_perfil")) || 0;
@@ -29,14 +30,17 @@ const Profiles = ({ setAuth }) => {
     try {
       const response = await api.get("/perfil");
 
+      // Sección Superadministradores: incluye al usuario actual
+      setSuperAdmins(response.data.filter(profile => Number(profile.IS_ADMIN) === 3));
+
       // Filtrar los perfiles para excluir el del usuario actual
       const filteredProfiles = response.data.filter(profile => profile.USER?.trim() !== username?.trim());
 
       // Transformar los datos agregando la propiedad "ROL" y formateando las fechas
       const formattedProfiles = filteredProfiles.map(profile => ({
         ...profile,
-        ROL: profile.IS_ADMIN === 1 ? "Visitante" :
-          profile.IS_ADMIN === 2 ? "Administrador" :
+        ROL: Number(profile.IS_ADMIN) === 1 ? "Visitante" :
+          Number(profile.IS_ADMIN) === 2 ? "Administrador" :
             "Super-Administrador",
       }));
 
@@ -53,11 +57,6 @@ const Profiles = ({ setAuth }) => {
       p.ROL.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [profiles, searchTerm]);
-
-  const superAdmins = useMemo(() =>
-    profiles.filter(p => p.IS_ADMIN === 3).slice(0, 3),
-    [profiles]);
-
 
   return (
     <PageLayout username={username} setAuth={setAuth}>

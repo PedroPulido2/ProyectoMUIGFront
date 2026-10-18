@@ -99,6 +99,10 @@ const Login = ({ setAuth }) => {
                 </form>
 
                 <div className={styles.loginFooter}>
+                    <span>¿Olvidaste tu contraseña?</span>
+                    <button className={styles.registerButton} onClick={() => navigate('/forgot-password')}>
+                        Recuperar contraseña
+                    </button>
                     <span>¿No tienes cuenta?</span>
                     <button className={styles.registerButton} onClick={() => navigate('/register')}>
                         Crear cuenta

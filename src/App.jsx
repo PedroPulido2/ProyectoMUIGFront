@@ -11,6 +11,8 @@ import Perfil from './pages/Perfil';
 import Profiles from './pages/Profiles';
 import AcercaDeCreador from './pages/AcercaDeCreador';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import Logs from './pages/Logs';
 import InfoProfile from './pages/InfoProfile';
 import EditProfile from './pages/EditProfile';
@@ -40,6 +42,14 @@ function App() {
         <Route
           path='/register'
           element={<Register />}
+        />
+        <Route
+          path='/forgot-password'
+          element={<ForgotPassword />}
+        />
+        <Route
+          path='/reset-password'
+          element={<ResetPassword />}
         />
         {/* Página protegida */}
         <Route
