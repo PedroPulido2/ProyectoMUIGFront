@@ -144,11 +144,11 @@ const PageLayout = ({ username, setAuth, children, urlimgProfile }) => {
                         <Link to="/perfil"><span className="material-symbols-outlined">account_circle</span>Perfil</Link>
                     </li>
                     <h4>
-                        <span>Creador</span>
+                        <span>Proyecto</span>
                         <div className={styles.menuSeparator}></div>
                     </h4>
                     <li>
-                        <Link to="/aboutCreator"><span className="material-symbols-outlined">shield_person</span>Acerca del Creador</Link>
+                        <Link to="/creditos"><span className="material-symbols-outlined">info</span>Acerca del proyecto</Link>
                     </li>
                     <h4>
                         <span>Acciones</span>

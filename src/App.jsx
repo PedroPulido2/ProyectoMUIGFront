@@ -9,7 +9,7 @@ import Roca from './pages/Roca';
 import Investigacion from './pages/Investigacion';
 import Perfil from './pages/Perfil';
 import Profiles from './pages/Profiles';
-import AcercaDeCreador from './pages/AcercaDeCreador';
+import Creditos from './pages/Creditos';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
@@ -96,10 +96,17 @@ function App() {
             </ProtectedRoute>}
         />
         <Route
+          path="/creditos"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Creditos setAuth={handleAuthChange} />
+            </ProtectedRoute>}
+        />
+        <Route
           path="/aboutCreator"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <AcercaDeCreador setAuth={handleAuthChange} />
+              <Creditos setAuth={handleAuthChange} />
             </ProtectedRoute>}
         />
         <Route
