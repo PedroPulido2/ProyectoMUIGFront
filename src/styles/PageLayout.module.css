@@ -61,9 +61,6 @@
     width: 50px;
     height: 50px;
     border-radius: 12px;
-    /* Bordes más modernos que el círculo */
-    border: 2px solid #e1b964;
-    /* Borde dorado */
     object-fit: cover;
 }
 

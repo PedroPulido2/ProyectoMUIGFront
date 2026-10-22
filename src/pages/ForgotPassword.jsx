@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { showNotification } from '../utils/showNotification';
 import styles from '../styles/Login.module.css';
+import logoBlanco from '../styles/images/v3 Logo blanco.png';
 
 const ForgotPassword = () => {
     const [correo, setCorreo] = useState('');
@@ -48,7 +49,7 @@ const ForgotPassword = () => {
         <div className={styles.loginPage}>
             <div className={styles.loginCard}>
                 <div className={styles.loginHeader}>
-                    <img src="/Logo.png" alt="Logo" className={styles.loginLogo} />
+                    <img src={logoBlanco} alt="Logo" className={styles.loginLogo} />
                     <h2>Recuperar contraseña</h2>
                     <p>Ingresa tu correo y te enviaremos instrucciones</p>
                 </div>

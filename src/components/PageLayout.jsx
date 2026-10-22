@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from '../styles/PageLayout.module.css';
-import rutaLogo from '../styles/images/Logo-simuig3.png';
+import rutaLogo from '../styles/images/v3 Logo blanco.png';
 import { Link } from "react-router-dom";
 import imagenProfileOther from '../styles/images/profile-other.jpg';
 import { showNotification } from "../utils/showNotification";

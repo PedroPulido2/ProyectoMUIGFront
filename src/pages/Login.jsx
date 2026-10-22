@@ -5,6 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Eye, EyeOff } from "lucide-react";
 import { showNotification } from '../utils/showNotification';
 import styles from '../styles/Login.module.css';
+import logoBlanco from '../styles/images/v3 Logo blanco.png';
 
 const Login = ({ setAuth }) => {
     const [user, setUser] = useState('');
@@ -56,7 +57,7 @@ const Login = ({ setAuth }) => {
         <div className={styles.loginPage}>
             <div className={styles.loginCard}>
                 <div className={styles.loginHeader}>
-                    <img src="/Logo.png" alt="Logo" className={styles.loginLogo} />
+                    <img src={logoBlanco} alt="Logo" className={styles.loginLogo} />
                     <h2>Bienvenido</h2>
                     <p>Ingresa tus credenciales para continuar</p>
                 </div>

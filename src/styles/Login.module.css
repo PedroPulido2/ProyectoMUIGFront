@@ -34,7 +34,7 @@
     display: block; 
     margin: 0 auto 1.5rem auto; 
     
-    filter: drop-shadow(0 0 10px rgba(225, 185, 100, 0.3));
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.25));
 }
 
 .loginHeader h2 {

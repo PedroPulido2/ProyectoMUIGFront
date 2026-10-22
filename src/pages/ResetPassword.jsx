@@ -4,6 +4,7 @@ import api from '../services/api';
 import { Eye, EyeOff } from "lucide-react";
 import { showNotification } from '../utils/showNotification';
 import styles from '../styles/Login.module.css';
+import logoBlanco from '../styles/images/v3 Logo blanco.png';
 
 const ResetPassword = () => {
     const [searchParams] = useSearchParams();
@@ -60,7 +61,7 @@ const ResetPassword = () => {
             <div className={styles.loginPage}>
                 <div className={styles.loginCard}>
                     <div className={styles.loginHeader}>
-                        <img src="/Logo.png" alt="Logo" className={styles.loginLogo} />
+                        <img src={logoBlanco} alt="Logo" className={styles.loginLogo} />
                         <h2>Restablecer contraseña</h2>
                         <p>El enlace es inválido o ha expirado</p>
                     </div>
@@ -78,7 +79,7 @@ const ResetPassword = () => {
         <div className={styles.loginPage}>
             <div className={styles.loginCard}>
                 <div className={styles.loginHeader}>
-                    <img src="/Logo.png" alt="Logo" className={styles.loginLogo} />
+                    <img src={logoBlanco} alt="Logo" className={styles.loginLogo} />
                     <h2>Restablecer contraseña</h2>
                     <p>Ingresa tu nueva contraseña (mín. 8 caracteres, una mayúscula, una minúscula y un número)</p>
                 </div>
