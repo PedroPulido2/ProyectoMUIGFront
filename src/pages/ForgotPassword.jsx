@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { showNotification } from '../utils/showNotification';
 import styles from '../styles/Login.module.css';
-import logoBlanco from '../styles/images/v3 Logo blanco.png';
+import logoBlanco from '../styles/images/MUIGsinfondo.png';
 
 const ForgotPassword = () => {
     const [correo, setCorreo] = useState('');

@@ -5,7 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Eye, EyeOff } from "lucide-react";
 import { showNotification } from '../utils/showNotification';
 import styles from '../styles/Login.module.css';
-import logoBlanco from '../styles/images/v3 Logo blanco.png';
+import logoBlanco from '../styles/images/MUIGsinfondo.png';
 
 const Login = ({ setAuth }) => {
     const [user, setUser] = useState('');
