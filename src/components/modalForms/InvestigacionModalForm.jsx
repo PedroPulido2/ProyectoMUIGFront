@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { showNotification } from "../../utils/showNotification";
 import styles from "../../styles/FormModal.module.css";
+import SelectCatalogo from "../SelectCatalogo";
+import {
+    INVESTIGACION_COLECCIONES,
+    FOSIL_FILOS,
+    FOSIL_SUBFILOS,
+    FOSIL_CLASES,
+    FOSIL_ORDENES,
+    FOSIL_FAMILIAS,
+    PERIODOS_GEOLOGICOS,
+    ERAS_GEOLOGICAS,
+} from "../../utils/catalogos";
 
 const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData }) => {
     const [formData, setFormData] = useState({
@@ -70,9 +81,9 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        if (name === "FILO" || name === "SUBFILO" || name === "CLASE" || name === "ORDEN" || name === "FAMILIA" || name === "GENERO" ||
-            name === "NOMBRE" || name === "PERIODO_GEOLOGICO" || name === "ERA_GEOLOGICA" || name === "FORMACION_GEOLOGICA" || name === "COLECTOR" ||
-            name === "COLECTOR"
+        // Solo campos de texto libre; colección, taxonomía, periodo y era son <select>.
+        if (name === "GENERO" ||
+            name === "NOMBRE" || name === "FORMACION_GEOLOGICA" || name === "COLECTOR"
         ) {
             if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value)) return;
         }
@@ -146,11 +157,12 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
                         </div>
                         <div className={styles.formGroup}>
                             <label>Colección:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="COLECCION"
-                                value={formData.COLECCION || ""}
+                                value={formData.COLECCION}
                                 onChange={handleChange}
+                                opciones={INVESTIGACION_COLECCIONES}
+                                requerido
                             />
                         </div>
                         <div className={styles.formGroup}>
@@ -164,47 +176,47 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
                         </div>
                         <div className={styles.formGroup}>
                             <label>Filo:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="FILO"
-                                value={formData.FILO || ""}
+                                value={formData.FILO}
                                 onChange={handleChange}
+                                opciones={FOSIL_FILOS}
                             />
                         </div>
                         <div className={styles.formGroup}>
                             <label>Subfilo:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="SUBFILO"
-                                value={formData.SUBFILO || ""}
+                                value={formData.SUBFILO}
                                 onChange={handleChange}
+                                opciones={FOSIL_SUBFILOS}
                             />
                         </div>
                         <div className={styles.formGroup}>
                             <label>Clase:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="CLASE"
-                                value={formData.CLASE || ""}
+                                value={formData.CLASE}
                                 onChange={handleChange}
+                                opciones={FOSIL_CLASES}
                             />
                         </div>
                         <div className={styles.formGroup}>
                             <label>Orden:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="ORDEN"
-                                value={formData.ORDEN || ""}
+                                value={formData.ORDEN}
                                 onChange={handleChange}
+                                opciones={FOSIL_ORDENES}
                             />
                         </div>
                         <div className={styles.formGroup}>
                             <label>Familia:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="FAMILIA"
-                                value={formData.FAMILIA || ""}
+                                value={formData.FAMILIA}
                                 onChange={handleChange}
+                                opciones={FOSIL_FAMILIAS}
                             />
                         </div>
                         <div className={styles.formGroup}>
@@ -228,20 +240,20 @@ const InvestigacionFormModal = ({ isOpen, closeModal, onSave, investigacionData 
                         </div>
                         <div className={styles.formGroup}>
                             <label>Periodo Geológico:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="PERIODO_GEOLOGICO"
-                                value={formData.PERIODO_GEOLOGICO || ""}
+                                value={formData.PERIODO_GEOLOGICO}
                                 onChange={handleChange}
+                                opciones={PERIODOS_GEOLOGICOS}
                             />
                         </div>
                         <div className={styles.formGroup}>
                             <label>Era Geológica:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="ERA_GEOLOGICA"
-                                value={formData.ERA_GEOLOGICA || ""}
+                                value={formData.ERA_GEOLOGICA}
                                 onChange={handleChange}
+                                opciones={ERAS_GEOLOGICAS}
                             />
                         </div>
                         <div className={styles.formGroup}>

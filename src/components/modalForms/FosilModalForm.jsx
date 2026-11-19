@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/FormModal.module.css";
 import { showNotification } from "../../utils/showNotification";
+import SelectCatalogo from "../SelectCatalogo";
+import {
+    FOSIL_COLECCIONES,
+    FOSIL_FILOS,
+    FOSIL_SUBFILOS,
+    FOSIL_CLASES,
+    FOSIL_ORDENES,
+    FOSIL_FAMILIAS,
+    TIEMPOS_GEOLOGICOS_FOSIL,
+    FOSIL_VITRINAS,
+} from "../../utils/catalogos";
 
 const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
     const [formData, setFormData] = useState({
@@ -69,8 +80,9 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
             if (value.length > 4) return;
         }
 
-        if (name === "FILO" || name === "SUBFILO" || name === "CLASE" || name === "ORDEN" || name === "FAMILIA" ||
-            name === "GENERO" || name === "NOMBRE_FOSIL" || name === "COLECTOR"
+        // Solo campos de texto libre; los taxonómicos y de catálogo son <select>
+        // y aceptan sus valores cerrados (guiones, paréntesis, etc.).
+        if (name === "GENERO" || name === "NOMBRE_FOSIL" || name === "COLECTOR"
         ) {
             if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value)) return;
         }
@@ -151,57 +163,57 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
                         </div>
                         <div className={styles.formGroup}>
                             <label>Colección:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="COLECCION"
-                                value={formData.COLECCION || ""}
+                                value={formData.COLECCION}
                                 onChange={handleChange}
+                                opciones={FOSIL_COLECCIONES}
                             />
                         </div>
                         <div className={styles.formGroup}>
                             <label>Filo:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="FILO"
-                                value={formData.FILO || ""}
+                                value={formData.FILO}
                                 onChange={handleChange}
+                                opciones={FOSIL_FILOS}
                             />
                         </div>
                         <div className={styles.formGroup}>
                             <label>SubFilo:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="SUBFILO"
-                                value={formData.SUBFILO || ""}
+                                value={formData.SUBFILO}
                                 onChange={handleChange}
+                                opciones={FOSIL_SUBFILOS}
                             />
                         </div>
                         <div className={styles.formGroup}>
                             <label>Clase:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="CLASE"
-                                value={formData.CLASE || ""}
+                                value={formData.CLASE}
                                 onChange={handleChange}
+                                opciones={FOSIL_CLASES}
                             />
                         </div>
                         {/* ¡AQUÍ ESTABA EL BUG! Ahora Orden y Familia están separados correctamente */}
                         <div className={styles.formGroup}>
                             <label>Orden:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="ORDEN"
-                                value={formData.ORDEN || ""}
+                                value={formData.ORDEN}
                                 onChange={handleChange}
+                                opciones={FOSIL_ORDENES}
                             />
                         </div>
                         <div className={styles.formGroup}>
                             <label>Familia:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="FAMILIA"
-                                value={formData.FAMILIA || ""}
+                                value={formData.FAMILIA}
                                 onChange={handleChange}
+                                opciones={FOSIL_FAMILIAS}
                             />
                         </div>
                         <div className={styles.formGroup}>
@@ -234,11 +246,11 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
                         </div>
                         <div className={styles.formGroup}>
                             <label>Tiempo Geológico:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="TIEMPO_GEOLOGICO"
-                                value={formData.TIEMPO_GEOLOGICO || ""}
+                                value={formData.TIEMPO_GEOLOGICO}
                                 onChange={handleChange}
+                                opciones={TIEMPOS_GEOLOGICOS_FOSIL}
                             />
                         </div>
                         <div className={styles.formGroup}>
@@ -261,11 +273,11 @@ const FosilFormModal = ({ isOpen, closeModal, onSave, fosilData }) => {
                         </div>
                         <div className={styles.formGroup}>
                             <label>Vitrina:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="VITRINA"
-                                value={formData.VITRINA || ""}
+                                value={formData.VITRINA}
                                 onChange={handleChange}
+                                opciones={FOSIL_VITRINAS}
                             />
                         </div>
                         <div className={styles.formGroup}>

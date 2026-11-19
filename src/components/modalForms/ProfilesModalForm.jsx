@@ -2,6 +2,13 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/FormModal.module.css";
 import { Eye, EyeOff } from "lucide-react";
 import { showNotification } from "../../utils/showNotification";
+import SelectCatalogo from "../SelectCatalogo";
+import {
+    TIPOS_IDENTIFICACION,
+    GENEROS,
+    ROLES,
+    ESTADOS_CUENTA,
+} from "../../utils/catalogos";
 
 const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
     const [formData, setFormData] = useState({
@@ -198,15 +205,13 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
                         </div>
                         <div className={styles.formGroup}>
                             <label>Tipo de identificación:</label>
-                            <select className={styles.styledSelect} name="tipoIdentificacion" value={formData.tipoIdentificacion || ""} onChange={handleChange} required>
-                                <option value="" disabled>Seleccione una opción</option>
-                                <option value="Tarjeta de identidad">Targeta de identidad (TI)</option>
-                                <option value="Cedula de Ciudadania">Cedula de Ciudadania (CC)</option>
-                                <option value="Tarjeta de extranjeria">Tarjeta de extranjeria (TE)</option>
-                                <option value="Cedula de extranjeria">Cedula de extranjeria (CE)</option>
-                                <option value="Pasaporte">Pasaporte (PP)</option>
-                                <option value="Permiso especial de permanencia">Permiso especial de permanencia (PEP)</option>
-                            </select>
+                            <SelectCatalogo
+                                name="tipoIdentificacion"
+                                value={formData.tipoIdentificacion}
+                                onChange={handleChange}
+                                opciones={TIPOS_IDENTIFICACION}
+                                requerido
+                            />
                         </div>
                         <div className={styles.formGroup}>
                             <label>Nombre:</label>
@@ -240,12 +245,13 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
                         </div>
                         <div className={styles.formGroup}>
                             <label>Genero:</label>
-                            <select className={styles.styledSelect} name="genero" value={formData.genero || ""} onChange={handleChange} required>
-                                <option value="" disabled>Seleccione una opción</option>
-                                <option value="Masculino">Masculino</option>
-                                <option value="Femenino">Femenino</option>
-                                <option value="Otro">Otro</option>
-                            </select>
+                            <SelectCatalogo
+                                name="genero"
+                                value={formData.genero}
+                                onChange={handleChange}
+                                opciones={GENEROS}
+                                requerido
+                            />
                         </div>
                         <div className={styles.formGroup}>
                             <label>Correo:</label>
@@ -304,17 +310,18 @@ const ProfilesModalForm = ({ isOpen, closeModal, onSave, profileData }) => {
                             <label>Tipo de Rol:</label>
                             <select className={styles.styledSelect} name="isAdmin" value={formData.isAdmin || ""} onChange={handleChange} required>
                                 <option value="" disabled>Seleccione una opción</option>
-                                <option value="1">Visitante</option>
-                                <option value="2">Administrador</option>
-                                <option value="3">Super-Administrador</option>
+                                {ROLES.map((rol) => (
+                                    <option key={rol.valor} value={rol.valor}>{rol.etiqueta}</option>
+                                ))}
                             </select>
                         </div>
                         <div className={styles.formGroup}>
                             <label>Estado:</label>
                             <select className={styles.styledSelect} name="estado" value={formData.estado || ""} onChange={handleChange} required>
                                 <option value="" disabled>Seleccione una opción</option>
-                                <option value="ACTIVO">Activo</option>
-                                <option value="BLOQUEADO">Bloqueado</option>
+                                {ESTADOS_CUENTA.map((estado) => (
+                                    <option key={estado} value={estado}>{estado === "ACTIVO" ? "Activo" : "Bloqueado"}</option>
+                                ))}
                             </select>
                         </div>
                         <button type="submit" className={styles.saveButton}>

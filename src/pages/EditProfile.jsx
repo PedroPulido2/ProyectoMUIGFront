@@ -431,12 +431,14 @@ const EditProfile = ({ setAuth }) => {
                   required
                 >
                   <option value="" disabled>Seleccione una opción</option>
-                  <option value="Tarjeta de identidad">Tarjeta de identidad (TI)</option>
-                  <option value="Cedula de Ciudadania">Cédula de Ciudadanía (CC)</option>
-                  <option value="Tarjeta de extranjeria">Tarjeta de extranjería (TE)</option>
-                  <option value="Cedula de extranjeria">Cédula de extranjería (CE)</option>
-                  <option value="Pasaporte">Pasaporte (PP)</option>
-                  <option value="Permiso especial de permanencia">Permiso especial de permanencia (PEP)</option>
+                  <option value="Cédula de Ciudadanía">Cédula de Ciudadanía (CC)</option>
+                  <option value="Tarjeta de Identidad">Tarjeta de Identidad (TI)</option>
+                  <option value="Cédula de Extranjería">Cédula de Extranjería (CE)</option>
+                  <option value="Tarjeta de Extranjería">Tarjeta de Extranjería (TE)</option>
+                  {formData.tipoIdentificacion &&
+                    !["Cédula de Ciudadanía", "Tarjeta de Identidad", "Cédula de Extranjería", "Tarjeta de Extranjería"].includes(formData.tipoIdentificacion) && (
+                      <option value={formData.tipoIdentificacion}>{formData.tipoIdentificacion} (dato antiguo)</option>
+                    )}
                 </select>
               </div>
 
@@ -543,9 +545,9 @@ const EditProfile = ({ setAuth }) => {
                     className={style.select}
                     required
                   >
-                    <option value="1">Visitante</option>
+                    <option value="1">Usuario normal</option>
                     <option value="2">Administrador</option>
-                    <option value="3">SuperAdministrador</option>
+                    <option value="3">Superadministrador</option>
                   </select>
                 </div>
               )}
@@ -557,6 +559,8 @@ const EditProfile = ({ setAuth }) => {
                   onChange={handleChange}
                   className={style.select}
                   required
+                  disabled={current_isAdmin !== 3}
+                  title={current_isAdmin !== 3 ? "Solo un superadministrador puede cambiar el estado" : undefined}
                 >
                   <option value="ACTIVO">ACTIVO</option>
                   <option value="BLOQUEADO">BLOQUEADO</option>

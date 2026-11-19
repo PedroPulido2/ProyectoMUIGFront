@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { showNotification } from "../../utils/showNotification";
 import styles from "../../styles/FormModal.module.css";
+import SelectCatalogo from "../SelectCatalogo";
+import {
+    MINERAL_COLECCIONES,
+    GRUPOS_MINERALOGICOS,
+    SUBGRUPOS_MINERALOGICOS,
+} from "../../utils/catalogos";
 
 const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
     const [formData, setFormData] = useState({
@@ -58,7 +64,8 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
             if (value.length > 4) return;
         }
 
-        if (name === "NOMBRE_MINERAL" || name === "GRUPO_MINERALOGICO" || name === "REGION" || name === "SUBGRUPO"
+        // Solo campos de texto libre; grupo y subgrupo son <select>.
+        if (name === "NOMBRE_MINERAL" || name === "REGION"
             || name === "COLECTOR"
         ) {
             if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value)) return;
@@ -140,11 +147,11 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
                         </div>
                         <div className={styles.formGroup}>
                             <label>Colección:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="COLECCION"
-                                value={formData.COLECCION || ""}
+                                value={formData.COLECCION}
                                 onChange={handleChange}
+                                opciones={MINERAL_COLECCIONES}
                             />
                         </div>
                         <div className={styles.formGroup}>
@@ -168,11 +175,11 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
                         </div>
                         <div className={styles.formGroup}>
                             <label>Grupo mineralogico:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="GRUPO_MINERALOGICO"
-                                value={formData.GRUPO_MINERALOGICO || ""}
+                                value={formData.GRUPO_MINERALOGICO}
                                 onChange={handleChange}
+                                opciones={GRUPOS_MINERALOGICOS}
                             />
                         </div>
                         <div className={styles.formGroup}>
@@ -186,11 +193,11 @@ const MineralFormModal = ({ isOpen, closeModal, onSave, mineralData }) => {
                         </div>
                         <div className={styles.formGroup}>
                             <label>Subgrupo:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="SUBGRUPO"
-                                value={formData.SUBGRUPO || ""}
+                                value={formData.SUBGRUPO}
                                 onChange={handleChange}
+                                opciones={SUBGRUPOS_MINERALOGICOS}
                             />
                         </div>
                         <div className={styles.formGroup}>

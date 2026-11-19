@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { showNotification } from "../../utils/showNotification";
 import styles from "../../styles/FormModal.module.css";
+import SelectCatalogo from "../SelectCatalogo";
+import {
+    ROCA_TIPOS,
+    ROCA_COLECCIONES,
+    DEPARTAMENTOS,
+} from "../../utils/catalogos";
 
 const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
     const [formData, setFormData] = useState({
@@ -58,7 +64,8 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
             if (value.length > 4) return;
         }
 
-        if (name === "TIPO" || name === "NOMBRE_PIEZA" || name === "DEPARTAMENTO" || name === "MUNICIPIO" ||
+        // Solo campos de texto libre; tipo y departamento son <select>.
+        if (name === "NOMBRE_PIEZA" || name === "MUNICIPIO" ||
             name === "COLECTOR_DONADOR") {
             if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value)) return;
         }
@@ -157,20 +164,21 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
                         </div>
                         <div className={styles.formGroup}>
                             <label>Tipo:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="TIPO"
-                                value={formData.TIPO || ""}
+                                value={formData.TIPO}
                                 onChange={handleChange}
+                                opciones={ROCA_TIPOS}
+                                requerido
                             />
                         </div>
                         <div className={styles.formGroup}>
                             <label>Colección:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="COLECCION"
-                                value={formData.COLECCION || ""}
+                                value={formData.COLECCION}
                                 onChange={handleChange}
+                                opciones={ROCA_COLECCIONES}
                             />
                         </div>
                         <div className={styles.formGroup}>
@@ -185,11 +193,11 @@ const RocaFormModal = ({ isOpen, closeModal, onSave, rocaData }) => {
                         </div>
                         <div className={styles.formGroup}>
                             <label>Departamento:</label>
-                            <input
-                                type="text"
+                            <SelectCatalogo
                                 name="DEPARTAMENTO"
-                                value={formData.DEPARTAMENTO || ""}
+                                value={formData.DEPARTAMENTO}
                                 onChange={handleChange}
+                                opciones={DEPARTAMENTOS}
                             />
                         </div>
                         <div className={styles.formGroup}>
